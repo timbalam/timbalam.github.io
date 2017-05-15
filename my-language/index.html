@@ -1,0 +1,127 @@
+<h2>A bientot a sa blogue</h2>
+
+<a href="../index.html">Home</a>
+
+<h4>I have made a programming language</h4>
+
+<a href="#try-it-out">Try it out</a>
+
+<p>
+I have made a programming language. It's working title is "My" but that's not a good name. I have made the language of course because I want to see how it is for writing programs. Let's look at how to use the language...
+</p>
+
+<h4>Using the language</h4>
+
+<p>
+To program using "My", we use a text editor to write a program, and then give the text file to the "Myi" program to execute. "Myi" is short for <em>My interpreter</em> because the program interprets other program. To install the "Myi" program see <a href="#try-it-out">here</a>.
+</p>
+
+<h4>Programs and values</h4>
+
+<p>
+In "My" programs, we create <em>values</em> by typing expressions. Most often, these values are stored for later use by assigning them a label, often called a <em>reference</em> or <em>variable</em>, by typing a label followed by an equals sign (<code>=</code>) followed by the expression. Labels must begin with a letter and can contain letters and numbers. A program can also simply evaluate an expression without assigning it to a label, just by writing the expression. Multiple assignments and evaluations can be made in a program, separated by semi-colons. Some values can be created directly from expressions, such as <em>numbers</em>, <em>strings</em>, or nested programs. Numbers are created by typing numeric characters, e.g. <code>123</code>. Strings are typed beginning with a double quotation mark (<code>"</code>) and ending with the same, e.g. <code>"These 9 words, 3 punctuation symbols, and 3 numbers form a string."</code>. Nested programs are created by typing the program inside curly-braces (<code>{}</code>). 
+</p>
+
+<p>
+These expression that directly create values are sometimes called <em>literal expressions</em>. In addition to these, we are also able to use mathematical expressions, e.g. <code>(1+0)*1</code>. These are sometimes called <em>compound expressions</em> as they combine together multiple literal expressions.
+</p>
+
+<p>
+For example, the following code assigns the value 1 to the label "myVar", and assigns the result of a mathematical expression to "MyExpr".
+</p>
+
+<pre>
+myVar = 1;
+myExpr = (1 + 0) * (1 ^ 1)
+</pre>
+
+<h4>Scope</h4>
+
+<p>
+Expressions in a program can reference (refer to) other values defined in the same program using the assigned label. Nested programs can also reference any label that the enclosing program can reference. The set of labels that can a program can reference is often called the <em>scope</em> or <em>environment</em> of the program. The set of labels defined directly in a program is often called the <em>local scope</em>.
+</p>
+
+<p>
+For example, the following code creates a nested program assigned to "myProg" that references the labels "myLabelVar", defined in the local scope, and "myParentVar", defined in the enclosing program.
+</p>
+
+<pre>
+myEnvVar = 1;
+myProg = {
+  myLocalVar = 0;
+  myExpr = (myEnvVar + myLocalVar) * myEnvVar
+}
+</pre>
+
+<h4>Visibility</h4>
+
+<p>
+An important consequence of the rule for scopes described above is that labels defined by a nested program are not in the scope of the enclosing program. For example, in the previous program, the label "myLocalVar" defined in "myProg" cannot be referenced by an expression defined in the top level program.
+</p>
+
+<p>
+It follows that labels defined in a program are also not in the scope of "sibling" programs, i.e. other programs defined by the enclosing program.
+</p>
+
+<p>
+We say that these labels are <em>private</em> to the program that defines it.
+</p>
+
+<p> 
+A program can choose to make labels it defines to be <em>public</em>, that is accessible via a reference to the program itself, by prepending a period (<code>.</code>) to the assignment definition. Then, any program that can reference this program can access the public label, by following the program reference with the period and label. Note that the private form of the label (without the initial <code>.</code>) exists in the scope of the program. 
+</p>
+
+<p>
+For example, the following code creates a program "myProg" with a public reference "myPubVar" which is referenced by the enclosing program.
+</p>
+
+<pre>
+myEnvVar = 1;
+myProg = {
+  .myPubVar = 0;
+} 
+myEnvExpr = myProg.myPubVar + myEnvVar
+</pre>
+
+<h4>Application</h4>
+
+<p>
+Two more components of the language are needed in order to write more complex programs. Program <em>application</em> creates a transformed program that replaces the public labels of a program by expressions defined for matching labels in another program. In "My", a program can be applied to another by "passing" the program to be applied surrounded by parentheses (<code>()</code>). So <code>progA(progB)</code> means "apply progB to progA". 
+</p>
+
+<p>
+Finally, programs which we intend to apply to other programs can reference public labels of the future result of applying the object. This is done by using the public label form (beginning with <code>.</code>) in expressions. Note that public labels defined in enclosing scopes cannot be referenced using the public label form. 
+</p>
+
+<p>
+The following example will hopefully look familiar. The code creates two programs "myFun" and "myArgs", applies "myArgs" to "myFun", and reads "myResult" from the resulting program.
+</p>
+
+<pre>
+myFun = {
+  .myParam = 3;
+  .myResult = myParam * 1
+}
+myArgs = {
+  .myParam = 1
+}
+myApp = myFun(myArgs)
+myResult = myApp.myResult // == 1
+</pre>
+
+<p>
+What is going on here is that the value of the public label "myParam" (equal to 1) in "myArgs" is replacing the value in "myFun" (equal to 3). The value assigned to public label "myResult" in "myApp" uses the updated value in its calculation.
+</p> 
+
+<p>
+It is not necessary to separately define the "myArgs" program. We could write instead a compound expression as shown in the following.
+</p>
+
+<pre>
+myFun = {
+  .myParam = 20
+  .myResult = (myParam + 0) ^ 1
+}
+myResult = myFun({ .myParam = 1 }).myResult // == 1
+</pre>
+

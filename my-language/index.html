@@ -1,4 +1,4 @@
-<h2>A bientot a sa blogue</h2>
+<h2>Blog</h2>
 
 <a href="../index.html">Home</a>
 
@@ -7,121 +7,205 @@
 <a href="#try-it-out">Try it out</a>
 
 <p>
-I have made a programming language. It's working title is "My" but that's not a good name. I have made the language of course because I want to see how it is for writing programs. Let's look at how to use the language...
+I have made a programming language. The working name for the language is "my". My language is designed around a flexible universal structure
 </p>
 
-<h4>Using the language</h4>
+<h4>Using my language</h4>
 
 <p>
-To program using "My", we use a text editor to write a program, and then give the text file to the "Myi" program to execute. "Myi" is short for <em>My interpreter</em> because the program interprets other program. To install the "Myi" program see <a href="#try-it-out">here</a>.
+We use a text editor to write our program code, and then give the text file to the <code>myi</code> program to execute. <code>myi</code> is short for "My interpreter" because it interprets the code you wrote based on the rules of my language. <code>myi</code> is run from the command line or terminal of your computer. To install <code>myi</code> see <a href="#try-it-out">here</a>.
 </p>
 
-<h4>Programs and values</h4>
+<h4>My code examples</h4>
 
 <p>
-In "My" programs, we create <em>values</em> by typing expressions. Most often, these values are stored for later use by assigning them a label, often called a <em>reference</em> or <em>variable</em>, by typing a label followed by an equals sign (<code>=</code>) followed by the expression. Labels must begin with a letter and can contain letters and numbers. A program can also simply evaluate an expression without assigning it to a label, just by writing the expression. Multiple assignments and evaluations can be made in a program, separated by semi-colons. Some values can be created directly from expressions, such as <em>numbers</em>, <em>strings</em>, or nested programs. Numbers are created by typing numeric characters, e.g. <code>123</code>. Strings are typed beginning with a double quotation mark (<code>"</code>) and ending with the same, e.g. <code>"These 9 words, 3 punctuation symbols, and 3 numbers form a string."</code>. Nested programs are created by typing the program inside curly-braces (<code>{}</code>). 
-</p>
-
-<p>
-These expression that directly create values are sometimes called <em>literal expressions</em>. In addition to these, we are also able to use mathematical expressions, e.g. <code>(1+0)*1</code>. These are sometimes called <em>compound expressions</em> as they combine together multiple literal expressions.
-</p>
-
-<p>
-For example, the following code assigns the value 1 to the label "myVar", and assigns the result of a mathematical expression to "MyExpr".
+Let's start by working through an example - implementations of the two boolean values, <code>True</code> and <code>False</code>: 
 </p>
 
 <pre>
-myVar = 1;
-myExpr = (1 + 0) * (1 ^ 1)
+True = {
+  .ifTrue =;
+  
+  .ifFalse =;
+  
+  .match = ifTrue;
+};
+
+False = {
+  .ifTrue =;
+  
+  .ifFalse =;
+  
+  .match = ifFalse;
+};
 </pre>
 
-<h4>Scope</h4>
-
 <p>
-Expressions in a program can reference (refer to) other values defined in the same program using the assigned label. Nested programs can also reference any label that the enclosing program can reference. The set of labels that can a program can reference is often called the <em>scope</em> or <em>environment</em> of the program. The set of labels defined directly in a program is often called the <em>local scope</em>.
+Here we have declared definitions for two values <code>True</code> and <code>False</code>. The definitions use the syntax <code>[name]=[value]</code> to declare a set of fields and values, separated by semi-colons <code>;</code> and surrounded by curly braces <code>{}</code>. Both values have three fields: <code>ifTrue</code>, <code>ifFalse</code>, and <code>match</code>. Note that the fields <code>ifTrue</code> and <code>ifFalse</code> are not assigned values - we will see what this means a little later. The values are differentiated by the third field <code>match</code>, which refers respectively to the <code>ifTrue</code> field for the <code>True</code> value and the <code>ifFalse</code>  field for the <code>False</code> value. 
 </p>
 
 <p>
-For example, the following code creates a nested program assigned to "myProg" that references the labels "myLabelVar", defined in the local scope, and "myParentVar", defined in the enclosing program.
+Using names of fields defined elsewhere in the program, as is seen in the <code>match</code> field definitions, is called 'referencing', and introduces a dependency between the definitions. Which fields can be referenced when writing definitions is determined by my language's 'scoping rules'. Fields which can be referenced in a particular definition are said to be 'in scope' for that definition.
+</p>
+
+<p>
+The scoping rules of my language can be stated simply: fields declared within a definition <code>{}</code> are in scope for that definition. Additionally, any fields in the 'enclosing scope', the scope of the enclosing definition of a nested definition, are also in scope for the nested definition. We will discuss some interesting implications of these rules in more details later.
+</p>
+
+<p>
+Each of the fields of <code>True</code> and <code>False</code> are declared beginning with a period <code>.</code>, indicating that they are public fields, able to be read and manipulated by code outside of the value's definition, where they are not in scope. Let's demonstrate this by defining the boolean "and" operation. 
 </p>
 
 <pre>
-myEnvVar = 1;
-myProg = {
-  myLocalVar = 0;
-  myExpr = (myEnvVar + myLocalVar) * myEnvVar
-}
+and = {
+  .bool1 =;
+  
+  .bool2 =;
+  
+  .call = {
+    .ifTrue =;
+    
+    .ifFalse =;
+    
+    bool2.ifTrue = ifTrue;
+    
+    bool2.ifFalse = ifFalse;
+    
+    bool1.ifTrue = bool2.match;
+    
+    bool1.ifFalse = ifFalse;
+    
+    .match = bool1.match;
+  };
+};
 </pre>
 
-<h4>Visibility</h4>
-
 <p>
-An important consequence of the rule for scopes described above is that labels defined by a nested program are not in the scope of the enclosing program. For example, in the previous program, the label "myLocalVar" defined in "myProg" cannot be referenced by an expression defined in the top level program.
+The definition of <code>and</code> has three public fields: <code>boo11</code>, <code>bool2</code> and <code>call</code>. The definition for <code>call</code> references the other fields <code>bool1</code> and <code>bool2</code> in two ways:
 </p>
 
 <p>
-It follows that labels defined in a program are also not in the scope of "sibling" programs, i.e. other programs defined by the enclosing program.
+The syntax <code>[name].[field]</code> on the left hand side of the equals sign <code>=</code>, for a name defined in the enclosing scope, forms a modified value within the definition with a new value assigned to the field.
 </p>
 
 <p>
-We say that these labels are <em>private</em> to the program that defines it.
-</p>
-
-<p> 
-A program can choose to make labels it defines to be <em>public</em>, that is accessible via a reference to the program itself, by prepending a period (<code>.</code>) to the assignment definition. Then, any program that can reference this program can access the public label, by following the program reference with the period and label. Note that the private form of the label (without the initial <code>.</code>) exists in the scope of the program. 
+The same syntax <code>[value].[field]</code> on the right hand side of declarations forms a reference to a public field of the value. 
 </p>
 
 <p>
-For example, the following code creates a program "myProg" with a public reference "myPubVar" which is referenced by the enclosing program.
+Hence, the definition of <code>call</code> above states that the fields <code>ifTrue</code> and <code>ifFalse</code> of <code>bool2</code> and the <code>ifFalse</code> field of <code>bool1</code> are updated to redirect to the corresponding fields of the <code>call</code> value, the <code>ifTrue</code> field of <code>bool1</code> is updated to redirect to the <code>match</code> field of the updated <code>bool2</code>, and the <code>match</code> field of the <code>call</code> value linked to the <code>match</code> of <code>bool1</code>.
+</p>
+
+
+<h4>Meaning of my code</h4>
+
+<p>
+To verify that our definition for <code>and</code> is consistent with that of boolean logical, we would want the following truth-table to hold:
 </p>
 
 <pre>
-myEnvVar = 1;
-myProg = {
-  .myPubVar = 0;
-} 
-myEnvExpr = myProg.myPubVar + myEnvVar
+<table>
+  <tbody>
+    <tr><td>and</td><td>bool1=True</td><td>bool1=False</td></tr>
+    <tr><td>bool2=True</td><td>call=True</td><td>call=False</td></tr>
+    <tr><td>bool2=False</td><td>call=False</td><td>call=False</td></tr>
+  </tbody>
+</table>
 </pre>
 
-<h4>Application</h4>
-
 <p>
-Two more components of the language are needed in order to write more complex programs. Program <em>application</em> creates a transformed program that replaces the public labels of a program by expressions defined for matching labels in another program. In "My", a program can be applied to another by "passing" the program to be applied surrounded by parentheses (<code>()</code>). So <code>progA(progB)</code> means "apply progB to progA". 
-</p>
-
-<p>
-Finally, programs which we intend to apply to other programs can reference public labels of the future result of applying the object. This is done by using the public label form (beginning with <code>.</code>) in expressions. Note that public labels defined in enclosing scopes cannot be referenced using the public label form. 
-</p>
-
-<p>
-The following example will hopefully look familiar. The code creates two programs "myFun" and "myArgs", applies "myArgs" to "myFun", and reads "myResult" from the resulting program.
+The case represented by the top left cell can be expressed by the following my code, featuring some new syntax:
 </p>
 
 <pre>
-myFun = {
-  .myParam = 3;
-  .myResult = myParam * 1
-}
-myArgs = {
-  .myParam = 1
-}
-myApp = myFun(myArgs)
-myResult = myApp.myResult // == 1
+expectTrue = and { .bool1 = True; .bool2 = True; }.call
 </pre>
 
 <p>
-What is going on here is that the value of the public label "myParam" (equal to 1) in "myArgs" is replacing the value in "myFun" (equal to 3). The value assigned to public label "myResult" in "myApp" uses the updated value in its calculation.
-</p> 
+The juxtaposition syntax <code>[value] [value]</code> binds tighter than the field access, and is an alternative way to express updating multiple field values of the first value with the corresponding field values of the second. In this case, the value <code>True</code> is being substituted as the values for fields <code>bool1</code> and <code>bool2</code> in <code>and</code>, and the corresponding updated value for the <code>call</code> field is being assigned as <code>expectTrue</code>.
+</p>
 
 <p>
-It is not necessary to separately define the "myArgs" program. We could write instead a compound expression as shown in the following.
+What exactly is meant above by 'substitute' and 'update'? How is the value assigned to <code>expectTrue</code> arrived at? In my language, computation is driven by field accesses. <code>expectTrue</code> will have the value of the <code>call</code> field of the updated <code>and</code> value. Working this out requires finding and replacing <code>and</code> by its definition, and further replacing the <code>bool1</code> and <code>bool2</code> fields with their new value <code>True</code>:
 </p>
 
 <pre>
-myFun = {
-  .myParam = 20
-  .myResult = (myParam + 0) ^ 1
-}
-myResult = myFun({ .myParam = 1 }).myResult // == 1
+expectTrue = {
+  .bool1 = True;
+  
+  .bool2 = True;
+  
+  .call = {
+    .ifTrue =;
+    
+    .ifFalse =;
+    
+    bool2.ifTrue = ifTrue;
+    
+    bool2.ifFalse = ifFalse;
+    
+    bool1.ifTrue = bool2.match;
+    
+    bool1.ifFalse = ifFalse;
+  
+    .match = bool1.match;
+  };
+}.call;
 </pre>
 
+<p>
+After these substitutions, we can see that a <code>call</code> field exists in the expanded definition of <code>and</code>, which we want to extract as the value of <code>expectTrue</code>. Doing this directly, however, will lead to a problem - the definition of <code>call</code> depends on <code>bool1</code> and <code>bool2</code>, which are defined externally. We introduce some new syntax and perform a small rewriting of <code>call</code>'s definition which moves these 'captured' references inside. 
+</p>
+
+<pre>
+expectTrue = {
+  .bool1 = True;
+  
+  .bool2 = True;
+  
+  .call = {
+    .ifTrue =;
+    
+    .ifFalse =;
+    
+    bool2 = True { ifTrue, ifFalse }
+    
+    bool1 = True { .ifTrue = bool2.match, ifFalse }
+  
+    .match = bool1.match;
+  };
+}.call;
+</pre>
+
+<p>
+The syntax of using a bare <code>[name]</code> inside a definition, creates a 'punned' definition, simply assigning the value corresponding to the name in the enclosing scope to a public field of the same name within the definition.
+</p>
+
+<p>
+This is combined with the juxtaposition syntax above to update the captured <code>True</code> values for <code>bool1</code> and <code>bool2</code>, redirecting fields <code>ifTrue</code> and <code>ifFalse</code> to the values for the corresponding fields of <code>call</code>. After the rewrite, the definition of <code>call</code> is independent of the other fields of the expanded <code>and</code> code, and we can extract the value to assign to <code>expectTrue</code>.
+</p>
+
+<pre>
+expectTrue = {
+  .ifTrue =;
+  
+  .ifFalse =;
+  
+  bool2 = True { ifTrue, ifFalse }
+  
+  bool1 = True { .ifTrue = bool2.match, ifFalse }
+
+  .match = bool1.match;
+};
+</pre>
+
+<p>
+Does the value of <code>expectTrue</code> correspond to that of <code>True</code>? Remember that the <code>match</code> field of <code>True</code> redirects to that of the <code>ifTrue</code> field. This implies that same holds for <code>expectTrue</code> - <code>bool1.match</code> redirects to the substituted value <code>bool2.match</code>, which redirects to the punned <code>ifTrue</code> field of <code>expectTrue</code>.
+</p>
+
+
+<h4>Where are my primitives? My IO?</h4>
+
+<p>
+Oh boy
+</p>

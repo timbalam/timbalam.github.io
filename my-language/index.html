@@ -16,196 +16,182 @@ I have made a programming language. The working name for the language is "my". M
 We use a text editor to write our program code, and then give the text file to the <code>myi</code> program to execute. <code>myi</code> is short for "My interpreter" because it interprets the code you wrote based on the rules of my language. <code>myi</code> is run from the command line or terminal of your computer. To install <code>myi</code> see <a href="#try-it-out">here</a>.
 </p>
 
-<h4>My code examples</h4>
+<h4>My code example</h4>
 
 <p>
-Let's start by working through an example - implementations of the two boolean values, <code>True</code> and <code>False</code>: 
+First things first - what does my language look like? Here are implementations of the two boolean values, <code>True</code> and <code>False</code>: 
 </p>
 
 <pre>
 True = {
-  .ifTrue =;
-  
-  .ifFalse =;
-  
-  .match = ifTrue;
+  .match = .ifTrue;
 };
 
 False = {
-  .ifTrue =;
-  
-  .ifFalse =;
-  
-  .match = ifFalse;
+  .match = .ifFalse;
 };
 </pre>
 
 <p>
-Here we have declared definitions for two values <code>True</code> and <code>False</code>. The definitions use the syntax <code>[name]=[value]</code> to declare a set of fields and values, separated by semi-colons <code>;</code> and surrounded by curly braces <code>{}</code>. Both values have three fields: <code>ifTrue</code>, <code>ifFalse</code>, and <code>match</code>. Note that the fields <code>ifTrue</code> and <code>ifFalse</code> are not assigned values - we will see what this means a little later. The values are differentiated by the third field <code>match</code>, which refers respectively to the <code>ifTrue</code> field for the <code>True</code> value and the <code>ifFalse</code>  field for the <code>False</code> value. 
+Here we have declared definitions for two values named <code>True</code> and <code>False</code>. The definitions use the syntax <code>[name]=[value]</code> or <code>.[name]=[value]</code> to associate names and values, with declarations separated by semi-colons <code>;</code>.
 </p>
 
 <p>
-Using names of fields defined elsewhere in the program, as is seen in the <code>match</code> field definitions, is called 'referencing', and introduces a dependency between the definitions. Which fields can be referenced when writing definitions is determined by my language's 'scoping rules'. Fields which can be referenced in a particular definition are said to be 'in scope' for that definition.
+The second form, where a name is preceded with a period <code>.</code> makes the name a 'field'. Fields introduce the capability for code outside of the value's definition to extract inner values, as well as substitute new values. The names <code>match</code> defined in <code>True</code> and <code>False</code> are examples of fields.
 </p>
 
 <p>
-The scoping rules of my language can be stated simply: fields declared within a definition <code>{}</code> are in scope for that definition. Additionally, any fields in the 'enclosing scope', the scope of the enclosing definition of a nested definition, are also in scope for the nested definition. We will discuss some interesting implications of these rules in more details later.
+Values can include nested sets of definitions surrounded by curly braces <code>{}</code>, as demonstrated by <code>True</code> and <code>False</code> values, and also use names directly, such as the <code>match</code> definitions which refer respectively to <code>ifTrue</code> and <code>ifFalse</code>. A name used in this way is called a 'reference', and introduces a dependency between definitions. The references to <code>isTrue</code> and <code>isFalse</code> names are similarly declared with a period <code>.</code>, making them field references.
 </p>
 
 <p>
-Each of the fields of <code>True</code> and <code>False</code> are declared beginning with a period <code>.</code>, indicating that they are public fields, able to be read and manipulated by code outside of the value's definition, where they are not in scope. Let's demonstrate this by defining the boolean "and" operation. 
+The different types of references have different 'scoping' rules for resolving the referenced value. We will discuss these rules in the context of another example, that of the boolean "and" operation, defined here:
 </p>
 
 <pre>
 and = {
-  .bool1 =;
+  arg2 = .arg2;
   
-  .bool2 =;
-  
-  .call = {
-    .ifTrue =;
-    
-    .ifFalse =;
-    
-    bool2.ifTrue = ifTrue;
-    
-    bool2.ifFalse = ifFalse;
-    
-    bool1.ifTrue = bool2.match;
-    
-    bool1.ifFalse = ifFalse;
-    
-    .match = bool1.match;
+  arg1 = .arg1 {
+    .ifTrue = arg2;
+
+    .ifFalse = False;
   };
+  
+  .call = arg1.match;
 };
 </pre>
 
 <p>
-The definition of <code>and</code> has three public fields: <code>boo11</code>, <code>bool2</code> and <code>call</code>. The definition for <code>call</code> references the other fields <code>bool1</code> and <code>bool2</code> in two ways:
+The definition of <code>and</code> has three names: <code>arg1</code>, <code>arg2</code> and <code>call</code> which is public, and introduces some new syntax: In the <code>arg1</code> value, we see a reference directly followed by an extended definition <code>{}</code>. This expresses extending the first value with the fields declared in the second. The field access syntax <code>[value].[field]</code>, when used on the right hand side of declarations forms a reference to a field of the value. An example of this is the <code>call</code> field definition.
 </p>
 
 <p>
-The syntax <code>[name].[field]</code> on the left hand side of the equals sign <code>=</code>, for a name defined in the enclosing scope, forms a modified value within the definition with a new value assigned to the field.
+The 'scoping' rules define which value (if any) a name refers to. The rules differ for plain references (not preceded by a <code>.</code>) and field references (preceded by <code>.</code>). Plain references point to a value with that name within the same definition <code>{}</code> as the reference, if one exists, otherwise for nested definitions, the value is found as if the reference were made in the enclosing definition.
+<p>
+
+</p>
+These rules have some interesting implications which we will see later. For now, we will apply the scoping rules for the references in the definition of <code>and</code> above. In one case, the value of the  field reference <code>arg1</code> is updated with new fields <code>ifTrue</code> and <code>ifFalse</code>. We will come to field reference scoping in a moment. The new <code>ifTrue</code> and <code>ifFalse</code> values are a reference to <code>arg2</code> and <code>False</code> respectively. By the rules above, we would first look for a declarations with these names in the same definition. Here only <code>ifTrue</code> and <code>ifFalse</code> names exist, so we continue looking in the enclosing definition. The enclosing definition declares names <code>arg2</code>, <code>arg1</code> and <code>call</code>, and we have therefore found the value referenced by the <code>arg2</code> reference, itself a field reference to <code>arg2</code>. For the <code>False</code> value, we have to look further into the top-level set of declarations, where it was defined above.
 </p>
 
 <p>
-The same syntax <code>[value].[field]</code> on the right hand side of declarations forms a reference to a public field of the value. 
+In another case, the field <code>call</code> references to <code>arg1</code> from which the field <code>match</code> is accessed. The name <code>arg1</code> exists in the same definition, so the reference resolves to the corresponding value. 
 </p>
 
 <p>
-Hence, the definition of <code>call</code> above states that the fields <code>ifTrue</code> and <code>ifFalse</code> of <code>bool2</code> and the <code>ifFalse</code> field of <code>bool1</code> are updated to redirect to the corresponding fields of the <code>call</code> value, the <code>ifTrue</code> field of <code>bool1</code> is updated to redirect to the <code>match</code> field of the updated <code>bool2</code>, and the <code>match</code> field of the <code>call</code> value linked to the <code>match</code> of <code>bool1</code>.
+Field references work in combination with definition extension as seen in the <code>arg1</code> value declared in <code>and</code>. They are resolved by need, when computing a value to return via a field access, and refer to the latest value defined for the corresponding field. We can begin to understand why in our definitions for <code>True</code> and <code>False</code> it is permitted to make field references to the non-existent fields <code>ifTrue</code> and <code>ifFalse</code>. As long as the fields are supplied by definition extension before accessing the <code>match</code> field, everything will be fine.
 </p>
-
 
 <h4>Meaning of my code</h4>
 
 <p>
-To verify that our definition for <code>and</code> is consistent with that of boolean logical, we would want the following truth-table to hold:
+The execution of my language occurs in a predictable fashion, allowing code behaviour to be reasoned about with a bit of practice. We illuminate this by working through the following example: Verifying that a particular case of our definition for <code>and</code> is consistent with that of boolean logical, demonstrated by following truth-table:
 </p>
 
 <pre>
 <table>
   <tbody>
-    <tr><td>and</td><td>bool1=True</td><td>bool1=False</td></tr>
-    <tr><td>bool2=True</td><td>call=True</td><td>call=False</td></tr>
-    <tr><td>bool2=False</td><td>call=False</td><td>call=False</td></tr>
+    <tr><td>and</td><td>arg1=True</td><td>arg1=False</td></tr>
+    <tr><td>arg2=True</td><td>call=True</td><td>call=False</td></tr>
+    <tr><td>arg2=False</td><td>call=False</td><td>call=False</td></tr>
   </tbody>
 </table>
 </pre>
 
 <p>
-The case represented by the top left cell can be expressed by the following my code, featuring some new syntax:
+The case represented by the top left cell can be expressed by the following my code:
 </p>
 
 <pre>
-expectTrue = and { .bool1 = True; .bool2 = True; }.call
+expectTrue = and { .arg1 = True; .arg2 = True; }.call;
 </pre>
 
 <p>
-The juxtaposition syntax <code>[value] [value]</code> binds tighter than the field access, and is an alternative way to express updating multiple field values of the first value with the corresponding field values of the second. In this case, the value <code>True</code> is being substituted as the values for fields <code>bool1</code> and <code>bool2</code> in <code>and</code>, and the corresponding updated value for the <code>call</code> field is being assigned as <code>expectTrue</code>.
+The code above expresses substituting the value <code>True</code> for fields <code>arg1</code> and <code>arg2</code> in <code>and</code>, and the corresponding updated value for the <code>call</code> field is being assigned as <code>expectTrue</code>.
 </p>
 
 <p>
-What exactly is meant above by 'substitute' and 'update'? How is the value assigned to <code>expectTrue</code> arrived at? In my language, computation is driven by field accesses. <code>expectTrue</code> will have the value of the <code>call</code> field of the updated <code>and</code> value. Working this out requires finding and replacing <code>and</code> by its definition, and further replacing the <code>bool1</code> and <code>bool2</code> fields with their new value <code>True</code>:
+How is the value assigned to <code>expectTrue</code> arrived at? In my language, field accesses drive computation. <code>expectTrue</code> will have the value of the <code>call</code> field of the updated <code>and</code> value. My language exhibits the property that a reference can always be substituted with the definition of the referenced value, without changing the computation result - a property often called 'referential transparency'. The property implies that to work out the value of the <code>call</code> field, we can replace <code>and</code> by its definition and add the new <code>arg1</code> and <code>arg2</code> fields, and the substituted value is equivalent to the original. We represent the substituted value below. Syntactically, my language forbids duplicate names in a definition, which would make references to <code>arg1</code> and <code>arg2</code> ambiguous. We avoid this in the represented value by relabelling both the declarations and references to <code>arg1</code> and <code>arg2</code> to preserve which values are referenced - a process known as alpha-renaming. 
 </p>
 
 <pre>
 expectTrue = {
-  .bool1 = True;
+  .arg1 = True;
   
-  .bool2 = True;
+  .arg2 = True;
   
-  .call = {
-    .ifTrue =;
-    
-    .ifFalse =;
-    
-    bool2.ifTrue = ifTrue;
-    
-    bool2.ifFalse = ifFalse;
-    
-    bool1.ifTrue = bool2.match;
-    
-    bool1.ifFalse = ifFalse;
+  arg2x = .arg2;
   
-    .match = bool1.match;
+  arg1x = .arg1 {
+    .ifTrue = arg2x;
+    
+    .ifFalse = False;
   };
+  
+  .call = arg1x.match;
 }.call;
 </pre>
 
 <p>
-After these substitutions, we can see that a <code>call</code> field exists in the expanded definition of <code>and</code>, which we want to extract as the value of <code>expectTrue</code>. Doing this directly, however, will lead to a problem - the definition of <code>call</code> depends on <code>bool1</code> and <code>bool2</code>, which are defined externally. We introduce some new syntax and perform a small rewriting of <code>call</code>'s definition which moves these 'captured' references inside. 
+After these substitutions, we can see that a <code>call</code> field exists in the expanded definition of <code>and</code>, which we want to extract as the value of <code>expectTrue</code>. Doing this directly, however, will lead to a problem - the definition of <code>call</code> has a reference to another value in the same definition <code>arg1x</code>. We would to lose the linked value if we simply extracted <code>call</code>'s definition, and now <code>arg1x</code> would reference a different value (or no value). My language obeys another principle, that references are resolved and fixed to found values during a field access. This principle is called 'lexical closure'. We can satisfy this principle by substituting <code>arg1x</code> for its definition, and other locally defined names as necessary until <code>call</code> has no local references. 
 </p>
 
 <pre>
 expectTrue = {
-  .bool1 = True;
+  .arg1 = True;
   
-  .bool2 = True;
+  .arg2 = True;
   
-  .call = {
-    .ifTrue =;
+  .call = True {
+    .ifTrue = True;
     
-    .ifFalse =;
-    
-    bool2 = True { ifTrue, ifFalse }
-    
-    bool1 = True { .ifTrue = bool2.match, ifFalse }
-  
-    .match = bool1.match;
-  };
+    .ifFalse = False;
+  }.match;
 }.call;
 </pre>
 
-<p>
-The syntax of using a bare <code>[name]</code> inside a definition, creates a 'punned' definition, simply assigning the value corresponding to the name in the enclosing scope to a public field of the same name within the definition.
-</p>
 
 <p>
-This is combined with the juxtaposition syntax above to update the captured <code>True</code> values for <code>bool1</code> and <code>bool2</code>, redirecting fields <code>ifTrue</code> and <code>ifFalse</code> to the values for the corresponding fields of <code>call</code>. After the rewrite, the definition of <code>call</code> is independent of the other fields of the expanded <code>and</code> code, and we can extract the value to assign to <code>expectTrue</code>.
+After this rewrite, the definition of <code>call</code> is independent of the other fields in the definition, and we can extract the value to assign to <code>expectTrue</code>.
+</p>
+
+<pre>
+expectTrue = True {
+  .ifTrue = True;
+  
+  .ifFalse = False;
+}.match;
+</pre>
+
+<p>
+Our value involves another field access, meaning we can compute further, substituting the definition of <code>True</code> and extracting the <code>match</code> field. Including the definition above gives:
 </p>
 
 <pre>
 expectTrue = {
-  .ifTrue =;
+  .ifTrue = True;
   
-  .ifFalse =;
+  .ifFalse = False;
   
-  bool2 = True { ifTrue, ifFalse }
-  
-  bool1 = True { .ifTrue = bool2.match, ifFalse }
-
-  .match = bool1.match;
-};
+  .match = .ifTrue;
+}.match;
 </pre>
 
 <p>
-Does the value of <code>expectTrue</code> correspond to that of <code>True</code>? Remember that the <code>match</code> field of <code>True</code> redirects to that of the <code>ifTrue</code> field. This implies that same holds for <code>expectTrue</code> - <code>bool1.match</code> redirects to the substituted value <code>bool2.match</code>, which redirects to the punned <code>ifTrue</code> field of <code>expectTrue</code>.
+We are nearly there. To avoid losing the field reference to <code>ifTrue</code>, we substitute its value <code>True</code> and finally extract <code>match</code>:
+</p>
+
+<pre>
+expectTrue = True;
+</pre>
+
+<p>
+QED. We have thus verified the top corner of the truth-table for boolean and. The enthusiastic reader can verify the other three cases as an exercise.
 </p>
 
 
 <h4>Where are my primitives? My IO?</h4>
 
 <p>
-Oh boy
+COMING SOON!
 </p>

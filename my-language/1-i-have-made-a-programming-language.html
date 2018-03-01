@@ -7,19 +7,31 @@
 <a href="#try-it-out">Try it out</a>
 
 <p>
-I have made a programming language. The working name for the language is "my". My language is designed around a flexible universal structure
+I have made a programming language. I haven't decided what to call it yet. The working name for the language is "my". I have predicted that you are curious and would like to ask the following questions.  
 </p>
 
-<h4>Using my language</h4>
+<h4>A what? What's a programming language?</h4>
+
+<p>
+A programming language lets us describe what we would like the computer to do as text. Text written in the programming language can be read and executed by a computer program that understands the rules of the language. 
+</p>
+
+<h4>Aren't there already other programming languages? How is my language different?</h4>
+
+<p>
+My language is different from other programming languages in that it seeks to keep the number of syntactic concepts low, centering on a simple yet powerful primitive structure. This directs toward some goals of my languauge - that it should be reasonably obvious what code is going to do, and that there should also be a reasonably obvious way to get something done. Hopefully this will be illustrated as we look at some examples.
+</p>
+
+<h4>How do I use my language?</h4>
 
 <p>
 We use a text editor to write our program code, and then give the text file to the <code>myi</code> program to execute. <code>myi</code> is short for "My interpreter" because it interprets the code you wrote based on the rules of my language. <code>myi</code> is run from the command line or terminal of your computer. To install <code>myi</code> see <a href="#try-it-out">here</a>.
 </p>
 
-<h4>My code example</h4>
+<h4>What does my language look like?</h4>
 
 <p>
-First things first - what does my language look like? Here are implementations of the two boolean values, <code>True</code> and <code>False</code>: 
+Here is some code implementing the two boolean values, <code>True</code> and <code>False</code>: 
 </p>
 
 <pre>
@@ -33,34 +45,50 @@ False = {
 </pre>
 
 <p>
-Here we have declared definitions for two values named <code>True</code> and <code>False</code>. The definitions use the syntax <code>[name]=[value]</code> or <code>.[name]=[value]</code> to associate names and values, with declarations separated by semi-colons <code>;</code>.
+Let's go through the first part line by line. The first line begins with <code>True</code>, which is the name we going to give to our first value. Next is a space, then an equals sign <code>=</code>. Generally spaces in a program are irrelevant (but make code easier for us to read), so we will ignore them. The equals sign indicates that we are defining the name on the left to be what comes to the right. The line ends with an open brace <code>{</code> signalling the beginning of a code "block" that continues until the corresponding closing brace <code>}</code> two lines later.
 </p>
 
 <p>
-The second form, where a name is preceded with a period <code>.</code> makes the name a 'field'. Fields introduce the capability for code outside of the value's definition to extract inner values, as well as substitute new values. The names <code>match</code> defined in <code>True</code> and <code>False</code> are examples of fields.
+The next line (indented with 2 spaces for readability, we can ignore the indent) follows a similar pattern. It begins with <code>.match</code>, which a name preceded by a dot <code>.</code>. We will see what effect the dot has later, but for now we ignore it. Next is an equals sign followed by a definition for the left hand side name. The definition consists of a name <code>.ifTrue</code> preceded by a dot. A name which is not used on the left hand side of a definition, refers to the value associated with that name. Exactly which values a name refers to at any point in the program is determined by scoping rules which we will look at in more detail later. In this case, the preceding dot of <code>.ifTrue</code> indicates that this name will later be associated with a value by other code. The line ends with a semi-colon <code>;</code> which indicates the end of the defintion of <code>.match</code>. 
+</p>
+
+<p>
+The following line begins with the closing brace of the code "block" and another semi-colon to end the definition of <code>True</code>. 
+</p>
+
+<p>
+The remaining code is very similar, and associates the name <code>False</code> with an almost identical value to <code>True</code>, but refers to <code>.ifFalse</code> instead of <code>.ifTrue</code> in the definition of <code>.match</code>.
+</p>
+
+<h4>But how does it work?</h4>
+
+<p>
+So far we have some code defining two values <code>True</code> and <code>False</code>. Now we want to show how to compute use the values. Let's work our way through the following example, which we will see describes the boolean "and" operation. 
+</p>
+
+<pre>
+and = {
+  a2 = .arg2;
+  
+  a1 = .arg1 {
+    .ifTrue = a2;
+
+    .ifFalse = False;
+  };
+  
+  .call = a1.match;
+};
+</pre>
+
+
+<p>
+We see from the first line that the name <code>and</code> is being defined by a "block" contained within the braces <code>{}</code>. Blocks are the main tool for abstraction provided by my language. One aspect of blocks is that they delimit the regions in which definitions can be referred to in other definitions. Recall above the use of the name <code>.isTrue</code> as part of the definition of <code>match</code> inside the block defining <code>True</code>. Using the form where the name is preceded with a period <code>.</code> indicates that we want to reference the immediate block. 
+makes the name a 'field'. Fields introduce the capability for code outside of the value's definition to extract inner values, as well as substitute new values. The names <code>match</code> defined in <code>True</code> and <code>False</code> are examples of fields.
 </p>
 
 <p>
 Values can include nested sets of definitions surrounded by curly braces <code>{}</code>, as demonstrated by <code>True</code> and <code>False</code> values, and also use names directly, such as the <code>match</code> definitions which refer respectively to <code>ifTrue</code> and <code>ifFalse</code>. A name used in this way is called a 'reference', and introduces a dependency between definitions. The references to <code>isTrue</code> and <code>isFalse</code> names are similarly declared with a period <code>.</code>, making them field references.
 </p>
-
-<p>
-The different types of references have different 'scoping' rules for resolving the referenced value. We will discuss these rules in the context of another example, that of the boolean "and" operation, defined here:
-</p>
-
-<pre>
-and = {
-  arg2 = .arg2;
-  
-  arg1 = .arg1 {
-    .ifTrue = arg2;
-
-    .ifFalse = False;
-  };
-  
-  .call = arg1.match;
-};
-</pre>
 
 <p>
 The definition of <code>and</code> has three names: <code>arg1</code>, <code>arg2</code> and <code>call</code> which is public, and introduces some new syntax: In the <code>arg1</code> value, we see a reference directly followed by an extended definition <code>{}</code>. This expresses extending the first value with the fields declared in the second. The field access syntax <code>[value].[field]</code>, when used on the right hand side of declarations forms a reference to a field of the value. An example of this is the <code>call</code> field definition.

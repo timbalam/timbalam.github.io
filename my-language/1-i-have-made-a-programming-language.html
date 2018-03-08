@@ -1,10 +1,12 @@
-<h2>Blog</h2>
+<h2>I have made a programming language</h2>
 
-<a href="../index.html">Home</a>
-
-<h4>I have made a programming language</h4>
+<a href="./index.html">Home</a>
 
 <a href="#try-it-out">Try it out</a>
+
+<a href="./examples/index.html">Examples</a>
+
+<h4>I have made a programming language</h4>
 
 <p>
 I have made a programming language. I haven't decided what to call it yet. The working name for the language is "my". I have predicted that you are curious and would like to ask the following questions.  
@@ -28,198 +30,165 @@ My language is different from other programming languages in that it seeks to ke
 We use a text editor to write our program code, and then give the text file to the <code>myi</code> program to execute. <code>myi</code> is short for "My interpreter" because it interprets the code you wrote based on the rules of my language. <code>myi</code> is run from the command line or terminal of your computer. To install <code>myi</code> see <a href="#try-it-out">here</a>.
 </p>
 
+
 <h4>What does my language look like?</h4>
 
 <p>
-Here is some code implementing the two boolean values, <code>True</code> and <code>False</code>: 
+Here is a simple bit of code demonstrating a few of my language's features. 
 </p>
 
 <pre>
-True = {
-  .match = .ifTrue;
+myNumber = 1;
+myText = "Hello, world.";
+
+myMath = 3 * 4; 
+mathWithVariables = myMath + myNumber;
+</pre>
+
+<p>
+Let's go through this code line by line. The first line begins with <code>myNumber</code>, followed a space, then an equals sign <code>=</code>. In general spaces in a program are irrelevant (except to make code easier for us to read) and can be ignored. The equals sign we say defines the meaning of the name to the left, to be the value expressed by what comes to the right, which is the number <code>1</code>. The semi-colon <code>;</code> at the end of line indicates the end of the definition. Effectively, we are choosing the name <code>myNumber</code> to be equivalent to the number <code>1</code> whereever it appears in the file. 
+</p>
+
+<p>
+The second line has a similar structure to the first, using the equals sign to define the name <code>myText</code> as the corresponding right hand value. In this case, the equals sign is followed by text "quoted" using double-quotes <code>""</code>, which is how we indicate the literal string of characters "Hello, world.". The definition is ended by a semi-colon. With this line, we are saying that uses of the name <code>myText</code> really mean the text "Hello, world.". 
+</p>
+
+<p>
+The third line is empty, and like other spaces is cosmetic, so we can skip it.
+</p>
+
+<p>
+In the fourth line, the name <code>myMath</code> is chosen to mean the result of the mathematical calculation appearing on the right hand of the equals sign. Here the numbers <code>3</code> and <code>4</code> are combined using the multiplication operation represented in perhaps the expected way by the asterisk symbol <code>*</code>. 
+</p>
+
+<p>
+The fifth line has a similar form to the others, begining with a name <code>mathWithVariables</code> followed by an equals sign, then the chosen definition. In this case, the defining code uses names which match ones we created definitions for on earlier lines: <code>myMath</code> and <code>myNumber</code>. The implication is that the names are placeholders for their definitions. Naming things makes writing code nicer as we can avoid having to repeatedly write complex bits of code, and also gives us a way to break complex ideas down into parts. 
+</p>
+
+
+<h4>Names, grouped</h4>
+
+<p>
+My language puts names into groups based on how they are defined. An example of this is the set of consecutive name definitions in a file such as what we have seen above form a group. The rules of my language are that within these groups, once a name is created its value cannot change, and no other value can be created with the same name. 
+</p>
+
+<p>
+In my language there are a few ways to make groups of names. This is often a good strategy for organising code. One way to form a name group is to denote components of a compound value, as in the following example.
+</p>
+
+<pre>
+myOperatingSystem = ( .os = "Windows", .version = 10 );
+
+versionIsModern = myOperatingSystem.version > 7
+</pre>
+
+<p>
+So what's going on here? The first line is relating the name <code>myOperatingSystem</code> with a definition with multiple parts. Let's break up the parts of the syntax: an open bracket <code>(</code>, an initial period <code>.</code>, a definition for <code>os</code>, a comma <code>,</code>, another period and definition for <code>version</code>, and a closing bracket <code>)</code>. The names defined between the brackets form a group, distinct from the group of names that we have seen so far. We will say that these names introduced in a bracket group are the names of components of the compound value. 
+</p>
+
+<p>
+In the last line, we create a name <code>versionIsModern</code> with a definition that begins with our previously defined named value <code>myOperatingSystem</code> followed by a period and <code>version</code>, which is the name of one of the components of <code>myOperatingSystem</code>. This syntax of following a compound value by a period and component name is a way in which we can refer to the component value. The rest of the definition uses the greater-than symbol <code>></code> to compare the <code>version</code> component to <code>7</code>. 
+</p>
+
+<p>
+With the bracket syntax it is possible to use names from the outer group in definitions for the components of the group as shown in the following code. Here, <code>myOldVersion</code> is used to define the <code>version</code> component of <code>myUpgradedOperatingSystem</code>.
+</p>
+
+<pre>
+myOldVersion = 7;
+
+myUpgradedOperatingSystem = ( .os = "Windows", .version = myOldVersion + 1 );
+</pre>
+
+<h4>Names, grouped again</h4>
+
+<p>
+There is one more syntactical construction in my language for grouping of names that is resembles more how we have defined names so far. Let's look at some more code.
+</p>
+
+<pre>
+myPoint = {
+  .x = 4;
+  .y = x + 2;
 };
 
-False = {
-  .match = .ifFalse;
+myPointHeight = myPoint.y; 
+</pre>
+
+<p>
+Let's get into what's happening here. In the first few lines we define <code>myPoint</code> to be a compound value that looks a bit like the bracket syntax used to declare <code>myOperatingSystem</code> earlier. Let's contrast the new syntax for the value definition, starting from the last character of the first line, where we have an open brace <code>{</code> instead of a bracket. The next line begins with an indent of 2 spaces. We recall that spaces (including line breaks) can be skipped over when reading my language code. The rest of the line has the familiar definition syntax, and we see a return to using semi-colons to end definitions, instead of the comma used in the bracket form. Like with the bracket syntax, and unlike the other definitions we have made, the left hand side name is prefixed by a period. The next line has a similar form, and makes use of <code>x</code> to define the name <code>y</code>. Notably, we do not need the period prefix when using <code>x</code>, and can in fact treat it as if it was defined without. This is a key difference between the forms - when using this brace form syntax, my language allows definitions to refer to names from the same group. The next line ends the compound value with a closing brace <code>}</code>, instead of the closing bracket of the other form. Finally the definition of <code>myPoint</code> terminates with a semi-colon.
+</p>
+
+<p>
+Skipping the blank line, the next part of the code defines <code>myPointHeight</code> using the previously defined name <code>myPoint</code>, referring to its <code>.y</code> component in a similar manner to how <code>versionIsModern</code> was defined earlier in terms of <code>myOperatingSystem.version</code>. This ability to access components of compound values through the value name is conferred by the period prefix on the component name.
+</p>
+
+<p>
+Effectively, a set of names defined consecutively between braces form a group where the prefixed names of the group indicate the accessible components of the value.
+</p>
+
+<p>
+We can introduce names to the group that are not prefixed. These names can be used for defining other names in the group, but do not become named components of the value. We could have equivalently written a definition for <code>myPoint</code> as below.
+</p>
+
+<pre>
+myEquivalentPoint = {
+  intercept = 2;
+  .x = 4;
+  .y = x + intercept;
 };
 </pre>
 
 <p>
-Let's go through the first part line by line. The first line begins with <code>True</code>, which is the name we going to give to our first value. Next is a space, then an equals sign <code>=</code>. Generally spaces in a program are irrelevant (but make code easier for us to read), so we will ignore them. The equals sign indicates that we are defining the name on the left to be what comes to the right. The line ends with an open brace <code>{</code> signalling the beginning of a code "block" that continues until the corresponding closing brace <code>}</code> two lines later.
+Without a period prefix when creating the name <code>intercept</code>, my language does not allow access to <code>myEquivalentPoint.intercept</code>. 
+The named components are <code>.x</code> and <code>.y</code>.
 </p>
 
+
 <p>
-The next line (indented with 2 spaces for readability, we can ignore the indent) follows a similar pattern. It begins with <code>.match</code>, which a name preceded by a dot <code>.</code>. We will see what effect the dot has later, but for now we ignore it. Next is an equals sign followed by a definition for the left hand side name. The definition consists of a name <code>.ifTrue</code> preceded by a dot. A name which is not used on the left hand side of a definition, refers to the value associated with that name. Exactly which values a name refers to at any point in the program is determined by scoping rules which we will look at in more detail later. In this case, the preceding dot of <code>.ifTrue</code> indicates that this name will later be associated with a value by other code. The line ends with a semi-colon <code>;</code> which indicates the end of the defintion of <code>.match</code>. 
+If we consider the definitions of <code>myPoint</code>, we would expect that the <code>.y</code> component assigned to <code>myPointHeight</code> will evaluate to <code>6</code>.
 </p>
 
-<p>
-The following line begins with the closing brace of the code "block" and another semi-colon to end the definition of <code>True</code>. 
-</p>
+<h4>Names, updated</h4>
 
 <p>
-The remaining code is very similar, and associates the name <code>False</code> with an almost identical value to <code>True</code>, but refers to <code>.ifFalse</code> instead of <code>.ifTrue</code> in the definition of <code>.match</code>.
-</p>
-
-<h4>But how does it work?</h4>
-
-<p>
-So far we have some code defining two values <code>True</code> and <code>False</code>. Now we want to show how to compute use the values. Let's work our way through the following example, which we will see describes the boolean "and" operation. 
+The following code demonstrates a fundamental feature of my language. Let's look at it first and then talk through what it does.
 </p>
 
 <pre>
-and = {
-  a2 = .arg2;
-  
-  a1 = .arg1 {
-    .ifTrue = a2;
+myPoint2 = myPoint{ .x = 5 };
 
-    .ifFalse = False;
-  };
-  
-  .call = a1.match;
-};
+myPoint2Height = myPoint2.y;
 </pre>
 
-
 <p>
-We see from the first line that the name <code>and</code> is being defined by a "block" contained within the braces <code>{}</code>. Blocks are the main tool for abstraction provided by my language. One aspect of blocks is that they delimit the regions in which definitions can be referred to in other definitions. Recall above the use of the name <code>.isTrue</code> as part of the definition of <code>match</code> inside the block defining <code>True</code>. Using the form where the name is preceded with a period <code>.</code> indicates that we want to reference the immediate block. 
-makes the name a 'field'. Fields introduce the capability for code outside of the value's definition to extract inner values, as well as substitute new values. The names <code>match</code> defined in <code>True</code> and <code>False</code> are examples of fields.
+In the first of these lines, we create the name <code>myPoint2</code> and define the value using yet another new syntactic form: the use of a name <code>myPoint</code> defined earlier followed by some syntax that looks similar to the earlier definition for <code>myPoint</code>, namely some braces surrounding a definition of the name <code>x</code>. This form is used to defined values that extend other values with new components, and with updates to already existing components. In this case, the update defines a <code>.x</code> component, which <code>myPoint</code> has. We can understand the new value for <code>myPoint2</code> as being defined as a revised version of <code>myPoint</code>, with the <code>x</code> name defined to be <code>5</code> instead of <code>4</code>.
 </p>
 
 <p>
-Values can include nested sets of definitions surrounded by curly braces <code>{}</code>, as demonstrated by <code>True</code> and <code>False</code> values, and also use names directly, such as the <code>match</code> definitions which refer respectively to <code>ifTrue</code> and <code>ifFalse</code>. A name used in this way is called a 'reference', and introduces a dependency between definitions. The references to <code>isTrue</code> and <code>isFalse</code> names are similarly declared with a period <code>.</code>, making them field references.
+The last definition for <code>myPoint2Height</code> thus refers to the <code>.y</code> component of <code>myPoint2</code>, calculated using the updated <code>.x</code> component, and should evaluate to <code>7</code>.
 </p>
 
 <p>
-The definition of <code>and</code> has three names: <code>arg1</code>, <code>arg2</code> and <code>call</code> which is public, and introduces some new syntax: In the <code>arg1</code> value, we see a reference directly followed by an extended definition <code>{}</code>. This expresses extending the first value with the fields declared in the second. The field access syntax <code>[value].[field]</code>, when used on the right hand side of declarations forms a reference to a field of the value. An example of this is the <code>call</code> field definition.
+This ability to create new extended and updated versions of values as exhibited by <code>myPoint2</code>'s definition is what allows us to do computations. 
 </p>
 
 <p>
-The 'scoping' rules define which value (if any) a name refers to. The rules differ for plain references (not preceded by a <code>.</code>) and field references (preceded by <code>.</code>). Plain references point to a value with that name within the same definition <code>{}</code> as the reference, if one exists, otherwise for nested definitions, the value is found as if the reference were made in the enclosing definition.
-<p>
-
-</p>
-These rules have some interesting implications which we will see later. For now, we will apply the scoping rules for the references in the definition of <code>and</code> above. In one case, the value of the  field reference <code>arg1</code> is updated with new fields <code>ifTrue</code> and <code>ifFalse</code>. We will come to field reference scoping in a moment. The new <code>ifTrue</code> and <code>ifFalse</code> values are a reference to <code>arg2</code> and <code>False</code> respectively. By the rules above, we would first look for a declarations with these names in the same definition. Here only <code>ifTrue</code> and <code>ifFalse</code> names exist, so we continue looking in the enclosing definition. The enclosing definition declares names <code>arg2</code>, <code>arg1</code> and <code>call</code>, and we have therefore found the value referenced by the <code>arg2</code> reference, itself a field reference to <code>arg2</code>. For the <code>False</code> value, we have to look further into the top-level set of declarations, where it was defined above.
-</p>
-
-<p>
-In another case, the field <code>call</code> references to <code>arg1</code> from which the field <code>match</code> is accessed. The name <code>arg1</code> exists in the same definition, so the reference resolves to the corresponding value. 
-</p>
-
-<p>
-Field references work in combination with definition extension as seen in the <code>arg1</code> value declared in <code>and</code>. They are resolved by need, when computing a value to return via a field access, and refer to the latest value defined for the corresponding field. We can begin to understand why in our definitions for <code>True</code> and <code>False</code> it is permitted to make field references to the non-existent fields <code>ifTrue</code> and <code>ifFalse</code>. As long as the fields are supplied by definition extension before accessing the <code>match</code> field, everything will be fine.
-</p>
-
-<h4>Meaning of my code</h4>
-
-<p>
-The execution of my language occurs in a predictable fashion, allowing code behaviour to be reasoned about with a bit of practice. We illuminate this by working through the following example: Verifying that a particular case of our definition for <code>and</code> is consistent with that of boolean logical, demonstrated by following truth-table:
+There are actually only a couple more syntactical forms to my language, which we will look at briefly, then we can get try it out with some examples. Another small piece of code demonstrates one of these forms.
 </p>
 
 <pre>
-<table>
-  <tbody>
-    <tr><td>and</td><td>arg1=True</td><td>arg1=False</td></tr>
-    <tr><td>arg2=True</td><td>call=True</td><td>call=False</td></tr>
-    <tr><td>arg2=False</td><td>call=False</td><td>call=False</td></tr>
-  </tbody>
-</table>
+myPlane = { .z = .x - .y + 7 };
+
+myPointDepth = myPlane( .x = 1, .y = 2 ).z;
 </pre>
 
 <p>
-The case represented by the top left cell can be expressed by the following my code:
-</p>
-
-<pre>
-expectTrue = and { .arg1 = True; .arg2 = True; }.call;
-</pre>
-
-<p>
-The code above expresses substituting the value <code>True</code> for fields <code>arg1</code> and <code>arg2</code> in <code>and</code>, and the corresponding updated value for the <code>call</code> field is being assigned as <code>expectTrue</code>.
+Looking at the first line, which defines the name <code>myPlane</code> as a compound value with an accessible named component <code>z</code>, where <code>z</code> uses two period prefixed names <code>x</code> and <code>y</code> which have no corresponding definition in the group. Including the prefix in the use site indicates that we expect values for these names to be provided in an updated version of the value. Note that directly accessing the <code>.z</code> component of <code>myPlane</code> will cause an error! My language will often feature values with these partially defined components, which act as templates from which complete values can be made using the value update syntax. 
 </p>
 
 <p>
-How is the value assigned to <code>expectTrue</code> arrived at? In my language, field accesses drive computation. <code>expectTrue</code> will have the value of the <code>call</code> field of the updated <code>and</code> value. My language exhibits the property that a reference can always be substituted with the definition of the referenced value, without changing the computation result - a property often called 'referential transparency'. The property implies that to work out the value of the <code>call</code> field, we can replace <code>and</code> by its definition and add the new <code>arg1</code> and <code>arg2</code> fields, and the substituted value is equivalent to the original. We represent the substituted value below. Syntactically, my language forbids duplicate names in a definition, which would make references to <code>arg1</code> and <code>arg2</code> ambiguous. We avoid this in the represented value by relabelling both the declarations and references to <code>arg1</code> and <code>arg2</code> to preserve which values are referenced - a process known as alpha-renaming. 
-</p>
-
-<pre>
-expectTrue = {
-  .arg1 = True;
-  
-  .arg2 = True;
-  
-  arg2x = .arg2;
-  
-  arg1x = .arg1 {
-    .ifTrue = arg2x;
-    
-    .ifFalse = False;
-  };
-  
-  .call = arg1x.match;
-}.call;
-</pre>
-
-<p>
-After these substitutions, we can see that a <code>call</code> field exists in the expanded definition of <code>and</code>, which we want to extract as the value of <code>expectTrue</code>. Doing this directly, however, will lead to a problem - the definition of <code>call</code> has a reference to another value in the same definition <code>arg1x</code>. We would to lose the linked value if we simply extracted <code>call</code>'s definition, and now <code>arg1x</code> would reference a different value (or no value). My language obeys another principle, that references are resolved and fixed to found values during a field access. This principle is called 'lexical closure'. We can satisfy this principle by substituting <code>arg1x</code> for its definition, and other locally defined names as necessary until <code>call</code> has no local references. 
-</p>
-
-<pre>
-expectTrue = {
-  .arg1 = True;
-  
-  .arg2 = True;
-  
-  .call = True {
-    .ifTrue = True;
-    
-    .ifFalse = False;
-  }.match;
-}.call;
-</pre>
-
-
-<p>
-After this rewrite, the definition of <code>call</code> is independent of the other fields in the definition, and we can extract the value to assign to <code>expectTrue</code>.
-</p>
-
-<pre>
-expectTrue = True {
-  .ifTrue = True;
-  
-  .ifFalse = False;
-}.match;
-</pre>
-
-<p>
-Our value involves another field access, meaning we can compute further, substituting the definition of <code>True</code> and extracting the <code>match</code> field. Including the definition above gives:
-</p>
-
-<pre>
-expectTrue = {
-  .ifTrue = True;
-  
-  .ifFalse = False;
-  
-  .match = .ifTrue;
-}.match;
-</pre>
-
-<p>
-We are nearly there. To avoid losing the field reference to <code>ifTrue</code>, we substitute its value <code>True</code> and finally extract <code>match</code>:
-</p>
-
-<pre>
-expectTrue = True;
-</pre>
-
-<p>
-QED. We have thus verified the top corner of the truth-table for boolean and. The enthusiastic reader can verify the other three cases as an exercise.
+With the next code part we have an example of using <code>myPlane</code>. This time we have used the earlier form of compound value definition with brackets to apply our updated values, but it works in the same way as the braces form, with the defined values for the <code>.x</code> and <code>.y</code> components being substituted in the definition for <code>myPlane</code>. In this case we don't bother to name the updated value we have created, and immediately extract the <code>.z</code> component to assign as the definition for <code>myPointDepth</code>.
 </p>
 
 
-<h4>Where are my primitives? My IO?</h4>
-
-<p>
-COMING SOON!
-</p>

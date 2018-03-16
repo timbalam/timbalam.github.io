@@ -1,3 +1,6 @@
+<h2>My language example - Booleans</h2>
+
+<h4>True and False</h4>
 
 <p>
 Here is some code implementing the two boolean values, <code>True</code> and <code>False</code>: 
@@ -14,50 +17,21 @@ False = {
 </pre>
 
 <p>
-Let's go through the first part line by line. The first line begins with <code>True</code>, which is the name we going to give to our first value. Next is a space, then an equals sign <code>=</code>. Generally spaces in a program are irrelevant (but make code easier for us to read), so we will ignore them. The equals sign indicates that we are defining the name on the left to be what comes to the right. The line ends with an open brace <code>{</code> signalling the beginning of a code "block" that continues until the corresponding closing brace <code>}</code> two lines later.
+The two declarations use the brace form for declaring compound values, which we call 'block' syntax. Both <code>True</code> and <code>False</code> have components <code>.match</code> that reference other component names (<code>.ifTrue</code> and <code>.ifFalse</code> respectively) that are not defined in the block, which indicates that these are intended as prototype values, requiring the missing component to be filled in before accessing <code>.match</code>. We can call these undefined components 'implicit' components. 
 </p>
 
-<p>
-The next line (indented with 2 spaces for readability, we can ignore the indent) follows a similar pattern. It begins with <code>.match</code>, which a name preceded by a dot <code>.</code>. We will see what effect the dot has later, but for now we ignore it. Next is an equals sign followed by a definition for the left hand side name. The definition consists of a name <code>.ifTrue</code> preceded by a dot. A name which is not used on the left hand side of a definition, refers to the value associated with that name. Exactly which values a name refers to at any point in the program is determined by scoping rules which we will look at in more detail later. In this case, the preceding dot of <code>.ifTrue</code> indicates that this name will later be associated with a value by other code. The line ends with a semi-colon <code>;</code> which indicates the end of the defintion of <code>.match</code>. 
 </p>
-
-<p>
-The following line begins with the closing brace of the code "block" and another semi-colon to end the definition of <code>True</code>. 
-</p>
-
-<p>
-The remaining code is very similar, and associates the name <code>False</code> with an almost identical value to <code>True</code>, but refers to <code>.ifFalse</code> instead of <code>.ifTrue</code> in the definition of <code>.match</code>.
-</p>
-
-<h4>But how does it work?</h4>
-
-<p>
-So far we have some code defining two values <code>True</code> and <code>False</code>. Now we want to show how to compute use the values. Let's work our way through the following example, which we will see describes the boolean "and" operation. 
+It might not be immediately obvious how these two values encode the usual true and false values. The intuition is that if we are dealing with a unknown boolean value in our code, we would extend it to specify what to do for the two possible branches <code>.ifTrue</code> and <code>.ifFalse</code>, then accessing <code>.match</code> will cause the corresponding branch to be entered (note that <code>False</code> will enter <code>.ifFalse</code> and <code>True</code> will enter <code>.ifTrue</code>). A use of these values is demonstrated in the following example describing the boolean <em>and</em> operation. 
 </p>
 
 <pre>
 and = {
-  a2 = .arg2;
-  
-  a1 = .arg1 {
-    .ifTrue = a2;
-
-    .ifFalse = False;
-  };
-  
-  .call = a1.match;
+  .call = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
 };
 </pre>
 
-
 <p>
-We see from the first line that the name <code>and</code> is being defined by a "block" contained within the braces <code>{}</code>. Blocks are the main tool for abstraction provided by my language. One aspect of blocks is that they delimit the regions in which definitions can be referred to in other definitions. Recall above the use of the name <code>.isTrue</code> as part of the definition of <code>match</code> inside the block defining <code>True</code>. Using the form where the name is preceded with a period <code>.</code> indicates that we want to reference the immediate block. 
-makes the name a 'field'. Fields introduce the capability for code outside of the value's definition to extract inner values, as well as substitute new values. The names <code>match</code> defined in <code>True</code> and <code>False</code> are examples of fields.
-</p>
-
-<p>
-Values can include nested sets of definitions surrounded by curly braces <code>{}</code>, as demonstrated by <code>True</code> and <code>False</code> values, and also use names directly, such as the <code>match</code> definitions which refer respectively to <code>ifTrue</code> and <code>ifFalse</code>. A name used in this way is called a 'reference', and introduces a dependency between definitions. The references to <code>isTrue</code> and <code>isFalse</code> names are similarly declared with a period <code>.</code>, making them field references.
-</p>
+We see that <code>and</code> is being defined using block syntax, with a component <code>.call</code> that is defined using juxtaposition to update an implicit component <code>.arg1</code> and the bracket form for declaring compound values, which we can call 'tuple' syntax. The power of this form is no nested scope is generated, so names in component definitions scope to outside of the tuple. This means that the reference to <code>.arg1</code> in the definition for <code>.ifTrue</code> refers to an implicit component of the value for <code>and</code>.
 
 <p>
 The definition of <code>and</code> has three names: <code>arg1</code>, <code>arg2</code> and <code>call</code> which is public, and introduces some new syntax: In the <code>arg1</code> value, we see a reference directly followed by an extended definition <code>{}</code>. This expresses extending the first value with the fields declared in the second. The field access syntax <code>[value].[field]</code>, when used on the right hand side of declarations forms a reference to a field of the value. An example of this is the <code>call</code> field definition.

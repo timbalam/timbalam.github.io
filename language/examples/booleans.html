@@ -4,7 +4,44 @@
 
 <br></br>
 
-<h4>True and False</h4>
+<h4>What is booleans again?</h4>
+
+Boolean logic simply refers to two values <em>True</em> and <em>False</em> and some relationships between them. For example, we expect an <em>and</em> relationship to be consistent with the following truth-table.
+</p>
+
+<pre>
+<table>
+  <tbody>
+    <tr><td>and</td><td>arg1=True</td><td>arg1=False</td></tr>
+    <tr><td>arg2=True</td><td>call=True</td><td>call=False</td></tr>
+    <tr><td>arg2=False</td><td>call=False</td><td>call=False</td></tr>
+  </tbody>
+</table>
+</pre>
+
+<p>
+In effect, we expect <em>a and b</em> to be true if and only if both <em>a</em> and <em>b</em> are true.
+</p>
+
+<p>
+Another example is the <em>or</em> relationship, demonstrated by this truth table.
+</p>
+
+<pre>
+<table>
+  <tbody>
+    <tr><td>or</td><td>arg1=True</td><td>arg1=False</td></tr>
+    <tr><td>arg2=True</td><td>call=True</td><td>call=True</td></tr>
+    <tr><td>arg2=False</td><td>call=True</td><td>call=False</td></tr>
+  </tbody>
+</table>
+</pre>
+
+<p>
+Here, we expect <em>a or b</em> to be true if any of <em>a</em> and <em>b</em> are true.
+
+<h4>True and False in my language</h4>
+
 
 <p>
 Here is some code implementing the two boolean values, <code>True</code> and <code>False</code>: 
@@ -21,7 +58,7 @@ False = {
 </pre>
 
 <p>
-The two declarations use the brace form for declaring compound values, which we call 'block' syntax. Both <code>True</code> and <code>False</code> have components <code>.match</code> that reference other component names (<code>.ifTrue</code> and <code>.ifFalse</code> respectively) that are not defined in the block, which indicates that these are intended as prototype values, requiring the missing component to be filled in before accessing <code>.match</code>. We can call these undefined components 'implicit' components. 
+The two declarations use the brace form for declaring compound values, which we call <em>block</em> syntax. Both <code>True</code> and <code>False</code> have components <code>.match</code> that reference other component names (<code>.ifTrue</code> and <code>.ifFalse</code> respectively) that are not defined in the block, which indicates that these are intended as prototype values, requiring the missing component to be filled in before accessing <code>.match</code>. We can call these undefined components <em>implicit</em> components. 
 </p>
 
 </p>
@@ -35,46 +72,45 @@ and = {
 </pre>
 
 <p>
-We see that <code>and</code> is being defined using block syntax, with a component <code>.call</code> that is defined using juxtaposition to update an implicit component <code>.arg1</code> and the bracket form for declaring compound values, which we can call 'tuple' syntax. The power of this form is no nested scope is generated, so names in component definitions scope to outside of the tuple. This means that the reference to <code>.arg1</code> in the definition for <code>.ifTrue</code> refers to an implicit component of the value for <code>and</code>.
+We see that <code>and</code> is being defined using block syntax, with a component <code>.call</code> that is defined using juxtaposition to update an undefined (and therefore implicit) component <code>.arg1</code> and the bracket form for declaring compound values, which we can call <em>tuple</em> syntax. The <code>.match</code> component of the updated value is assigned to the <code>.call</code> component of <code>and</code>.
+<p>
 
 <p>
-The definition of <code>and</code> has three names: <code>arg1</code>, <code>arg2</code> and <code>call</code> which is public, and introduces some new syntax: In the <code>arg1</code> value, we see a reference directly followed by an extended definition <code>{}</code>. This expresses extending the first value with the fields declared in the second. The field access syntax <code>[value].[field]</code>, when used on the right hand side of declarations forms a reference to a field of the value. An example of this is the <code>call</code> field definition.
+The definition of <code>and</code> above demonstrates using names to reference both previously defined values and implicit components. The rules of my language for which values (if any) a name refers to are <em>scoping</em> rules. The rules relate to name groups, and work differently for plain references (not preceded by a <code>.</code>) and component references (preceded by <code>.</code>). Stated simply, a new file and each use of the block syntax <code>{</code> <code>}</code> introduces a new name group with referencable names. When defining names in a group, using a plain reference will point to a value with that name within the same group if one exists, otherwise for nested blocks the value is found as if the name was used outside the immediate block.
 </p>
 
 <p>
-The 'scoping' rules define which value (if any) a name refers to. The rules differ for plain references (not preceded by a <code>.</code>) and field references (preceded by <code>.</code>). Plain references point to a value with that name within the same definition <code>{}</code> as the reference, if one exists, otherwise for nested definitions, the value is found as if the reference were made in the enclosing definition.
-<p>
-
-</p>
-These rules have some interesting implications which we will see later. For now, we will apply the scoping rules for the references in the definition of <code>and</code> above. In one case, the value of the  field reference <code>arg1</code> is updated with new fields <code>ifTrue</code> and <code>ifFalse</code>. We will come to field reference scoping in a moment. The new <code>ifTrue</code> and <code>ifFalse</code> values are a reference to <code>arg2</code> and <code>False</code> respectively. By the rules above, we would first look for a declarations with these names in the same definition. Here only <code>ifTrue</code> and <code>ifFalse</code> names exist, so we continue looking in the enclosing definition. The enclosing definition declares names <code>arg2</code>, <code>arg1</code> and <code>call</code>, and we have therefore found the value referenced by the <code>arg2</code> reference, itself a field reference to <code>arg2</code>. For the <code>False</code> value, we have to look further into the top-level set of declarations, where it was defined above.
+Using a component reference in a definition will always refer to the current name group, and becomes implicit if there is no defined component for that name.
 </p>
 
 <p>
-In another case, the field <code>call</code> references to <code>arg1</code> from which the field <code>match</code> is accessed. The name <code>arg1</code> exists in the same definition, so the reference resolves to the corresponding value. 
+Technical note: A component reference is still implicit if the corresponding group has the name defined but not designated as a component, i.e. defined without a leading period.
+<p>
+
+<p>
+A feature of the tuple syntax using <code>(</code> <code>)</code> is it does not create a new block. Names for defined components are not referencable and names used to define components are scoped to the name group / block containing the tuple.
+</p>
+
+</p>
+An implication of this is that in the definition of <code>.call</code> above, both <code>.arg1</code> and the implicit component reference <code>.arg2</code> in the definition for <code>.ifTrue</code> refer to implicit components of <code>and</code>. 
+<p>
+
+<p>
+We can use the scoping rules to determine how the public reference to <code>False</code> in the definition of the component <code>.ifFalse</code> is resolved to a value. The name <code>False</code> is not in the immediate block created to define <code>and</code>, but the outside group (the main file) defines <code>False</code> (see earlier), and hence this is the value referenced. It would be an error to publically reference a name that no containing block defines, in contrast to component references which are allowed to be implicit.
 </p>
 
 <p>
-Field references work in combination with definition extension as seen in the <code>arg1</code> value declared in <code>and</code>. They are resolved by need, when computing a value to return via a field access, and refer to the latest value defined for the corresponding field. We can begin to understand why in our definitions for <code>True</code> and <code>False</code> it is permitted to make field references to the non-existent fields <code>ifTrue</code> and <code>ifFalse</code>. As long as the fields are supplied by definition extension before accessing the <code>match</code> field, everything will be fine.
+The definition of <code>.call<code> above demonstrates an important interation between implicit references and definition extension. Implicit references are resolved only when needed to compute a component value being accessed, where they refer to the latest value defined for the corresponding component. The definition of <code>.call</code> provides values for two components of <code>.arg1</code>, namely <code>.ifTrue</code> and <code>.ifFalse</code>, and then accesses the component <code>.match</code>. 
+</p>
+
+<p>
+If we look back at our definitions for <code>True</code> and <code>False</code>, were we make implicit references to <code>ifTrue</code> and <code>ifFalse</code>, we can imagine providing these values as <code>.arg1</code> and <code>.arg2</code> to <code>and</code>. The implicit components are supplied by definition extension before accessing the <code>match</code> field so everything will be fine.
 </p>
 
 <h4>Meaning of my code</h4>
 
 <p>
-The execution of my language occurs in a predictable fashion, allowing code behaviour to be reasoned about with a bit of practice. We illuminate this by working through the following example: Verifying that a particular case of our definition for <code>and</code> is consistent with that of boolean logical, demonstrated by following truth-table:
-</p>
-
-<pre>
-<table>
-  <tbody>
-    <tr><td>and</td><td>arg1=True</td><td>arg1=False</td></tr>
-    <tr><td>arg2=True</td><td>call=True</td><td>call=False</td></tr>
-    <tr><td>arg2=False</td><td>call=False</td><td>call=False</td></tr>
-  </tbody>
-</table>
-</pre>
-
-<p>
-The case represented by the top left cell can be expressed by the following my code:
+We would like to know if our definition for <code>and</code> is consistent with that of boolean logic as demonstrated by the truth-table in the first section. For example, the case represented by the top left cell can be expressed by the following my code:
 </p>
 
 <pre>
@@ -82,68 +118,59 @@ expectTrue = and { .arg1 = True; .arg2 = True; }.call;
 </pre>
 
 <p>
-The code above expresses substituting the value <code>True</code> for fields <code>arg1</code> and <code>arg2</code> in <code>and</code>, and the corresponding updated value for the <code>call</code> field is being assigned as <code>expectTrue</code>.
-</p>
-
-<p>
-How is the value assigned to <code>expectTrue</code> arrived at? In my language, field accesses drive computation. <code>expectTrue</code> will have the value of the <code>call</code> field of the updated <code>and</code> value. My language exhibits the property that a reference can always be substituted with the definition of the referenced value, without changing the computation result - a property often called 'referential transparency'. The property implies that to work out the value of the <code>call</code> field, we can replace <code>and</code> by its definition and add the new <code>arg1</code> and <code>arg2</code> fields, and the substituted value is equivalent to the original. We represent the substituted value below. Syntactically, my language forbids duplicate names in a definition, which would make references to <code>arg1</code> and <code>arg2</code> ambiguous. We avoid this in the represented value by relabelling both the declarations and references to <code>arg1</code> and <code>arg2</code> to preserve which values are referenced - a process known as alpha-renaming. 
+We can perhaps build an intuition as to what value <code>expectTrue</code> will have by applying some <em>rewriting strategies</em> - replacing code with code in ways that keep the same value. Our first strategy involves explicitly replacing a public reference by the code that defines it. In my language this is always possible (this property is often called <em>referential transparency</em>). Applying this to <code>and</code> for the above code would look something like the following.
 </p>
 
 <pre>
-expectTrue = {
+expectTrueEquivalent1 = {
+  .call = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
+} { .arg1 = True; .arg2 = True; }.call;
+</pre>
+
+
+<p>
+Another strategy involves replacing an extension to a value by moving the extending components into the original value, either by replacing previous components or introducing new components. In general when we move components between blocks, we need to rewrite them to be <em>block independent</em> first. We will come back shortly to what this means. For now, looking at our code we see that the extended components <code>.arg1</code> and <code>.arg2</code> in both cases are defined to be <code>True</code>, and moving these definitions into the substituted <code>and</code> code won't change their values. After rewriting by moving the components the code would look something like the following. Note that the ordering of definitions in a block is actually arbitrary, and for ease of reading I have put definitions before uses. 
+</p>
+
+<pre>
+expectTrueEquivalent1 = {
   .arg1 = True;
   
   .arg2 = True;
   
-  arg2x = .arg2;
-  
-  arg1x = .arg1 {
-    .ifTrue = arg2x;
-    
-    .ifFalse = False;
-  };
-  
-  .call = arg1x.match;
+  .call = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
 }.call;
 </pre>
 
 <p>
-After these substitutions, we can see that a <code>call</code> field exists in the expanded definition of <code>and</code>, which we want to extract as the value of <code>expectTrue</code>. Doing this directly, however, will lead to a problem - the definition of <code>call</code> has a reference to another value in the same definition <code>arg1x</code>. We would to lose the linked value if we simply extracted <code>call</code>'s definition, and now <code>arg1x</code> would reference a different value (or no value). My language obeys another principle, that references are resolved and fixed to found values during a field access. This principle is called 'lexical closure'. We can satisfy this principle by substituting <code>arg1x</code> for its definition, and other locally defined names as necessary until <code>call</code> has no local references. 
+Our final rewriting trick for component accesses works almost the same way as our trick of moving extended components into the original definition. After ensuring that the component definition is block independent, we replace the component access with the defining code for the component. In the above code we have are accessing the <code>.call</code> component of our expanded <code>and</code>. However, the <code>.call</code> component has references the new component fields, making it <em>block dependent</em>. If we try our rewriting trick we would lose the definitions of the <code>.arg1</code> and <code>.arg2</code>, and the rewritten code would describe a different value to what we started with. To get around this, we can simplify the component definition to remove the block dependency of the definition, by applying our first rewrite strategy - i.e. substituting the other component values by their defining code. We may have to do this repeatedly until the rewritten definition does not depend on any other local names - i.e. is block independent. After applying the process to make <code>.call</code> block independent we get the following value equivalent to <code>expectTrue</code>.
 </p>
 
 <pre>
-expectTrue = {
+expectTrueEquivalent2 = {
   .arg1 = True;
   
   .arg2 = True;
   
-  .call = True {
-    .ifTrue = True;
-    
-    .ifFalse = False;
-  }.match;
+  .call = True ( .ifTrue = True, .ifFalse = False ).match;
 }.call;
 </pre>
 
 
 <p>
-After this rewrite, the definition of <code>call</code> is independent of the other fields in the definition, and we can extract the value to assign to <code>expectTrue</code>.
+We can now apply the component access rewrite rule by substituting the <code>.call</code> component access by the rewritten definition, with a result of something like the following.
 </p>
 
 <pre>
-expectTrue = True {
-  .ifTrue = True;
-  
-  .ifFalse = False;
-}.match;
+expectTrueEquivalent3 = True ( .ifTrue = True, .ifFalse = False ).match;
 </pre>
 
 <p>
-Our value involves another field access, meaning we can compute further, substituting the definition of <code>True</code> and extracting the <code>match</code> field. Including the definition above gives:
+Our value involves further value extension and component access, meaning we can continue to simplify further through rewriting - first rewrite <code>True</code> by its definition, and move in the extended components.
 </p>
 
 <pre>
-expectTrue = {
+expectTrueEquivalent4 = {
   .ifTrue = True;
   
   .ifFalse = False;
@@ -153,13 +180,13 @@ expectTrue = {
 </pre>
 
 <p>
-We are nearly there. To avoid losing the field reference to <code>ifTrue</code>, we substitute its value <code>True</code> and finally extract <code>match</code>:
+We are nearly there. We make <code>.match</code> block independent by substituting <code>.ifTrue</code> and finally, we rewrite the <code>.match</code> access by its final rewritten definition.
 </p>
 
 <pre>
-expectTrue = True;
+expectTrueEquivalent5 = True;
 </pre>
 
 <p>
-QED. We have thus verified the top corner of the truth-table for boolean and. The enthusiastic reader can verify the other three cases as an exercise.
+QED. We have thus verified one of the four cases of the truth-table for boolean and. The enthusiastic reader can verify the other three cases as an exercise. Further, the reader can try to implement <em>or</em> and verify their implementation.
 </p>

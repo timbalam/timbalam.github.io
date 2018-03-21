@@ -13,8 +13,8 @@ Boolean logic simply refers to two values <em>True</em> and <em>False</em> and s
 <table>
   <tbody>
     <tr><td>and</td><td>arg1=True</td><td>arg1=False</td></tr>
-    <tr><td>arg2=True</td><td>call=True</td><td>call=False</td></tr>
-    <tr><td>arg2=False</td><td>call=False</td><td>call=False</td></tr>
+    <tr><td>arg2=True</td><td>res=True</td><td>res=False</td></tr>
+    <tr><td>arg2=False</td><td>res=False</td><td>res=False</td></tr>
   </tbody>
 </table>
 </pre>
@@ -31,8 +31,8 @@ Another example is the <em>or</em> relationship, demonstrated by this truth tabl
 <table>
   <tbody>
     <tr><td>or</td><td>arg1=True</td><td>arg1=False</td></tr>
-    <tr><td>arg2=True</td><td>call=True</td><td>call=True</td></tr>
-    <tr><td>arg2=False</td><td>call=True</td><td>call=False</td></tr>
+    <tr><td>arg2=True</td><td>res=True</td><td>res=True</td></tr>
+    <tr><td>arg2=False</td><td>res=True</td><td>res=False</td></tr>
   </tbody>
 </table>
 </pre>
@@ -67,12 +67,12 @@ It might not be immediately obvious how these two values encode the usual true a
 
 <pre>
 and = {
-  .call = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
+  .res = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
 };
 </pre>
 
 <p>
-We see that <code>and</code> is being defined using block syntax, with a component <code>.call</code> that is defined using juxtaposition to update an undefined (and therefore implicit) component <code>.arg1</code> and the bracket form for declaring compound values, which we can call <em>tuple</em> syntax. The <code>.match</code> component of the updated value is assigned to the <code>.call</code> component of <code>and</code>.
+We see that <code>and</code> is being defined using block syntax, with a component <code>.res</code> that is defined using juxtaposition to update an undefined (and therefore implicit) component <code>.arg1</code> and the bracket form for declaring compound values, which we can call <em>tuple</em> syntax. The <code>.match</code> component of the updated value is assigned to the <code>.res</code> component of <code>and</code>.
 <p>
 
 <p>
@@ -92,7 +92,7 @@ A feature of the tuple syntax using <code>(</code> <code>)</code> is it does not
 </p>
 
 </p>
-An implication of this is that in the definition of <code>.call</code> above, both <code>.arg1</code> and the implicit component reference <code>.arg2</code> in the definition for <code>.ifTrue</code> refer to implicit components of <code>and</code>. 
+An implication of this is that in the definition of <code>.res</code> above, both <code>.arg1</code> and the implicit component reference <code>.arg2</code> in the definition for <code>.ifTrue</code> refer to implicit components of <code>and</code>. 
 <p>
 
 <p>
@@ -100,7 +100,7 @@ We can use the scoping rules to determine how the public reference to <code>Fals
 </p>
 
 <p>
-The definition of <code>.call<code> above demonstrates an important interation between implicit references and definition extension. Implicit references are resolved only when needed to compute a component value being accessed, where they refer to the latest value defined for the corresponding component. The definition of <code>.call</code> provides values for two components of <code>.arg1</code>, namely <code>.ifTrue</code> and <code>.ifFalse</code>, and then accesses the component <code>.match</code>. 
+The definition of <code>.res</code> above demonstrates an important interation between implicit references and definition extension. Implicit references are resolved only when needed to compute a component value being accessed, where they refer to the latest value defined for the corresponding component. The definition of <code>.res</code> provides values for two components of <code>.arg1</code>, namely <code>.ifTrue</code> and <code>.ifFalse</code>, and then accesses the component <code>.match</code>. 
 </p>
 
 <p>
@@ -110,40 +110,26 @@ If we look back at our definitions for <code>True</code> and <code>False</code>,
 <h4>Meaning of my code</h4>
 
 <p>
-We would like to know if our definition for <code>and</code> is consistent with that of boolean logic as demonstrated by the truth-table in the first section. For example, the case represented by the top left cell can be expressed by the following my code:
+My language is designed with the principle that it shouldn't be too hard to work out what a program will actually evaluate to, or at least how the smaller parts of the code will interact when composed. For example, we might like to have some confidence that our definitions for <code>True</code>, <code>False</code> and <code>and</code> interact in a manner consistent with the truth-table from the first section. The case represented by the top left cell can be expressed by the following my code.
 </p>
 
 <pre>
-expectTrue = and { .arg1 = True; .arg2 = True; }.call;
+expectTrue = and { .arg1 = True; .arg2 = True; }.res;
 </pre>
 
 <p>
-We can perhaps build an intuition as to what value <code>expectTrue</code> will have by applying some <em>rewriting strategies</em> - replacing code with code in ways that keep the same value. Our first strategy involves explicitly replacing a public reference by the code that defines it. In my language this is always possible (this property is often called <em>referential transparency</em>). Applying this to <code>and</code> for the above code would look something like the following.
-</p>
-
-<pre>
-expectTrueEquivalent1 = {
-  .call = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
-} { .arg1 = True; .arg2 = True; }.call;
-</pre>
-
-
-<p>
-Another strategy involves replacing an extension to a value by moving the extending components into the original value, either by replacing previous components or introducing new components. In general when we move components between blocks, we need to rewrite them to be <em>block independent</em> first. We will come back shortly to what this means. For now, looking at our code we see that the extended components <code>.arg1</code> and <code>.arg2</code> in both cases are defined to be <code>True</code>, and moving these definitions into the substituted <code>and</code> code won't change their values. After rewriting by moving the components the code would look something like the following. Note that the ordering of definitions in a block is actually arbitrary, and for ease of reading I have put definitions before uses. 
+My language evaluates in a way that can be modelled through <em>rewriting strategies</em>, by which we mean replacing parts of code with other code in ways that keep the same value. We can perhaps build an intuition as to what value <code>expectTrue</code> will have by going through the work of applying some of these strategies. The first rewriting strategy we will use involves explicitly replacing a reference by the code that defines it. In my language this is always allowed for a public reference, a property often called <em>referential transparency</em>, and as we will see can also be applied to component references as well in some special situations. Applying this strategy to <code>and</code> for the above code would look something like the following.
 </p>
 
 <pre>
 expectTrueEquivalent1 = {
-  .arg1 = True;
-  
-  .arg2 = True;
-  
-  .call = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
-}.call;
+  .res = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
+} { .arg1 = True; .arg2 = True; }.res;
 </pre>
 
+
 <p>
-Our final rewriting trick for component accesses works almost the same way as our trick of moving extended components into the original definition. After ensuring that the component definition is block independent, we replace the component access with the defining code for the component. In the above code we have are accessing the <code>.call</code> component of our expanded <code>and</code>. However, the <code>.call</code> component has references the new component fields, making it <em>block dependent</em>. If we try our rewriting trick we would lose the definitions of the <code>.arg1</code> and <code>.arg2</code>, and the rewritten code would describe a different value to what we started with. To get around this, we can simplify the component definition to remove the block dependency of the definition, by applying our first rewrite strategy - i.e. substituting the other component values by their defining code. We may have to do this repeatedly until the rewritten definition does not depend on any other local names - i.e. is block independent. After applying the process to make <code>.call</code> block independent we get the following value equivalent to <code>expectTrue</code>.
+Another strategy involves replacing an extension to a value by moving the extending components into the original value, either replacing previous components of the same name or introducing new components. In general when we move components between blocks, we need to rewrite them to be <em>block independent</em> first. We will come back shortly to what this means. For now, looking at our code we see that the extended components <code>.arg1</code> and <code>.arg2</code> in both cases are defined to be <code>True</code>, and after moving these definitions into the substituted <code>and</code> code their referred values would be the same. After rewriting by moving the components the code would look something like the following. Note that the ordering of definitions in a block is actually arbitrary, and for ease of reading I have put name definitions before uses. 
 </p>
 
 <pre>
@@ -152,17 +138,31 @@ expectTrueEquivalent2 = {
   
   .arg2 = True;
   
-  .call = True ( .ifTrue = True, .ifFalse = False ).match;
-}.call;
+  .res = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
+}.res;
+</pre>
+
+<p>
+Our final rewriting trick (for now) is for component accesses, and works almost the same way as our trick of moving extended components into the original definition. After ensuring that the component definition is block independent, we replace the component access code with the code defining the component. In the above code we have are accessing the <code>.res</code> component of our expanded <code>and</code>. However, the <code>.res</code> component has references the new component fields, making it <em>block dependent</em>. If we try our rewriting trick we would throw away the definitions of the <code>.arg1</code> and <code>.arg2</code>, and the rewritten code would end up referring to different component values to what we started with. To get around this, we can simplify a component definition to remove the dependencies on other block names by applying our first rewrite strategy - i.e. substituting the other names by their defining code. We may have to do this repeatedly until the rewritten definition does not depend on any other local names - i.e. is block independent. (We will run into trouble with this if the component ends up referencing itself! We will assume for the moment that this won't happen.) After applying the process to make <code>.res</code> block independent we get the following value equivalent to <code>expectTrue</code>.
+</p>
+
+<pre>
+expectTrueEquivalent3 = {
+  .arg1 = True;
+  
+  .arg2 = True;
+  
+  .res = True ( .ifTrue = True, .ifFalse = False ).match;
+}.res;
 </pre>
 
 
 <p>
-We can now apply the component access rewrite rule by substituting the <code>.call</code> component access by the rewritten definition, with a result of something like the following.
+We can now apply the component access rewrite rule by substituting the <code>.res</code> component access by the rewritten definition, with a result of something like the following.
 </p>
 
 <pre>
-expectTrueEquivalent3 = True ( .ifTrue = True, .ifFalse = False ).match;
+expectTrueEquivalent4 = True ( .ifTrue = True, .ifFalse = False ).match;
 </pre>
 
 <p>
@@ -170,7 +170,7 @@ Our value involves further value extension and component access, meaning we can 
 </p>
 
 <pre>
-expectTrueEquivalent4 = {
+expectTrueEquivalent5 = {
   .ifTrue = True;
   
   .ifFalse = False;
@@ -180,11 +180,11 @@ expectTrueEquivalent4 = {
 </pre>
 
 <p>
-We are nearly there. We make <code>.match</code> block independent by substituting <code>.ifTrue</code> and finally, we rewrite the <code>.match</code> access by its final rewritten definition.
+We are nearly there. We make <code>.match</code> block independent by substituting <code>.ifTrue</code>'s value <code>True</code> and finally, we rewrite the <code>.match</code> access by the component's rewritten definition.
 </p>
 
 <pre>
-expectTrueEquivalent5 = True;
+expectTrueEquivalent6 = True;
 </pre>
 
 <p>

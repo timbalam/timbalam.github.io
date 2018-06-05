@@ -19,16 +19,24 @@
 I have made a programming language. I haven't decided what to call it yet. The working name for the language is "my". 
 </p>
 
-<h4>A what? What's a programming language?</h4>
+<h4>What's a programming language?</h4>
 
 <p>
-A programming language lets us describe what we would like the computer to do. Code written in the programming language can be read and executed by a computer program that understands the rules of the language. 
+We use computers for a wide array of tasks, in a wide variety of devices. We use PCs and mobile phones to browse the web for information, shop on-line and consume social media, we send and receive email, we read and  write documents, play games, and many other tasks. Computers can perform repetitive business operations and calculations quickly and automatically, allowing us to be more productive with our time. Programming languages are a form of communication that lets us describe how the computer should do these sorts of tasks. Code is the written form of a programming language, and can be read and executed by a computer program that understands the rules of the language. 
 </p>
 
-<h4>Aren't there already other programming languages? How is my language different?</h4>
+<h4>Aren't there already other programming languages? How is your language different?</h4>
 
 <p>
-My language is different from other programming languages in that it seeks to keep the number of syntactic concepts low, centering on a simple yet powerful primitive structure. This directs toward some goals of my languauge - that it should be reasonably obvious what code is going to do, and that there should also be a reasonably obvious way to get something done. Hopefully this will be illustrated as we look at some examples.
+Creating a useful programming language is a big task. Currently, my language is significantly less useful than the most commonly used ones. If you want to get stuff done, you should look at those languages instead. However, programming languages are fascinating to study in their own right. When we learn a programming language, we might focus on a primitive construct provided by the language, like a for-loop or a function, and how to do certain tasks with them, like counting grocery costs or manipulating text. Writing a new programming language allows one to explore how one could program using an alternative set of constructs. The set of constructs is one way in which a programming language encourages a philosophical approach to writing programs.
+</p>
+
+<p>
+Some of the philosophical approaches that my language seeks to motivate is thus - that it should be reasonably obvious what code is going to do when it runs, and that there should be a reasonably obvious way to get something done. This is achieved by limiting the number of primitive constructs provided by the language. Languages with a lot of constructs can be powerful and useful, but can be difficult to learn and the interactions between the constructs can lead to it being difficult to follow exactly how a program will work. It can also be the case that an abundance of constructs can lead to confusion about how to approach a problem. Two constructs that are provided by many common programming languages are functions, and objects, which are a handy way to organise functions for a common purpose. When using these languages I have often found it difficult to decide when an object is appropriate, or whether a function will do. Other programming languages choose to only provide either only functions, or less commonly, only objects. An issue with providing a smaller set of constructs is that one often needs to reimplement the missing constructs, leading to more work to write a program, and more opportunities to make mistakes.
+</p>
+
+<p>
+My language chooses to balance these concerns by providing a simple yet powerful primitive structure which effectively replaces many distinct constructs provided by other languages - which I haven't thought of a good name for. A working title is a 'component group'. I will make some attempts to describe the construct in terms of some concepts from other programming languages, but don't worry if you don't understand these descriptions, we will go through the construct thoroughly in the beginners introduction and the examples. The 'component group' can be described as a set of name definitions which are self-referencing, extensible immutably, with controlled private/public visibility of names and early/late binding of references in definitions. 'Self-referencing' means that names defined by a component group are in scope in the definitions of those names, such as in a 'let' or 'letrec' definitions from common functional programming languages. 'Extensible immutably' means that name definitions cannot be changed, but new, independent values can be produced by substituting new definitions into a previously defined value, such as with so called 'functional record update' found in some programming languages. The 'controlled visibility' options are the familiar 'private' form for 'let' / 'letrec' definitions, and the 'public' name, which can be accessed from outside the defining code, as with a public member of an object or a field of a record. The same 'private' and 'public' forms when used as references in definitions correspond to the two 'variable-binding' modes - 'early', where the bound value is selected at the definition site, again as the familiar 'let' / 'letrec' definitions, or 'late', where the bound value is selected only when it is accessed from the (possibly updated) component of that name, as is the case for object methods which can resolve to methods overridden on subclasses. 
 </p>
 
 <h4>How do I use my language?</h4>

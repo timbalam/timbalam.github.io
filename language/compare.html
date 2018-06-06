@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+
+<body>
+<h2>Compare</h2>
+
+<p>Up: <a href=".">Language</a>, Prev: <a href="examples">Examples</a>, Next: <a href="reference">Reference</a>.</p>
+
+<br></br>
+
+<h1>How to do thing from 'x' language</h1>
+
+<h4>Component group</h4>
+
+<p>
+Here I try to describe the main construct provided by my language - which I haven't thought of a good name for. A working title is a 'component group'.  The 'component group' can be described as a set of name definitions which are self-referencing, extensible immutably, with controlled private/public visibility of names and early/late binding of references in definitions. 'Self-referencing' means that names defined by a component group are in scope in the definitions of those names, such as in a 'let' or 'letrec' definitions from common functional programming languages. 'Extensible immutably' means that name definitions cannot be changed, but new, independent values can be produced by substituting new definitions into a previously defined value, such as with so called 'functional record update' found in some programming languages. The 'controlled visibility' options are the familiar 'private' form for 'let' / 'letrec' definitions, and the 'public' name, which can be accessed from outside the defining code, as with a public member of an object or a field of a record. The same 'private' and 'public' forms when used as references in definitions correspond to the two 'variable-binding' modes - 'early', where the bound value is selected at the definition site, again as the familiar 'let' / 'letrec' definitions, or 'late', where the bound value is selected only when it is accessed from the (possibly updated) component of that name, as is the case for object methods which can resolve to methods overridden on subclasses. 
+</p>
+
+</body>
+</html>

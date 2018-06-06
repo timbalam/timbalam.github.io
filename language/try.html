@@ -8,56 +8,76 @@
 
 <h1>Getting started with my language</h1>
 
-<h2>The easy way (on Windows at least):</h2>
+<h4>The easy way (on Windows at least):</h4>
 
 <ul>
 <li>
-Download the binary for the latest <a href="https://github.com/timbalam/myi/releases">GitHub release</a>
+Download the binary for the latest <a href="https://github.com/timbalam/myi/releases">GitHub release</a> to your usual download folder.
 </li>
 <li>
-Unpack the archive and place <code>myi-exe.exe</code> somewhere.
+Open the file explorer program on your computer and navigate to the folder with the downloaded archive. Right-click and unpack the archive and place the contained file <code>myi-exe.exe</code> somewhere, for example in your home directory, 'Documents' directory, or a create a new folder.
 </li>
 <li>
-Use the command prompt to <code>cd</code> to the directory that you placed <code>myi-exe.exe</code>. 
+Open the command prompt or terminal interface on your computer, type <code>cd</code> followed by the path to the directory where you placed <code>myi-exe.exe</code>, and hit 'enter'. 
 </li>
 <li>
-Alternatively, place <code>myi-exe.exe</code> in a directory mentioned in your <code>%PATH%</code> (type <code>echo %PATH%</code>)
+Alternatively, place <code>myi-exe.exe</code> in a directory mentioned in your <code>%PATH%</code> (to see a list of directories, type <code>echo %PATH%</code> and hit 'enter').
 </li>
 <li>
-To interpret a text file <code>code.my</code> type <code>myi-exe.exe code.my</code>.
+To test that the my language interpreter is installed correctly, you can type <code>myi-exe.exe --version</code> and hit 'enter'. If you see something like: <code>myi-exe.EXE: --version: openFile: does not exist (No such file or directory)</code> then congratulations! It works! If you see something like: <code>'mye-exe.exe' is not recognized as an internal or external command, operable program or batch file.'</code>, unfortunately something hasn't worked. Perhaps try the alternative way below. 
 </li>
 </ul>
 
-<h2>Alternative way</h2>
+<h4>Alternative way</h4>
 <p>
 If easy way doesn't work, or you want to play with it, you can build the source code:
 </p>
 
 <ul>
 <li>
-You will need to <a href="https://docs.haskellstack.org/en/stable/README/#how-to-install">install Stack</a> on your system
+You will need to <a href="https://docs.haskellstack.org/en/stable/README/#how-to-install">install Stack</a> on your system.
 </li>
 <li>
-If you have <a href="https://git-scm.com">git</a> installed you can clone the git repo from the shell via <code>git clone https://github.com/timbalam/myi</code>
+If you have <a href="https://git-scm.com">git</a> installed, you can use the command prompt or terminal command to clone the <code>myi</code> git repository (containing the program source code). Type <code>git clone https://github.com/timbalam/myi</code> and hit 'enter' to copy the repository folder to the current directory.
 </li>
 <li>
-Alternatively use a browser to visit <a href="https://github.com/timbalam/myi">https://github.com/timbalam/myi</a> and select the green "Clone or download" button to the far right of the screen
+Alternatively you can obtain the git repository using a web browser with the following steps:
+<ul>
+<li>
+Open a web browser, visit <a href="https://github.com/timbalam/myi">https://github.com/timbalam/myi</a> and select the green "Clone or download" button to the far right of the screen.
 </li>
 <li>
-Press "Download ZIP" and save the archive
+Press "Download ZIP" and save the archive to your usual downloads folder.
 </li>
 <li>
-Unpack the archive and place the source folder somewhere
+Find the downloaded archive in your file explorer program. Right-click and unpack the archive and place the source folder somewhere (e.g. your home directory, 'Documents' directory, or create a new directory).
+</li>
+</ul>
 </li>
 <li>
-Either way, navigate to the source folder in your shell or command prompt
+Either way, navigate to the source folder in the command prompt or terminal interface. Type <code>cd</code> followed by the path to the source folder, and hit 'enter'.
 </li>
 <li>
-Type "stack build" to build the source
+Type <code>stack build</code> and hit 'enter' to build the source. If Stack is successful you should eventually see a message like: 
+<pre>
+myi-0.1.0.0: copy/register
+...
+Installing executable(s) in
+...
+Registering myi-1.0.0...
+</pre>
 </li>
-<li>
-To interpret a text file <code>code.my</code> type <code>stack exec myi -- code.my</code>.
-</li>
+</ul>
+
+<h4>Writing and running your code</h4>
+<p>
+You can write your code in any text file editor, as long as it can save files in plain text format. For example <a href="https://notepad-plus-plus.org/">Notepad++</a> is a good option if you use Windows, and another is <a href="https://atom.io/">Atom</a> which is available on most operating systems. Open the text editor, type your code, and save the file in the same directory that you installed <code>myi-exe.exe</code>.
+</p>
+
+<p>
+To interpret the code, return to your terminal or command line prompt and type 
+<code>myi-exe.exe</code> followed by the name you used to save your code file and hit 'enter'. If you installed via Stack (the 'Alternative way' above), you will need to
+type <code>stack exec myi-exe --</code> (don't forget the two '-' dash characaters) follwed by the name of your saved code file, and hit 'enter'.
 </p>
 
 </body>

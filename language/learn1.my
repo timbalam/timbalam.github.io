@@ -1,0 +1,2 @@
+myText = "Hello world.";
+.run = myText.print;

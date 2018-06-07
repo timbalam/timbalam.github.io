@@ -13,7 +13,7 @@
 
 <h1>A first look at my code</h1>
 
-<h4>How it looks and what it means</h4>
+<h4>Getting it working</h4>
 
 <p>
 In this section we will look at how to read my language, to hopefully get an idea of what a program might do when we execute it. We will start with a simple program to test that everything is working.
@@ -21,20 +21,93 @@ In this section we will look at how to read my language, to hopefully get an ide
 
 <pre>
 // learn1.my
-.run = "Hello, world.".print;
+myText = "Hello, world.";
+.run = print( .val = myText,);
 </pre>
 
+<p>
+Open your favourite text editor and type in the code shown in the block above. Save the file, for example calling it 'learn1.my'. If you followed the instructions from the <a href="try">Try</a> page to install <code>myi</code>, you should now be able to execute the saved code file as described in the "Writing and running your code" section. You should see the following printed to the terminal screen:
+</p>
 
 <pre>
-myNumber = 1;
-myText = "Hello, world.";
-
-myMath = 3 * 4; 
-mathWithVariables = myMath + myNumber;
+$ myi-exe.exe learn1.myi
+Hello, world.
 </pre>
 
-<!-- interleave meaning with syntax -->
-<!-- quote lines of code in text -->
+<p>
+Running our program made some text print on the screen! Magic!
+</p>
+
+<h4>How it looks and what it means</h4>
+
+<p>
+Let's break the example down: The first line
+<pre>
+// learn1.my
+</pre>
+begins with two forward slash characters <code>//</code>. This is how you write a 'comment' in my language - the <code>//</code> and the remainder of the line is ignored by the interpreter. Throughout this website I will use this convention of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
+</p>
+
+<p>
+The next line
+<pre>
+myText = "Hello, world.";
+</pre>
+begins with a 'label' <code>myText</code>, followed by a space, an equals sign character <code>=</code>, another space, and some 'double-quoted' text <code>"Hello, world."</code>, and ends with a semi-colon character <code>;</code>. The <code>;</code> is used in my language to separate a series of statements which associate names with code definitions. The part of the line preceding the <code>;</code>
+<pre>
+myText = "Hello, world."
+</pre>
+is such a statement. This form is how you give names and reuse pieces of code in my language. Often this is called an 'assignment', a 'definition', or an 'association'. We can break the statement down further. Looking at the code to the left hand side of the <code>=</code>, we have the label
+<pre>
+myText
+</pre>
+and a space. Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter. A label, when associated with a code definition, can be used within code definitions as a shorthand for the defining code. In this case, the defining code is to the right of the equals sign
+<pre>"Hello, world."</pre>
+ignoring the leading space. The double-quotes indicate that this is 'literal text' and has the value of the actual sequence of characters within the quotes. With this line, we are saying that uses of the name <code>myText</code> really mean the text 'Hello, world.'. 
+</p>
+
+<p>
+The third line from the example above
+<pre>
+.run = print(.val = myText,);
+</pre>
+is another name associating statement like the second line, with an <code>=</code> separating a left hand side label and right hand side code definition, and ending with a <code>;</code>. There are a few new things though. First, the left hand side label
+<pre>
+.run
+</pre>
+starts with a period character <code>.</code>, which denotes a special type of label which we will come back to later. For now, know that this <code>.</code> makes the <code>.run</code> definition available to the interpreter when we run the program. 
+</p>
+
+<p>
+The right hand side code
+<pre>
+print(.val = myText,)
+</pre>
+consists of a label <code>print</code> followed by a new type of syntax. Looking closer we have
+<pre>
+(.val = myText,)
+</pre>
+with parentheses <code>()</code> surrounding something that might actually look familiar. It is another name associating statement, but this time ending with a comma character <code>,</code>, which takes the place of <code>;</code> inside <code>()</code>'s as a statement terminator. Looking at the statement
+<pre>
+.val = myText
+</pre>
+we see another special label <code>.val</code> on the left hand side, and our previously defined label <code>myText</code> on the right. We will again postpone discussing the special label, only saying that for this particular case the definition for <code>.val</code> is made available to the code defining <code>print</code>. All we will say of <code>print</code> for now is that it will print to the terminal whatever it has associated with the label <code>.val</code>.
+</p>
+
+<h4>Printing some other things</h4>
+
+<p>
+So, you can print text to the terminal with my language. Cool! But you can print other things too! Consider the following code, from a file named 'learn2.my'.
+</p>
+
+<pre>
+// learn2.my
+myNumber = 2;
+myMath = 3 * myNumber;
+.run = print(.val = myMath,);
+</pre>
+
+<!-- up to here -->
 
 <p>
 Let's go through this code line by line. The first line begins with <code>myNumber</code>, followed a space, then an equals sign <code>=</code>. In general spaces in a program are irrelevant (except to make code easier for us to read) and can be ignored. The equals sign defines the name to the left, to mean the value expressed by what comes to the right, which is the number <code>1</code>. The semi-colon <code>;</code> at the end of line indicates the end of the definition. Think of this as us choosing the name <code>myNumber</code> to be equivalent to the number <code>1</code> whereever it appears in the file. 

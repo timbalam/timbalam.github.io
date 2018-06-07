@@ -1,2 +1,3 @@
+// learn1.my
 myText = "Hello world.";
-.run = myText.print;
+.run = print( .val = myText,);

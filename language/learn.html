@@ -141,19 +141,30 @@ is like the third line from the first example 'learn1.my':
 <pre>
 .run = print(.val = myText,);
 </pre>
-with <code>.val</code> inside the <code>()</code> defined to a different label <code>myMath</code> instead of <code>myText</code>. We recall that <code>print</code> will print the value associated with <code>.val</code> to the terminal. Hence we can expect that this line will print whatever <code>myNumber</code> evaluates to. We saw from running the code file 'learn2.my' earlier that this was '6'. We can confirm this by a process of repeatedly substituting names by their code definitions: in the manner of <code>myMath</code> → <code>3 * myNumber</code> → <code>3 * 2</code> → <code>6</code>. 
-</p>
-
-<!-- up to here -->
-
-<p>
-Naming things makes writing code nicer as we can avoid having to repeatedly write complex bits of code, and also gives us a way to break complex ideas down into parts. 
+with <code>.val</code> inside the <code>()</code> defined to a different label <code>myMath</code> instead of <code>myText</code>. We recall that <code>print</code> will print the value associated with <code>.val</code> to the terminal. Hence we would expect that this line will print whatever <code>myNumber</code> evaluates to. We saw from running the code file 'learn2.my' earlier that this was '6'. We can confirm this by a process of repeatedly substituting names by their code definitions: in the manner of <code>myMath</code> → <code>3 * myNumber</code> → <code>3 * 2</code> → <code>6</code>. 
 </p>
 
 <h4>Names, grouped</h4>
 
 <p>
-My language puts names into groups based on how they are defined. An example of this is the set of consecutive name definitions separated by semi-colons in a file such as what we have seen above form a group. The rules of my language are that within these groups, once a name is created its value cannot change, and no other value can be created with the same name. 
+Naming things (through assignments) is perhaps the core idea of my language. We name things to make code nicer, avoid having to repeatedly write complex bits of code, and to break complex ideas down into parts. My language allows things to be named, and additionally to form groups of named things. We have already seen this in the programs we have written so far - the set of labels defined by the <code>;</code> separated assignments form a group. A rule of my language is that within any group, once a name is created its value cannot change, and no other value can be created with the same name. Let's check this with a quick example. The following program
+<pre>
+// learn2_bad.my
+myNumber = 2;
+myMath = 3 * myNumber;
+myMath = 5;
+.run = print(.val = myMath,);
+</pre>
+has an additional line added to it compared to 'learn2.my' above. The new line
+<pre>
+myMath = 5;
+</pre>
+is an assignment of the number 5 to the label <code>myMath</code>. Type the code block into a text file editor, save the file as 'learn2_bad.my', and give the file to the interpreter to run. You should see an error like the following.
+<pre>
+$ my-exe.exe learn2_bad.my
+my-exe.EXE: MyExceptions [OverlappedSet (Priv (Pure (I_ "myMath")))]
+</pre>
+The duplicate assignments to <code>myMath</code> are forbidden as they would introduce ambiguity - which value would be associated with <code>.val</code> and printed? Unique names mean that one can quickly find where a label has been assigned, allowing programs to be more easily understood. 
 </p>
 
 <p>

@@ -1,0 +1,5 @@
+// learn2.my
+myNumber = 2;
+myMath = 3 * myNumber;
+myMath = 5;
+.run = print( .val = myMath,);

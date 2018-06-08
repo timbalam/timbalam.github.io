@@ -41,29 +41,30 @@ Running our program made some text print on the screen! Magic!
 <h4>How it looks and what it means</h4>
 
 <p>
-Let's break the example down: The first line
+The program we just created and ran is the result of the interaction of all the code we wrote. We can break the code down into smaller pieces and consider the role of each piece, and then considering the behaviour that results from combining these roles. Let's start with the first line
 <pre>
 // learn1.my
 </pre>
-begins with two forward slash characters <code>//</code>. This is how you write a 'comment' in my language - the <code>//</code> and the remainder of the line is ignored by the interpreter. Throughout this website I will use this convention of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
+begins with two forward slash characters <code>//</code>. This is how you write a 'comment' in my language. Comments are usually for prose descriptions of code written for the benefit of the programmer - the interpreter will see the <code>//</code> and ignore it and the remainder of the line. Throughout these tutorials I will use this convention of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
 </p>
 
 <p>
-The next line
+Next, the first non-trivial line
 <pre>
 myText = "Hello, world.";
 </pre>
-begins with a 'label' <code>myText</code>, followed by a space, an equals sign character <code>=</code>, another space, and some 'double-quoted' text <code>"Hello, world."</code>, and ends with a semi-colon character <code>;</code>. The <code>;</code> is used in my language to separate a series of statements which associate names with code definitions. The part of the line preceding the <code>;</code>
+does not begin with <code>//</code> so we know it is not a comment. The two most important features of the line are the equals sign character <code>=</code>, which tells us that this piece of code is a particular type of statement that associates names with code definitions, and the semi-colon character <code>;</code>, which tells us where the statement ends. The part of the line up to the <code>;</code>
 <pre>
 myText = "Hello, world."
 </pre>
-is such a statement. This form is how you give names and reuse pieces of code in my language. Often this is called an 'assignment', a 'definition', or an 'association'. We can break the statement down further. Looking at the code to the left hand side of the <code>=</code>, we have the label
+contains the statement, called an 'assignment', 'definition' or 'association'. This form is how you give names to reusable pieces of code in my language. 
+We can break the assignment down further to the pieces to the left- and right of the <code>=</code>, called respectively the left- and right- hand sides. The left hand side of the assignment above is the label
 <pre>
 myText
 </pre>
-and a space. Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter. A label, when associated with a code definition, can be used within code definitions as a shorthand for the defining code. In this case, the defining code is to the right of the equals sign
+followed by a space. Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter. A label is associated with a code definition by an assignment, and can be used within code definitions as a shorthand for the defining code. In this case, the defining code is to the right of the equals sign (the right hand side)
 <pre>"Hello, world."</pre>
-ignoring the leading space. The double-quotes indicate that this is 'literal text' and has the value of the actual sequence of characters within the quotes. With this line, we are saying that uses of the name <code>myText</code> really mean the text 'Hello, world.'. 
+ignoring the leading space. Using double-quotes around text is my language's way to indicate that this value is 'literally' the text shown within the quotes. With this line, we are saying that uses of the name <code>myText</code> appearing in definitions really mean the text 'Hello, world.'. 
 </p>
 
 <p>
@@ -71,11 +72,11 @@ The third line from the example above
 <pre>
 .run = print(.val = myText,);
 </pre>
-is another name associating statement like the second line, with an <code>=</code> separating a left hand side label and right hand side code definition, and ending with a <code>;</code>. There are a few new things though. First, the left hand side label
+is, like the second line, another assignment, which we remember features a <code>=</code> separating a left hand side label and right hand side code definition, and ending with a <code>;</code>. There are a few new things though. First, the left hand side label
 <pre>
 .run
 </pre>
-starts with a period character <code>.</code>, which denotes a special type of label which we will come back to later. For now, know that this <code>.</code> makes the <code>.run</code> definition available to the interpreter when we run the program. 
+starts with a period character <code>.</code>, which denotes a special type of label with additional abilities that we will come back to later. For now, know that this <code>.</code> makes the <code>.run</code> code definition available to be evaluated by the interpreter when we run the program. 
 </p>
 
 <p>
@@ -83,15 +84,23 @@ The right hand side code
 <pre>
 print(.val = myText,)
 </pre>
-consists of a label <code>print</code> followed by a new type of syntax. Looking closer we have
+consists of a label <code>print</code> followed by something new - a pair of parentheses <code>()</code> containing something that might look familiar
 <pre>
-(.val = myText,)
+.val = myText,
 </pre>
-with parentheses <code>()</code> surrounding something that might actually look familiar. It is another name associating statement, but this time ending with a comma character <code>,</code>, which takes the place of <code>;</code> inside <code>()</code>'s as a statement terminator. Looking at the statement
+which we might recognise as another assignment. If we compare it to the previous line
+<pre>
+myText = "Hello, world.";
+</pre>
+we see that the assignment ends with a comma character <code>,</code>, which in my language takes the place of <code>;</code> as the terminator for assignments appearing inside <code>()</code>'s. Considering the assignment
 <pre>
 .val = myText
 </pre>
-we see another special label <code>.val</code> on the left hand side, and our previously defined label <code>myText</code> on the right. We will again postpone discussing the special label, only saying that for this particular case the definition for <code>.val</code> is made available to the code defining <code>print</code>. All we will say of <code>print</code> for now is that it will print to the terminal whatever it has associated with the label <code>.val</code>.
+we see another special label <code>.val</code> on the left hand side, and a label <code>myText</code> on the right. We will again postpone discussing the special label <code>.val</code>, only saying that for this particular case the definition for <code>.val</code> is made available to the code defining <code>print</code>, and that <code>print</code> will print to the terminal whatever value is associated with <code>.val</code>.
+</p>
+
+<p>
+In this case, that value will whatever definition is associated with <code>myText</code>. We can look through the sequence of assignments in our program to find one that defines the label <code>myText</code>. In this case, we don't have to look far - the previous line contains such an assignment giving <code>myText</code> the value of the literal text 'Hello, world.'. Thus, <code>print</code> prints the text 'Hello, world.' to the terminal.
 </p>
 
 <h4>Printing some other things</h4>
@@ -108,35 +117,38 @@ myMath = 3 * myNumber;
 </pre>
 
 <p>
-Type out (or copy) the code above in a text file called 'learn2.my'. Run the code using the interpreter <code>myi-exe.exe</code> as we did earlier with 'learn1.my', and you should see it print the value: <code>6</code>
+Type out (or copy) the code above in a text file called 'learn2.my'. Run the code using the interpreter <code>myi-exe.exe</code> as we did earlier with 'learn1.my', and you should see the following printed to the terminal:
+<pre>
+$ my-exe.exe learn2.my
+6
+</pre>
 </p> 
 
 <p>
-We can study the the lines of the code of 'learn2.my', to try to understand how the program arrived at this result. We begin from the second line as the first line only contains a comment. The second line
-<pre>
-myNumber = 2;
-</pre>
-is yet another example of our usual name defining statement, using the label <code>myNumber</code>. The right hand side of the <code>=</code> is the number <code>2</code>. Remember that this means that we are choosing the name <code>myNumber</code> to be equivalent to the number <code>2</code> where ever we use it in definition code.
-</p>
-
-<p>
-The third line
-<pre>
-myMath = 3 * myNumber;
-</pre>
-has on the left hand side of the <code>=</code> the label <code>myText</code>. Taking a closer look at the right hand side (up to the terminating <code>;</code>)
+As we just did with the first example program 'learn1.my', we can study the the lines of the code of 'learn2.my' to try to understand how the program arrived at this result. I will go a bit faster through this one, and if you find you are getting lost, it might help to go back and have a closer look at the first example breakdown. The first line of 'learn2.my' contains a comment. The second line is an assignment with left-hand side label <code>myNumber</code> and right hand side of the number <code>2</code>. Remember that this assignment means that we are choosing the name <code>myNumber</code> to be equivalent to the number <code>2</code> where ever we use it in definition code. The third line assigns the label <code>myMath</code> to the right hand side
 <pre>
 3 * myNumber
 </pre>
-we can the number <code>3</code>, followed by a space, an asterisk symbol <code>*</code>, another space, and the label <code>myNumber</code>. The <code>*</code> describes a mathematical calculation, the multiplication of the left hand value with the right. Here the number <code>3</code> is being multiplied by the code represented by <code>myNumber</code>. 
+where the asterisk symbol <code>*</code> describes a mathematical calculation - the multiplication of the values to the left and right. Essentially, this definition says to multiply the number <code>3</code> by the value of the code represented by <code>myNumber</code>. To find the definition for <code>myNumber</code> we look through the sequence of assignments we have made until we find a corresponding definition for that label - the assignment on the previous line defined <code>myNumber</code> as the number <code>2</code>.
 </p>
-
-
 
 <p>
-The fifth line has a similar form to the others, begining with a name <code>mathWithVariables</code> followed by an equals sign, then the chosen definition. In this case, the defining code uses names which match ones we created definitions for on earlier lines: <code>myMath</code> and <code>myNumber</code>. These names can be considered placeholders for their definitions, and when determining the value of <code>mathWithVariables</code>, the definitions of would be substituted and reduced in the manner of <code>mathWithVariables</code> → <code>myMath + myNumber</code> → <code>3 * 4 + 1</code> → <code>13</code>. Naming things makes writing code nicer as we can avoid having to repeatedly write complex bits of code, and also gives us a way to break complex ideas down into parts. 
+The fourth line
+<pre>
+.run = print(.val = myMath,);
+</pre>
+is like the third line from the first example 'learn1.my':
+<pre>
+.run = print(.val = myText,);
+</pre>
+with <code>.val</code> inside the <code>()</code> defined to a different label <code>myMath</code> instead of <code>myText</code>. We recall that <code>print</code> will print the value associated with <code>.val</code> to the terminal. Hence we can expect that this line will print whatever <code>myNumber</code> evaluates to. We saw from running the code file 'learn2.my' earlier that this was '6'. We can confirm this by a process of repeatedly substituting names by their code definitions: in the manner of <code>myMath</code> → <code>3 * myNumber</code> → <code>3 * 2</code> → <code>6</code>. 
 </p>
 
+<!-- up to here -->
+
+<p>
+Naming things makes writing code nicer as we can avoid having to repeatedly write complex bits of code, and also gives us a way to break complex ideas down into parts. 
+</p>
 
 <h4>Names, grouped</h4>
 

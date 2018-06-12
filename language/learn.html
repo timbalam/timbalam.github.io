@@ -16,17 +16,23 @@
 <h4>Getting it working</h4>
 
 <p>
-In this section we will look at how to read my language, to hopefully get an idea of what a program might do when we execute it. We will start with a simple program to test that everything is working.
+In this section we will look at how to read my language,
+ to hopefully get an idea of what a program might do when we execute it.
+ We will start with a simple program to test that everything is working.
 </p>
 
 <pre>
 // learn1.my
 myText = "Hello, world.";
-.run = print( .val = myText,);
+.run = print( .val = myText,).run;
 </pre>
 
 <p>
-Open your favourite text editor and type in the code shown in the block above. Save the file, for example calling it 'learn1.my'. If you followed the instructions from the <a href="try">Try</a> page to install <code>myi</code>, you should now be able to execute the saved code file as described in the "Writing and running your code" section. You should see the following printed to the terminal screen:
+Open your favourite text editor and type in the code block above.
+Save the file, for example calling it 'learn1.my'.
+If you followed the instructions from the <a href="try">Try</a> page to install <code>myi</code>, 
+you should now be able to execute the saved code file as described in the "Writing and running your code" section.
+You should see the following printed to the terminal screen:
 </p>
 
 <pre>
@@ -35,89 +41,138 @@ Hello, world.
 </pre>
 
 <p>
-Running our program made some text print on the screen! Magic!
+Running our program made some text print on the screen!
+Magic!
 </p>
 
 <h4>How it looks and what it means</h4>
 
 <p>
-The program we just created and ran is the result of the interaction of all the code we wrote. We can break the code down into smaller pieces and consider the role of each piece, and then considering the behaviour that results from combining these roles. Let's start with the first line
+The program we just created and ran is the result of the interaction of all the code we wrote.
+We can break the code down into smaller pieces and consider the role of each piece,
+and then considering the behaviour that results from combining these roles.
+Let's start with the first line
 <pre>
 // learn1.my
 </pre>
-begins with two forward slash characters <code>//</code>. This is how you write a 'comment' in my language. Comments are usually for prose descriptions of code written for the benefit of the programmer - the interpreter will see the <code>//</code> and ignore it and the remainder of the line. Throughout these tutorials I will use this convention of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
+begins with two forward slash characters <code>//</code>.
+This is how you write a 'comment' in my language. 
+Comments are usually for prose descriptions of code written for the benefit of the programmer –
+the interpreter will see the <code>//</code> and ignore it and the remainder of the line.
+Throughout these tutorials I will use this convention of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
 </p>
 
 <p>
 Next, the first non-trivial line
 <pre>
-myText = "Hello, world.";
+myText = "Hello world.";
 </pre>
-does not begin with <code>//</code> so we know it is not a comment. The two most important features of the line are the equals sign character <code>=</code>, which tells us that this piece of code is a particular type of statement that associates names with code definitions, and the semi-colon character <code>;</code>, which tells us where the statement ends. The part of the line up to the <code>;</code>
-<pre>
-myText = "Hello, world."
-</pre>
-contains the statement, called an 'assignment', 'definition' or 'association'. This form is how you give names to reusable pieces of code in my language. 
-We can break the assignment down further to the pieces to the left- and right of the <code>=</code>, called respectively the left- and right- hand sides. The left hand side of the assignment above is the label
-<pre>
-myText
-</pre>
-followed by a space. Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter. A label is associated with a code definition by an assignment, and can be used within code definitions as a shorthand for the defining code. In this case, the defining code is to the right of the equals sign (the right hand side)
-<pre>"Hello, world."</pre>
-ignoring the leading space. Using double-quotes around text is my language's way to indicate that this value is 'literally' the text shown within the quotes. With this line, we are saying that uses of the name <code>myText</code> appearing in definitions really mean the text 'Hello, world.'. 
+does not begin with <code>//</code> so we know it is not a comment.
+The two most important features of the line are the equals sign character <code>=</code>,
+which tells us that this piece of code is a particular type of statement that associates names with code definitions,
+and the semi-colon character <code>;</code>,
+which tells us where the statement ends.
+The part of the line up to the <code>;</code> –
+<code>myText = "Hello world."</code> –
+contains the statement,
+called an 'assignment', 'definition' or 'association'.
+This form is how you give names to reusable pieces of code in my language. 
+We can break the assignment down further to the pieces to the left- and right of the <code>=</code>, 
+called respectively the left- and right- hand sides.
+The left hand side of the assignment above is the label <code>myText</code> followed by a space.
+Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter.
+A label is associated with a code definition by an assignment, 
+and can be used within code definitions as a shorthand for the defining code. 
+In this case, the defining code is to the right of the equals sign (the right hand side) <code>"Hello world."</code>,
+ignoring the leading space.
+Using double-quotes around text is my language's way to indicate that this value is 'literally' the text shown within the quotes.
+With this line, we are saying that uses of the name <code>myText</code> appearing in definitions really mean the text 'Hello world.'. 
 </p>
 
 <p>
 The third line from the example above
 <pre>
-.run = print(.val = myText,);
+.run = print(.val = myText,).run;
 </pre>
-is, like the second line, another assignment, which we remember features a <code>=</code> separating a left hand side label and right hand side code definition, and ending with a <code>;</code>. There are a few new things though. First, the left hand side label
-<pre>
-.run
-</pre>
-starts with a period character <code>.</code>, which denotes a special type of label with additional abilities that we will come back to later. For now, know that this <code>.</code> makes the <code>.run</code> code definition available to be evaluated by the interpreter when we run the program. 
+is, like the second line, another assignment, 
+which we remember features a <code>=</code> separating a left hand side label and right hand side code definition, 
+and ending with a <code>;</code>. 
+There are a few new things though. 
+First, the left hand side label <code>.run</code> starts with a period character <code>.</code>,
+which denotes a 'key' – 
+a label with some added behaviour. 
+We will see some examples of special key behaviour below.
+For now, know that code definition assigned to the key <code>.run</code> is where the interpreter looks to begin running the program. 
 </p>
 
 <p>
-The right hand side code
-<pre>
-print(.val = myText,)
-</pre>
-consists of a label <code>print</code> followed by something new - a pair of parentheses <code>()</code> containing something that might look familiar
-<pre>
-.val = myText,
-</pre>
-which we might recognise as another assignment. If we compare it to the previous line
+The right hand side code <code>print(.val = myText,).run</code> is an example of an extremely common pattern in my language code.
+The code has three main parts juxtaposed:
+first a label <code>print</code>,
+second a block of code inside a pair of parentheses <code>()</code>,
+and third another label <code>.run</code> beginning with a <code>.</code> – a key.
+If we look closer at the code inside the <code>()</code>—<code>.val = myText,</code>—we might recognise it as another assignment.
+If we compare it to the assignment from the second line
 <pre>
 myText = "Hello, world.";
 </pre>
-we see that the assignment ends with a comma character <code>,</code>, which in my language takes the place of <code>;</code> as the terminator for assignments appearing inside <code>()</code>'s. Considering the assignment
-<pre>
-.val = myText
-</pre>
-we see another special label <code>.val</code> on the left hand side, and a label <code>myText</code> on the right. We will again postpone discussing the special label <code>.val</code>, only saying that for this particular case the definition for <code>.val</code> is made available to the code defining <code>print</code>, and that <code>print</code> will print to the terminal whatever value is associated with <code>.val</code>.
+we see that the assignment ends with a comma character <code>,</code>, 
+which in my language takes the place of <code>;</code> as the terminator for assignments appearing inside <code>()</code>'s. 
+Considering the assignment <code>.val = myText</code>
+we see another key <code>.val</code> on the left hand side,
+and a label <code>myText</code> on the right.
 </p>
 
 <p>
-In this case, that value will whatever definition is associated with <code>myText</code>. We can look through the sequence of assignments in our program to find one that defines the label <code>myText</code>. In this case, we don't have to look far - the previous line contains such an assignment giving <code>myText</code> the value of the literal text 'Hello, world.'. Thus, <code>print</code> prints the text 'Hello, world.' to the terminal.
+Let's elaborate on the common pattern shown here: 
+The label <code>print</code> in this case is a built-in 'command', 
+with the ability to print a value to the terminal. 
+In order to print a value, 
+<code>print</code> needs that value to be associated with its key <code>.val</code>, 
+which can be done via the pattern shown –
+following the command <code>print</code> by the assignment to <code>.val</code> inside <code>()</code>'s.
+In the third part of the pattern, 
+we have followed the <code>print</code> with the key <code>.run</code>.
+This is how we can tell the command to perform its particular action - 
+printing to the terminal. 
+The pattern shown demonstrates the two common uses for keys –
+making code definitions available to commands, 
+and invoking command actions associated with those keys.
+</p>
+
+<p>
+We can think of this part of the pattern as 'configuring' the command – 
+we are telling <code>print</code> <em>what</em> to we want printed. 
+The third part of the pattern—the key <code>.run</code>—is how we confirm that we want the print action to happen. 
+</p>
+
+<p>
+In this case, the value that we want printed is associated with <code>myText</code>. 
+We can look through the sequence of assignments in our program to find one that defines the label <code>myText</code>. 
+In this case, we don't have to look far –
+the previous line contains such an assignment giving <code>myText</code> the value of the literal text 'Hello, world.'. 
+Thus, <code>print</code> prints the text 'Hello, world.' to the terminal.
 </p>
 
 <h4>Printing some other things</h4>
 
 <p>
-So, you can print text to the terminal with my language. Cool! But you can print other things too! Consider the following code, from a file named 'learn2.my'.
+So, you can print text to the terminal with my language. 
+Cool! But you can print other things too! 
+Consider the following code, from a file named 'learn2.my'.
 </p>
 
 <pre>
 // learn2.my
 myNumber = 2;
 myMath = 3 * myNumber;
-.run = print(.val = myMath,);
+.run = print(.val = myMath,).run;
 </pre>
 
 <p>
-Type out (or copy) the code above in a text file called 'learn2.my'. Run the code using the interpreter <code>myi-exe.exe</code> as we did earlier with 'learn1.my', and you should see the following printed to the terminal:
+Type out (or copy) the code above in a text file called 'learn2.my'. 
+Run the code using the interpreter <code>myi-exe.exe</code> as we did earlier with 'learn1.my', 
+and you should see the following printed to the terminal:
 <pre>
 $ my-exe.exe learn2.my
 6
@@ -125,29 +180,68 @@ $ my-exe.exe learn2.my
 </p> 
 
 <p>
-As we just did with the first example program 'learn1.my', we can study the the lines of the code of 'learn2.my' to try to understand how the program arrived at this result. I will go a bit faster through this one, and if you find you are getting lost, it might help to go back and have a closer look at the first example breakdown. The first line of 'learn2.my' contains a comment. The second line is an assignment with left-hand side label <code>myNumber</code> and right hand side of the number <code>2</code>. Remember that this assignment means that we are choosing the name <code>myNumber</code> to be equivalent to the number <code>2</code> where ever we use it in definition code. The third line assigns the label <code>myMath</code> to the right hand side
+As we just did with the first example program 'learn1.my', 
+we can study the the lines of the code of 'learn2.my' to try to understand how the program arrived at this result. 
+I will go a bit faster through this one, 
+and if you find you are getting lost, 
+it might help to go back and have a closer look at the breakdown of the first example. 
+The first line of 'learn2.my'
 <pre>
-3 * myNumber
+// learn2.my
 </pre>
-where the asterisk symbol <code>*</code> describes a mathematical calculation - the multiplication of the values to the left and right. Essentially, this definition says to multiply the number <code>3</code> by the value of the code represented by <code>myNumber</code>. To find the definition for <code>myNumber</code> we look through the sequence of assignments we have made until we find a corresponding definition for that label - the assignment on the previous line defined <code>myNumber</code> as the number <code>2</code>.
+contains a comment with the example file name. 
+The second line
+<pre>
+myNumber = 2;
+</pre>
+is an assignment with left-hand side label <code>myNumber</code> and right hand side of the number <code>2</code>. 
+Remember that this assignment means that we are choosing the name <code>myNumber</code> to be equivalent to the number <code>2</code> where ever we use it in definition code. 
+The third line
+<pre>
+myMath = 3 * myNumber;
+</pre>
+assigns the label <code>myMath</code> to the right hand side <code>3 * myNumber</code>
+where the asterisk symbol <code>*</code> describes a mathematical calculation - 
+the multiplication of the values to the left and right. 
+Essentially, this definition says to multiply the number <code>3</code> by the value of the code represented by <code>myNumber</code>. 
+To find the definition for <code>myNumber</code> we look through the sequence of assignments we have made until we find a corresponding definition for that label - 
+the assignment on the previous line defined <code>myNumber</code> as the number <code>2</code>.
 </p>
 
 <p>
 The fourth line
 <pre>
-.run = print(.val = myMath,);
+.run = print(.val = myMath,).run;
 </pre>
-is like the third line from the first example 'learn1.my':
-<pre>
-.run = print(.val = myText,);
-</pre>
-with <code>.val</code> inside the <code>()</code> defined to a different label <code>myMath</code> instead of <code>myText</code>. We recall that <code>print</code> will print the value associated with <code>.val</code> to the terminal. Hence we would expect that this line will print whatever <code>myNumber</code> evaluates to. We saw from running the code file 'learn2.my' earlier that this was '6'. We can confirm this by a process of repeatedly substituting names by their code definitions: in the manner of <code>myMath</code> → <code>3 * myNumber</code> → <code>3 * 2</code> → <code>6</code>. 
+is almost the same as the third line from the first example 'learn1.my' earlier, 
+except that inside the <code>()</code> <code>.val</code> is defined to a different label <code>myMath</code> instead of <code>myText</code>. 
+We recall that <code>print</code> will print the value associated with <code>.val</code> to the terminal. 
+Hence with this line we are saying we want to print whatever <code>myMath</code> evaluates to. 
+We saw from running the code file 'learn2.my' earlier that this was '6'. 
+We can confirm this by a process of repeatedly substituting names by their code definitions: 
+beginning with <code>myMath</code>,
+substituting the definition from the third line gives <code>myMath</code> → <code>3 * myNumber</code>.
+Substituting the definition for <code>myNumber</code> from line 2 gives
+<code>3 * myNumber</code> → <code>3 * 2</code>,
+and finally performing the multiplication gives <code>3 * 2</code> → <code>6</code>. 
 </p>
 
 <h4>Names, grouped</h4>
 
 <p>
-Naming things (through assignments) is perhaps the core idea of my language. We name things to make code nicer, avoid having to repeatedly write complex bits of code, and to break complex ideas down into parts. My language allows things to be named, and additionally to form groups of named things. We have already seen this in the programs we have written so far - the set of labels defined by the <code>;</code> separated assignments form a group. A rule of my language is that within any group, once a name is created its value cannot change, and no other value can be created with the same name. Let's check this with a quick example. The following program
+Naming things (through assignments) is perhaps the core idea of my language. 
+We name things to make code nicer, 
+avoid having to repeatedly write complex bits of code, 
+and to break complex ideas down into parts. 
+My language allows things to be named, 
+and additionally to form groups of named things. 
+We have already seen this in the programs we have written so far –
+the set of labels defined by the <code>;</code> separated assignments form a group. 
+A rule of my language is that within any group, 
+once a name is created its value cannot change, 
+and no other value can be created with the same name. 
+Let's see how this works with a quick example. 
+The following program
 <pre>
 // learn2_bad.my
 myNumber = 2;
@@ -155,20 +249,53 @@ myMath = 3 * myNumber;
 myMath = 5;
 .run = print(.val = myMath,);
 </pre>
-has an additional line added to it compared to 'learn2.my' above. The new line
+has an additional line added to it compared to 'learn2.my' above. 
+The new line
 <pre>
 myMath = 5;
 </pre>
-is an assignment of the number 5 to the label <code>myMath</code>. Type the code block into a text file editor, save the file as 'learn2_bad.my', and give the file to the interpreter to run. You should see an error like the following.
+is an assignment of the number 5 to the label <code>myMath</code>. 
+Type the code block into a text file editor, 
+save the file as 'learn2_bad.my', 
+and give the file to the interpreter to run. 
+You should see an error like the following.
 <pre>
 $ my-exe.exe learn2_bad.my
 my-exe.EXE: MyExceptions [OverlappedSet (Priv (Pure (I_ "myMath")))]
 </pre>
-The duplicate assignments to <code>myMath</code> are forbidden as they would introduce ambiguity - which value would be associated with <code>.val</code> and printed? Unique names mean that one can quickly find where a label has been assigned, allowing programs to be more easily understood. 
+The duplicate assignments to <code>myMath</code> are forbidden as they would introduce ambiguity –
+which value would be associated with <code>.val</code> and printed? 
+Unique names mean that one can quickly find where a label has been assigned, 
+allowing programs to be more easily understood.
 </p>
 
 <p>
-In my language there are a few ways to make groups of names. This is often a good strategy for organising code. Another example of a name group involves my language's compound values, which are values that group together other values called components, as in the following example.
+Another way in which we have used groups of names so far has been to assign a value to  <code>.val</code> for the <code>print</code> command. 
+Recall the relevant line of code from the 'learn2.my' example
+<pre>
+.run = print(.val = myMath,).run;
+</pre>
+and realise that <code>()</code> is a way in my language to construct a new group of names.
+Each new group is considered distinct from other group, 
+so name repetitions are allowed between groups – 
+the name <code>.val</code> assigned in this group could also be assigned in the outer group. 
+We call the <code>()</code> and the assignments contained collectively a 'tuple'. 
+The names assigned by tuples behave differently to those in the outer group in an important way –
+they aren't able to be used in right-hand side definitions,
+and therefore aren't easily reusable.
+This makes tuples only really useful as a way to pass code definitions to commands,
+and hence only key assignments are permitted – 
+i.e. all assigned labels must have an initial <code>.</code>.
+As an aside, Tuples do have another powerful use as destructuring patterns, but we won't cover that in this introduction.
+</p>
+
+
+
+<!-- up to here -->
+
+
+<p>
+My language there are a few ways to make groups of names. This is often a good strategy for organising code. Another example of a name group involves my language's compound values, which are values that group together other values called components, as in the following example.
 </p>
 
 <pre>

@@ -24,7 +24,7 @@ In this section we will look at how to read my language,
 <pre>
 // learn1.my
 myText = "Hello, world.";
-.run = print( .val = myText,).run;
+.run = myText.print;
 </pre>
 
 <p>
@@ -299,8 +299,8 @@ First though, let's imagine we have a two-dimensional co-ordinate that we want t
 
 <pre>
 // learn3.my
-myCoord = (.x = 2, .y = 4);
-.run = print(.val = myCoord.y,).run
+myPoint = (.x = 2, .y = 4);
+.run = print(.val = myPoint.y,).run
 </pre>
 
 <p>
@@ -312,6 +312,34 @@ Run the file with the my language interpreter and you should see the following.
 $ myi-exe.exe learn3.my
 4
 </pre>
+
+<p>
+There are perhaps some interesting new things in this example. Let's skip the first line and look closer at line 2.
+</p>
+
+<pre>
+myPoint = (.x = 2, .y = 4);
+</pre>
+
+<p>
+As you might have guessed, this line is an assignment to the label <code>myCoord</code>.
+The assigned value is a tuple, which we might remember is a sequence of <code>,</code> separated assignments inside <code>()</code>'s. 
+In this case the tuple defines numeric values for two keys <code>.x</code> and <code>.y</code> – 
+the x- and y- "co-ordinates" of a point.
+We can see on the next line how to talk about the values of these keys.
+The line
+<pre>
+.run = print(.val = myPoint.y,).run
+</pre>
+you might notice is the usual invoking of the <code>print</code> command like we have seen in previous examples.
+The value to be printed we have written as <code>myPoint.y</code>  –
+which should be read as the label <code>myPoint</code> followed by the key <code>.y</code>.
+This is the same pattern that we use to run our <code>print</code> command,
+where we follow the command with the key <code>.run</code>.
+
+</p>
+
+
 
 <!-- up to here -->
 – in fact, a command is a definition of a group of names for our expected "inputs" – and outputs that looks a bit closer to how we have defined names so far. Let's look at some more code.

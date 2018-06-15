@@ -24,7 +24,7 @@ In this section we will look at how to read my language,
 <pre>
 // learn1.my
 myText = "Hello, world.";
-.run = myText.print;
+.run = print(.val = myText,).run;
 </pre>
 
 <p>
@@ -48,10 +48,14 @@ Magic!
 <h4>How it looks and what it means</h4>
 
 <p>
+One of the things this article aims to teach is to learn to read my language code, 
+and to do that we need to understand the code <em>syntax</em> –
+how the words and symbols together assembled the program like puzzle pieces.
 The program we just created and ran is the result of the interaction of all the code we wrote.
 We can break the code down into smaller pieces and consider the role of each piece,
 and then considering the behaviour that results from combining these roles.
-Let's start with the first line
+Let's start by breaking the program into lines. 
+The first line
 <pre>
 // learn1.my
 </pre>
@@ -63,30 +67,33 @@ Throughout these tutorials I will use this convention of putting a file name as 
 </p>
 
 <p>
-Next, the first non-trivial line
+The second line
 <pre>
 myText = "Hello world.";
 </pre>
-does not begin with <code>//</code> so we know it is not a comment.
-The two most important features of the line are the equals sign character <code>=</code>,
-which tells us that this piece of code is a particular type of statement that associates names with code definitions,
-and the semi-colon character <code>;</code>,
-which tells us where the statement ends.
-The part of the line up to the <code>;</code> –
-<code>myText = "Hello world."</code> –
-contains the statement,
-called an "assignment", "definition" or "association".
-This form is how you give names to reusable pieces of code in my language. 
-We can break the assignment down further to the pieces to the left- and right of the <code>=</code>, 
-called respectively the left- and right- hand sides.
-The left hand side of the assignment above is the label <code>myText</code> followed by a space.
-Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter.
-A label is associated with a code definition by an assignment, 
-and can be used within code definitions as a shorthand for the defining code. 
-In this case, the defining code is to the right of the equals sign (the right hand side) <code>"Hello world."</code>,
-ignoring the leading space.
+is the first piece of my language code we see that actually does something.
+As the line does not begin with <code>//</code>, we know it is not a comment.
+First, let's examine the syntax –
+starting from the left we see first an odd-looking "camel case" word <code>myText</code>,
+a space, an equals sign <code>=</code>, another space,
+a sentence in double quotes <code>"Hello world."</code>,
+and a semi-colon <code>;</code>.
+This syntax demonstrates a very common form in my language, 
+called an "assignment". 
+With this form you can give names to reusable pieces of code in my language,
+by associating a word (a "label") with a code definition.
+An assigned label can be referred to within code definitions as shorthand for its definition. 
+The form begins with the left-hand side of the assignment, which above is the label <code>myText</code> followed by a space.
+Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter, 
+and the label does not include the space.
+The <code>=</code> indicates the start of the code definition, 
+occurring on the assignment's right-hand side.
+The code definition continues until the <code>;</code> terminator.
+In this case, the defining code is the double-quoted sentence <code>"Hello world."</code>
+(as usual the leading space can be ignored).
 In my language, using double-quotes around text creates a literal value that represents the text shown within the quotes.
 With this line, we are saying that uses of the name <code>myText</code> appearing in definitions really mean the text "Hello world.". 
+Note that inside quotes, spaces are significant and not ignored!
 </p>
 
 <p>
@@ -95,63 +102,77 @@ The third line from the example above
 .run = print(.val = myText,).run;
 </pre>
 is, like the second line, another assignment, 
-which we remember features a <code>=</code> separating a left hand side label and right hand side code definition, 
-and ending with a <code>;</code>. 
-There are a few new things though. 
-First, the left hand side label <code>.run</code> starts with a period character <code>.</code>,
-which denotes a "key" – 
-a label with some added behaviour. 
-We will see some examples of special key behaviour below.
-For now, know that code definition assigned to the key <code>.run</code> is where the interpreter looks to begin running the program. 
-</p>
-
-<p>
-The right hand side code <code>print(.val = myText,).run</code> is an example of an extremely common pattern in my language code.
-The code has three main parts juxtaposed:
-first a label <code>print</code>,
-second a block of code inside a pair of parentheses <code>()</code>,
-and third another label <code>.run</code> beginning with a <code>.</code> – a key.
-If we look closer at the code inside the <code>()</code>—<code>.val = myText,</code>—we might recognise it as another assignment.
-If we compare it to the assignment from the second line
+but this time featuring some new syntax on the left-hand side –
+we see a period character <code>.</code> before the usual label.
+Following that we see the same <code>=</code>, 
+and a right-hand side code definition, 
+finally ending with a <code>;</code>. 
+The code definition <code>print(.val = myText,).run</code> also shows some new syntax – 
+a label <code>print</code>,
+followed by an opening parenthesis <code>(</code>,
+a block of code,
+a closing parenthesis <code>)</code>,
+a <code>.</code>
+and another label <code>run</code>.
+Taking a look closer at the code inside the parentheses, <code>.val = myText,</code>, we might recognise it as another assignment!
+If we compare it to the other assignments we have seen, for example from the second line
 <pre>
 myText = "Hello, world.";
 </pre>
 we see that the assignment ends with a comma character <code>,</code>, 
-which in my language takes the place of <code>;</code> as the terminator for assignments appearing inside <code>()</code>'s. 
+which in my language takes the place of <code>;</code> as the terminator for assignments appearing inside <code>()</code>. 
+We call this form with a <code>()</code> and an inner sequence of assignments collectively a "tuple". 
 Considering the assignment <code>.val = myText</code>
-we see another key <code>.val</code> on the left hand side,
-and a label <code>myText</code> on the right.
+we see on the left-hand side another <code>.</code> before a label <code>val</code>, 
+and on the right-hand side a label <code>myText</code>.
 </p>
 
 <p>
-Let's elaborate on the common pattern shown here: 
+This example shows two uses of <code>.</code> before a label on the left-hand side of an assignment –
+when assigning <code>run</code>, and <code>val</code>.
+In my language this indicates that the label is "public".
+For now, we can just treat these labels the same as if the <code>.</code> wasn't there.
+The left-hand side assignment to <code>run</code> has a special meaning in my language code,
+as the code definition assigned to a public label <code>run</code> is communicated to the interpreter to be executed when the program is run.
+</p>
+
+<p>
+The syntax shown in the code definition <code>print(.val = myText,).run</code> is an example of another common pattern in my language code.
 The label <code>print</code> in this case is a built-in "command", 
 with the ability to print a value to the terminal. 
-In order to print a value, 
-<code>print</code> needs that value to be associated with its key <code>.val</code>, 
-which can be done via the pattern shown –
-following the command <code>print</code> by the assignment to <code>.val</code> inside <code>()</code>'s.
-In the third part of the pattern, 
-we have followed the <code>print</code> with the key <code>.run</code>.
-This is how we can tell the command to perform its particular action - 
-printing to the terminal. 
-The pattern shown demonstrates the two common uses for keys –
-making code definitions available to commands, 
-and invoking command actions associated with those keys.
+In the pattern, the command is followed by a tuple of assignments –
+which is a way in my language to "communicate" values to the command.
+In this case, the <code>print</code> command finds the value to print from the value communicated to it with the public label <code>val</code>, 
+which we set via the (public) assignment to <code>val</code> in the tuple.
+Finally, the pattern ends with a <code>.</code> followed by a label.
+This is how we tell the command to perform an action.
+When we tell the command <code>print</code> to <code>run</code>, 
+it knows to print to the terminal.
 </p>
 
 <p>
-We can think of this part of the pattern as "configuring" the command – 
-we are telling <code>print</code> <em>what</em> to we want printed. 
-The third part of the pattern—the key <code>.run</code>—is how we confirm that we want the print action to happen. 
+The pattern shown by <code>print(.val = myText,).run</code> demonstrates two common uses for public labels.
+The first is when communicating values to commands –
+only values with public labels are communicated,
+meaning <code>val</code> needs to be public.
+The second is invoking command actions –
+the syntax for giving the <code>run</code> instruction to the command mirrors that for denoting public labels. 
+We will see the reason for this later. 
 </p>
 
 <p>
-In this case, the value that we want printed is associated with <code>myText</code>. 
+We can think of the pattern as a two-stage process.
+First we use a tuple of values to "configure" the command – 
+we tell <code>print</code> <em>what</em> to print.
+Second we pass the label <code>run</code> to actually invoke the print action. 
+</p>
+
+<p>
+As we mentioned earlier, in this case the value that we want printed is that assigned to <code>myText</code>. 
 We can look through the sequence of assignments in our program to find one that defines the label <code>myText</code>. 
-In this case, we don't have to look far –
+We don't have to look far –
 the previous line contains such an assignment giving <code>myText</code> the value of the literal text "Hello, world.". 
-Thus, <code>print</code> prints the text "Hello, world." to the terminal.
+Thus, the <code>run</code> action of <code>print</code> prints the text "Hello, world." to the terminal.
 </p>
 
 <h4>Printing some other things</h4>

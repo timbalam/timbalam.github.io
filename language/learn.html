@@ -23,7 +23,7 @@ In this section we will look at how to read my language,
 
 <pre>
 // learn1.my
-myText = "Hello, world.";
+myText = "Hello world.";
 .run = print(.val = myText,).run;
 </pre>
 
@@ -37,7 +37,7 @@ You should see the following printed to the terminal screen:
 
 <pre>
 $ myi-exe.exe learn1.myi
-Hello, world.
+Hello world.
 </pre>
 
 <p>
@@ -48,37 +48,51 @@ Magic!
 <h4>How it looks and what it means</h4>
 
 <p>
-One of the things this article aims to teach is to learn to read my language code, 
-and to do that we need to understand the code <em>syntax</em> –
-how the words and symbols together assembled the program like puzzle pieces.
-The program we just created and ran is the result of the interaction of all the code we wrote.
-We can break the code down into smaller pieces and consider the role of each piece,
-and then considering the behaviour that results from combining these roles.
-Let's start by breaking the program into lines. 
-The first line
+Learning to read my language code means learning the code syntax –
+how programming concepts are represented as text.
+In the following I will briefly describe the syntax and meaning of the code shown in the program above.
+To begin, the first line shows our first example of syntax:
+a sequence of two forward slash symbols <code>//</code>.
+</p>
+
 <pre>
-// learn1.my
+1 | // learn1.my
+    ^^
 </pre>
-begins with two forward slash characters <code>//</code>.
-This is how you write a "comment" in my language. 
-Comments are usually for prose descriptions of code written for the benefit of the programmer –
-the interpreter will see the <code>//</code> and ignore it and the remainder of the line.
-Throughout these tutorials I will use this convention of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
+
+<p>
+This syntax indicates the start of a "comment" in my language –
+The <code>//</code> and everything on the rest of the line are ignored when running the code.
+Comments can be used for any purpose,
+and are often used for prose descriptions of code, 
+written for the benefit of the programmer.
+Throughout these tutorials I will use the convention seen here of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
 </p>
 
 <p>
-The second line
+Looking at the second line
+we can break apart the pieces of syntax –
+from the left we see first a sequence of alphabetic characters <code>myText</code> forming a word.
 <pre>
-myText = "Hello world.";
+2 | myText = "Hello world.";
+    ^^^^^^
 </pre>
-is the first piece of my language code we see that actually does something.
-As the line does not begin with <code>//</code>, we know it is not a comment.
-First, let's examine the syntax –
-starting from the left we see first an odd-looking "camel case" word <code>myText</code>,
-a space, an equals sign <code>=</code>, another space,
-a sentence in double quotes <code>"Hello world."</code>,
-and a semi-colon <code>;</code>.
-This syntax demonstrates a very common form in my language, 
+Next is a space, then an equals sign symbol <code>=</code>.
+<pre>
+2 | myText = "Hello world.";
+           ^
+</pre>
+Next is another space, then a sentence in double quotes <code>"Hello world."</code>.
+<pre>
+2 | myText = "Hello world.";
+             ^^^^^^^^^^^^^^
+</pre>
+Finally, we have a semi-colon symbol <code>;</code>.
+<pre>
+2 | myText = "Hello world.";
+                           ^
+</pre>
+This combination of syntax demonstrates a very common form in my language, 
 called an "assignment". 
 With this form you can give names to reusable pieces of code in my language,
 by associating a word (a "label") with a code definition.
@@ -93,38 +107,61 @@ In this case, the defining code is the double-quoted sentence <code>"Hello world
 (as usual the leading space can be ignored).
 In my language, using double-quotes around text creates a literal value that represents the text shown within the quotes.
 With this line, we are saying that uses of the name <code>myText</code> appearing in definitions really mean the text "Hello world.". 
-Note that inside quotes, spaces are significant and not ignored!
+(Note that inside quotes, spaces are significant and not ignored!)
 </p>
 
 <p>
-The third line from the example above
-<pre>
-.run = print(.val = myText,).run;
-</pre>
-is, like the second line, another assignment, 
+The third line from the example above is,
+an assignment like the second line, 
 but this time featuring some new syntax on the left-hand side –
 we see a period character <code>.</code> before the usual label.
+<pre>
+3 | .run = print(.val = myText,).run;
+    ^^^^
+</pre>
 Following that we see the same <code>=</code>, 
 and a right-hand side code definition, 
 finally ending with a <code>;</code>. 
-The code definition <code>print(.val = myText,).run</code> also shows some new syntax – 
-a label <code>print</code>,
-followed by an opening parenthesis <code>(</code>,
-a block of code,
-a closing parenthesis <code>)</code>,
-a <code>.</code>
-and another label <code>run</code>.
-Taking a look closer at the code inside the parentheses, <code>.val = myText,</code>, we might recognise it as another assignment!
-If we compare it to the other assignments we have seen, for example from the second line
+The code definition also shows some new syntax:
+First a label <code>print</code>.
 <pre>
-myText = "Hello, world.";
+3 | .run = print(.val = myText,).run;
+           ^^^^^
 </pre>
-we see that the assignment ends with a comma character <code>,</code>, 
-which in my language takes the place of <code>;</code> as the terminator for assignments appearing inside <code>()</code>. 
+Following that is an opening parenthesis <code>(</code>,
+a block of code,
+and a closing parenthesis <code>)</code>.
+<pre>
+3 | .run = print(.val = myText,).run;
+                ^^^^^^^^^^^^^^^^
+</pre>
+Finally, we see another <code>.</code> with a label, this time <code>run</code>.
+<pre>
+3 | .run = print(.val = myText,).run;
+                                ^^^^
+</pre>
+Coming back to the code inside the parentheses, we might recognise it as another assignment!
+<pre>
+3 | .run = print(.val = myText,).run;
+                 ^^^^^^^^^^^^^^
+</pre>
 We call this form with a <code>()</code> and an inner sequence of assignments collectively a "tuple". 
-Considering the assignment <code>.val = myText</code>
-we see on the left-hand side another <code>.</code> before a label <code>val</code>, 
-and on the right-hand side a label <code>myText</code>.
+If we compare to the other assignments we have seen, for example from the second line
+<pre>
+2 | myText = "Hello world.";
+</pre>
+we see that the assignment inside the tuple ends with a comma character <code>,</code>. 
+In my language <code>,</code> takes the place of <code>;</code> as the terminator for tuple assignments.
+For the left-hand side of the tuple assignment we see another <code>.</code> before a label <code>val</code>.
+<pre>
+3 | .run = print(.val = myText,).run;
+                 ^^^^
+</pre>
+Finally, on the right-hand side we see a label <code>myText</code>.
+<pre>
+3 | .run = print(.val = myText,).run;
+                        ^^^^^^
+</pre>
 </p>
 
 <p>
@@ -137,7 +174,12 @@ as the code definition assigned to a public label <code>run</code> is communicat
 </p>
 
 <p>
-The syntax shown in the code definition <code>print(.val = myText,).run</code> is an example of another common pattern in my language code.
+The syntax shown in the code definition for <code>run</code>
+<pre>
+3 | .run = print(.val = myText,).run
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+</pre>
+is an example of another common pattern in my language code.
 The label <code>print</code> in this case is a built-in "command", 
 with the ability to print a value to the terminal. 
 In the pattern, the command is followed by a tuple of assignments –
@@ -151,7 +193,7 @@ it knows to print to the terminal.
 </p>
 
 <p>
-The pattern shown by <code>print(.val = myText,).run</code> demonstrates two common uses for public labels.
+The pattern shown by the code definition demonstrates two common uses for public labels.
 The first is when communicating values to commands –
 only values with public labels are communicated,
 meaning <code>val</code> needs to be public.
@@ -172,6 +214,9 @@ As we mentioned earlier, in this case the value that we want printed is that ass
 We can look through the sequence of assignments in our program to find one that defines the label <code>myText</code>. 
 We don't have to look far –
 the previous line contains such an assignment giving <code>myText</code> the value of the literal text "Hello, world.". 
+<pre>
+2 | myText = "Hello world.";
+</pre>
 Thus, the <code>run</code> action of <code>print</code> prints the text "Hello, world." to the terminal.
 </p>
 
@@ -206,46 +251,66 @@ we can study the the lines of the code of "learn2.my" to try to understand how t
 I will go a bit faster through this one, 
 and if you find you are getting lost, 
 it might help to go back and have a closer look at the breakdown of the first example. 
-The first line of "learn2.my"
+The first line of "learn2.my" contains a comment with the example file name. 
+The second line is an assignment with left-hand side label <code>myNumber</code>
 <pre>
-// learn2.my
+2 | myNumber = 2;
+    ^^^^^^^^
 </pre>
-contains a comment with the example file name. 
-The second line
+and right hand side of the number 2. 
 <pre>
-myNumber = 2;
+2 | myNumber = 2;
+               ^
 </pre>
-is an assignment with left-hand side label <code>myNumber</code> and right hand side of the number <code>2</code>. 
-Remember that this assignment means that we are choosing the name <code>myNumber</code> to be equivalent to the number <code>2</code> where ever we use it in definition code. 
-The third line
+Remember that this assignment means that we are choosing the name <code>myNumber</code> to be equivalent to the number 2 where ever we use it in definition code. 
+The third line assigns the label <code>myMath</code> 
 <pre>
-myMath = 3 * myNumber;
+3 | myMath = 3 * myNumber;
+    ^^^^^^
 </pre>
-assigns the label <code>myMath</code> to the right hand side <code>3 * myNumber</code>
-where the asterisk symbol <code>*</code> describes a mathematical calculation - 
+to the right hand side
+<pre>
+3 | myMath = 3 * myNumber;
+             ^^^^^^^^^^^^
+</pre>
+where the asterisk symbol <code>*</code> describes a mathematical equation - 
 the multiplication of the values to the left and right. 
-Essentially, this definition says to multiply the number <code>3</code> by the value of the code represented by <code>myNumber</code>. 
+Essentially, this definition says to multiply the number 3 by the value of the code represented by <code>myNumber</code>. 
 To find the definition for <code>myNumber</code> we look through the sequence of assignments we have made until we find a corresponding definition for that label - 
-the assignment on the previous line defined <code>myNumber</code> as the number <code>2</code>.
+the assignment on the previous line defined <code>myNumber</code> as the number 2.
+<pre>
+2 | myNumber = 2;
+</pre>
 </p>
 
 <p>
-The fourth line
+The fourth line is almost the same as the third line from the first example "learn1.my" earlier, 
+except that the tuple assignment <code>.val</code> is defined with a label <code>myMath</code> (the previous example defined <code>val</code> as <code>myText</code>). 
 <pre>
-.run = print(.val = myMath,).run;
+4 | .run = print(.val = myMath,).run;
+                        ^^^^^^
 </pre>
-is almost the same as the third line from the first example "learn1.my" earlier, 
-except that inside the <code>()</code> <code>.val</code> is defined to a different label <code>myMath</code> instead of <code>myText</code>. 
 We recall that <code>print</code> will print the value associated with <code>.val</code> to the terminal. 
 Hence with this line we are saying we want to print whatever <code>myMath</code> evaluates to. 
 We saw from running the code file "learn2.my" earlier that this was the number 6. 
-We can confirm this by a process of repeatedly substituting names by their code definitions: 
-beginning with <code>myMath</code>,
-substituting the definition from the third line gives <code>myMath</code> → <code>3 * myNumber</code>.
-Substituting the definition for <code>myNumber</code> from line 2 gives
-<code>3 * myNumber</code> → <code>3 * 2</code>,
-and finally performing the multiplication gives <code>3 * 2</code> → <code>6</code>. 
+We can confirm this by a process of repeatedly substituting names by their code definitions beginning with <code>myMath</code>:
 </p>
+<table>
+<tr>
+  <td><code>myMath</code></td>
+</tr>
+<tr>
+  <td><code>3 * myNumber</code></td>
+  <td>Substituting <code>myMath</code> (line 3)</td>
+</tr>
+<tr>
+  <td><code>3 * 2</code></td>
+  <td>Substituting <code>myNumber</code> (line 2)</td>
+</tr>
+<tr>
+  <td><code>6</code></td><td>Performing <code>*</code></td>
+</tr>
+</table>
 
 <h4>Names, grouped</h4>
 
@@ -273,7 +338,7 @@ myMath = 5;
 has an additional line added to it compared to "learn2.my" above. 
 The new line
 <pre>
-myMath = 5;
+4 | myMath = 5;
 </pre>
 is an assignment of the number 5 to the label <code>myMath</code>. 
 Type the code block into a text file editor, 
@@ -285,37 +350,34 @@ $ my-exe.exe learn2_bad.my
 my-exe.EXE: MyExceptions [OverlappedSet (Priv (Pure (I_ "myMath")))]
 </pre>
 The duplicate assignments to <code>myMath</code> are forbidden as they would introduce ambiguity –
-which value would be associated with <code>.val</code> and printed? 
+which value would be associated with <code>val</code> and communicated to <code>print</code>? 
 Unique names mean that one can quickly find where a label has been assigned, 
 allowing programs to be more easily understood.
 </p>
 
 <p>
-The following line from the "learn2.my" example
-<pre>
-.run = print(.val = myMath,).run;
-</pre>
-demonstrates using <code>()</code> to construct a new group of names. 
-We call the <code>()</code> and the assignments contained within collectively a "tuple". 
+We have seen the tuple construction a few times so far,
+first in line 3 of the "learn1.my".
+Tuples construct new group of names.
 Each new group is considered distinct from other group, 
 so name repetitions are allowed between groups – 
-the name <code>.val</code> assigned in this group could also be assigned in the outer top-level group.
-The names assigned by tuples behave differently to those in the outer group in an important way –
+the name <code>val</code> assigned in this group could also be assigned in the top-level group.
+The names assigned by tuples behave differently to those in the top-level group in an important way –
 they aren't able to be used in right-hand side definitions,
 and therefore aren't easily reusable.
 This makes tuples only really useful as a way to pass code definitions to commands,
-and hence only key assignments are permitted – 
-i.e. all assigned labels must have an initial <code>.</code>.
+and hence only public label assignments are permitted – 
+i.e. all assigned labels must be prefixed with <code>.</code>.
 As an aside, tuples do have another powerful use as destructuring patterns, 
 but we won't cover that in this introduction.
 </p>
 
-<h4>Names, grouped again</h4>
+<h4>Names, grouped, demonstrated</h4>
 
 <p>
 In previous examples we have used the command <code>print</code> to print values to our terminal. 
 We will soon see that in my language has the capability to define our own commands as well.
-First though, let's imagine we have a two-dimensional co-ordinate that we want to print the height of. We might some write code like the following.
+First though, let's imagine we have a two-dimensional co-ordinate that we want to print the y-axis component of. We might some write code like the following.
 </p>
 
 <pre>
@@ -335,34 +397,158 @@ $ myi-exe.exe learn3.my
 </pre>
 
 <p>
-There are perhaps some interesting new things in this example. Let's skip the first line and look closer at line 2.
+There are perhaps some interesting new things in this example. Let's skip the (trivial) first line and look closer at line 2.
+As you might have guessed, this line is an assignment to the label <code>myPoint</code>.
+The assigned value
+<pre>
+2 | myPoint = (.x = 2, .y = 4);
+              ^^^^^^^^^^^^^^^^
+</pre>
+is a tuple, 
+which we might remember is syntactically a sequence of <code>,</code> separated assignments inside <code>()</code>s. 
+In this case the tuple defines numeric values for two public names <code>x</code> and <code>y</code> – 
+the x- and y- "co-ordinates" of a point.
+We can see on the next line
+<pre>
+3 | .run = print(.val = myPoint.y,).run
+</pre>
+how to talk about the values of public names like these. 
+The line you might notice is the usual invoking of the <code>print</code> command like we have seen in previous examples.
+The value assigned to the tuple name <code>val</code> as the value to be printed should be read as the label <code>myPoint</code>
+<pre>
+3 | .run = print(.val = myPoint.y,).run
+                        ^^^^^^^
+</pre>
+followed by the public prefix <code>.</code> and label <code>.y</code>.
+<pre>
+3 | .run = print(.val = myPoint.y,).run
+                               ^^
+</pre>
+This is the same pattern that we use to run our <code>print</code> command.
+We recall that following the command by the public name <code>run</code> would invoke the print action.
+To work out what is to be printed, the program will look for the definition <code>myPoint</code>,
+and then invoke the corresponding action associated with the public name <code>y</code>.
+Looking through our program, we find the relevant definition on line 2.
+<pre>
+2 | myPoint = (.x = 2, .y = 4);
+</pre>
+For a tuple, the action invoked by a public name is to simply to get the value assigned to that name in the tuple.
+(It is an error to invoke a name that is not assigned in the tuple.)
+Invoking <code>y</code> on the tuple defined for <code>myPoint</code> will thus return 4,
+which is the value printed.
+</p>
+
+<p>
+A slightly more useful thing then printing the y-component value of a single point,
+would be to print y-component values that are related to the x-components –
+i.e. a line.
+Let's try to generalise our previous example, and modify the definition of <code>myPoint</code> so that the  <code>y</code> coordinate is related to the <code>x</code> by the line "y = x + 2".
 </p>
 
 <pre>
-myPoint = (.x = 2, .y = 4);
+// learn4_bad.my
+myPoint = (.x = 2, .y = x + 2);
+.run = print(.val = myPoint.y,).run
 </pre>
 
 <p>
-As you might have guessed, this line is an assignment to the label <code>myCoord</code>.
-The assigned value is a tuple, which we might remember is a sequence of <code>,</code> separated assignments inside <code>()</code>'s. 
-In this case the tuple defines numeric values for two keys <code>.x</code> and <code>.y</code> – 
-the x- and y- "co-ordinates" of a point.
-We can see on the next line how to talk about the values of these keys.
-The line
+However, this doesn't quite work! After saving the above block of code to a file "learn4_bad.my" and running you should see the following error.
+</p>
+
 <pre>
+$ myi-exe.exe learn4_bad.my
+my-exe.EXE: MyExceptions [ScopeError (Priv (Pure (I_ "x")))]
+</pre>
+
+<p>
+The error tells us that we have used the label <code>x</code> without defining it. 
+Recall that earlier I said that tuple assignments aren't the same as top-level ones,
+and assigned names aren't used for determining values to substitute for label usages.
+This is the cause of the error –
+there is no value assigned to <code>x</code> that can be substituted into the tuple definition for <code>y</code>.
+</p>
+
+<p>
+Don't worry if this all seems a bit confusing! 
+We have available a simple fix: 
+an alternative construction called a "block",
+demonstrated in the following fixed example.
+</p>
+
+<pre>
+// learn4.my
+myPoint = {.x = 2; .y = x + 2};
 .run = print(.val = myPoint.y,).run
 </pre>
-you might notice is the usual invoking of the <code>print</code> command like we have seen in previous examples.
-The value to be printed we have written as <code>myPoint.y</code>  –
-which should be read as the label <code>myPoint</code> followed by the key <code>.y</code>.
-This is the same pattern that we use to run our <code>print</code> command,
-where we follow the command with the key <code>.run</code>.
 
+<p>
+Follow the usual process – type, save to a file "learn4.my" and run. You should see the following.
+</p>
+
+<pre>
+$ myi-exe.exe learn4.my
+4
+</pre>
+
+<p>
+Woah!
+What did we do?
+Focusing on the changed line 2, we have replaced the tuple construction syntax with a new syntax for constructing a "block". 
+Instead of <code>()</code> we employ opening and closing brace characters <code>{}</code>.
+<pre>
+2 | myPoint = {.x = 2; .y = x + 2};
+              ^                  ^
+</pre>
+Instead of <code>,</code> for terminating assignments, we return to the usual <code>;</code>.
+<pre>
+2 | myPoint = {.x = 2; .y = x + 2};
+                     ^
+</pre>
+The return of <code>;</code> as assignment terminator suggests a return to the top-level behaviour of assignments,
+which is the case.
+</p>
+
+<p>
+Before we look at the block construction in more depth, 
+we should note that we didn't need to change the reference to <code>myPoint</code> on line 3!
+<pre>
+3 | .run = print(.val = myPoint.y,).run
+                        ^^^^^^^^^
+</pre>
+I.e. we can invoke the name <code>y</code> on the new block definition of <code>myPoint</code> in the same way as with the tuple definition.
+</p>
+
+<p>
+Let's come back to the block construction shown.
+Like a tuple, a block introduces a new name group. 
+Contrary to a tuple, names defined within the block <em>are</em> available to be used as placeholders in definitions made the block.
+In this case, to calculate the value for <code>y</code> we need to know the value for <code>x</code>.
+<pre>
+2 | myPoint = {.x = 2; .y = x + 2};
+                            ^
+</pre>
+We search within the assignments of the block and find the definition.
+<pre>
+2 | myPoint = {.x = 2; .y = x + 2};
+               ^^^^^^
+</pre>
+A subtle point is that we used the label <code>x</code> plain in the definition of <code>y</code> to refer to the public definition without needing to include the prefix <code>.</code>.
+This follows from earlier when I said that we can generally get away with thinking of public name definitions as though they were defined in the normal way (without the <code>.</code>). 
 </p>
 
 
-
 <!-- up to here -->
+
+<p>
+Names defined in a block take precedence over ("shadow") any identical names defined in code outside the block.
+So when determining the value for a label used in a definition,
+the names defined in the current block are searched,
+then the names of the enclosing block,
+and so forth up to the top-level name group.
+Finally, builtin names such as <code>print</code> are searched.
+<p>
+
+
 – in fact, a command is a definition of a group of names for our expected "inputs" – and outputs that looks a bit closer to how we have defined names so far. Let's look at some more code.
 </p>
 

@@ -1,0 +1,137 @@
+<!doctype html>
+<body>
+<h2>Desugaring to categories</h2>
+
+<p>
+In the paper <a href="http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf">Compiling to Categories</a> the author makes use of a famous correspondence between the "simply typed lambda calculus and a "cartesian closed category" to transform and re-interpret programs written in the Haskell programming language. 
+An insight of this is that while Haskell's syntax is closely related to lambda calculus,
+the language itself forces a relatively rigid "monomorphic" interpretation. 
+In contrast, Haskell also has "do notation" that provides syntax that describes computations that can be re-interpreted in different monadic contexts.
+</p>
+
+<p>
+Briefly, the <code>Monad</code> typeclass interface has the two methods shown below: 
+</p>
+<pre>
+class Monad m where
+  return :: a -> m a
+  (>>=) :: m a -> (a -> m b) -> m b
+</pre>
+<p>
+Only the "bind" function <code>(>>=)</code> is involved in the do notation desugar, which is shown here:
+</p>
+<pre>
+-- do desugar
+do { a <- m; U } -- --> m >>= (\ a -> do { U })
+do { e }         -- --> e
+</pre>
+
+<p>
+The thing to note here is that the type of the expression is determined based on the desugared terms.
+Do notation only introduces <code>(>>=)</code> terms, which from the <code>Monad</code> class definition have the type <code>Monad m => m a -> (a -> m b) -> m b</code>.
+</p>
+
+<p>
+The author of <em>Compiling to Categories</em> describes a hierarchy of typeclass interfaces:
+<code>Category</code>, <code>Cartesian</code>, and <code>Closed</code>.
+The <code>Category</code> class has "identity" and "composition" functions,
+and is given by:
+</p>
+<pre>
+class Category k where
+  id :: a `k` a
+  (.) :: (b `k` c) -> (a `k` b) -> (a `k` c)
+</pre>
+<p>
+The <code>Cartesian</code> class adds compound types ("tuples"), given by:
+</p>
+<pre>
+class Category k => Cartesian k where
+  (***) :: (a `k` c) -> (a `k` d) -> (a `k` (c, d))
+  exl :: (a, b) `k` a
+  exr :: (a, b) `k` b
+</pre>
+<p>
+The <code>Closed</code> class adds "exponential" types —
+basically, objects representing morphisms.
+In the lambda calculus correspondence,
+this represents the fact that objects are lambdas and can be passed as arguments. 
+The class is:
+</p>
+<pre>
+class Cartesian k => Closed k where
+  apply :: ((a `k` b), a) `k` b
+  curry :: ((a, b) `k` c) -> (a `k` (b `k` c))
+  uncurry :: (a `k` (b `k` c)) -> ((a, b) `k` c)  
+</pre>
+
+<p>
+The paper describes a "lambda notation" desugar similar to that for do notation as follows:
+<p>
+<pre>
+-- lambda desugar
+\ x -> x        -- --> id
+\ x -> U V      -- --> apply . ((\ x -> U) *** (\ x -> V))
+\ x -> \ y -> U -- --> curry (\(x, y) -> U)
+\ x -> k        -- --> const k ??
+</pre>
+
+<p>
+Let's consider an example: <code>\ f x -> f x</code>.
+The desugared version is:
+</p>
+<pre>
+-- \ f -> \ x -> f x
+-- curry (\(f,x) -> f x)
+-- curry (apply . ((\(f,x) -> f) *** (\(f,x) -> x)))
+-- curry (apply . (exl *** exr))
+</pre>
+
+
+<p>
+An example category for reinterpretation is the "Kliesli" category,
+where arrows are functions with a monadic effect.
+We can define the category thus:
+</p>
+<pre>
+newtype Kliesli m a b = K { unK :: a -> m b }
+
+instance Monad m => Category (Kliesli m) where
+  id = K return
+  g . f = K (unK g <=< unK f)
+  
+instance Monad m => Cartesian (Kliesli m) where
+  f *** g = K (\ a -> liftA2 (,) (unK f a) (unK g a))
+  exl = K (\ (a, b) -> return a)
+  exr = K (\ (a, b) -> return b)  
+
+instance Monad m => Closed (Kliesli m) where
+  apply = K (\ (f, x) -> unK f x)
+  curry f = K (\ a -> return (K (\ b -> unK f (a, b))))
+  uncurry f = K (\ (a, b) -> unK f a >>= \ g -> unK g b)
+</pre>
+
+<p>
+What is the reinterpretation of application <code>\ f r -> f r</code> in this category? Let's see:
+</p>
+<pre>
+-- \ f -> \ r -> f r
+-- curry (apply . (exl *** exr))
+-- (defn exl, exr)
+-- curry (apply . (K (\ (a, b) -> return a) *** K (\ (a, b) -> return b)))
+-- (defn (***))
+-- curry (apply . (K return))
+-- (defn (.))
+-- curry apply
+-- (defn apply)
+-- curry (K (\ (f, x) -> unK f x))
+-- (defn curry)
+-- K (\ f -> return (K (\ r -> unK f r)))
+  
+putStrLn :: String -> IO ()
+getStrLn :: IO String
+
+f :: IO ()
+f = putStrLn getStrLn
+  -- (apply . const putStrLn *** const getStrLn) ()
+

@@ -1,0 +1,35 @@
+<!doctype html>
+<head>
+<script src="script/myi-web.js"></script>
+</head>
+<body>
+<textarea id="codeArea" placeholder="type code here..."></textarea>
+<textarea id="outputArea" readonly></textarea>
+<button id="clearButton" type="button" onclick="clearResults()">Clear</button>
+<input type="text" id="evalArea"></input>
+<button id="runButton" type="button">Run</button>
+
+<script>
+function clearResults () {
+  outputArea.value = '';
+};
+function appendResult(inp, res) {
+  outputArea.value += '\n>>' + inp + '\n' + res;
+};
+function setup(eval) {
+  c = codeArea;
+  e = evalArea;
+  r = runButton;
+  r.onclick = function() {
+    eval(c.value, e.value)
+  };
+};
+
+/*setup(function(str1, str2) {
+  console.log(str1);
+  appendResult(str2, str2);
+});*/
+</script>
+
+
+</body>

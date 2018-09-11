@@ -1,35 +1,46 @@
 <!doctype html>
 <head>
-<script src="script/myi-web.js"></script>
+  <meta charset="utf-8">
+  <title>Web interpreter</title>
 </head>
 <body>
-<textarea id="codeArea" placeholder="type code here..."></textarea>
-<textarea id="outputArea" readonly></textarea>
-<button id="clearButton" type="button" onclick="clearResults()">Clear</button>
-<input type="text" id="evalArea"></input>
-<button id="runButton" type="button">Run</button>
+<h2>Editable code</h2>
+<textarea id="code" placeholder="type code here..." style="min-height: 100px;width: 95%"></textarea>
+<h2>Output</h2>
+<pre id="output" style="overflow-y: auto;height: 50px;;width: 95%"></pre>
+<input type="text" id="eval" placeholder="type an expression here and click evaluate.." style="width: 95%"></input>
+<div class="controls">
+  <button id="run" type="button">Evaluate</button>
+  <button id="clear" type="button" onclick="clearOutput()">Clear</button>
+</div>
 
 <script>
-function clearResults () {
-  outputArea.value = '';
+var code = document.getElementById('code');
+var eval = document.getElementById('eval');
+var output = document.getElementById('output');
+var run = document.getElementById('run');
+function clearOutput () {
+  output.textContent = '';
 };
-function appendResult(inp, res) {
-  outputArea.value += '\n>>' + inp + '\n' + res;
+function appendOutput(res) {
+  output.textContent += res + '\n';
+  scrollToBottom(output)
 };
-function setup(eval) {
-  c = codeArea;
-  e = evalArea;
-  r = runButton;
-  r.onclick = function() {
-    eval(c.value, e.value)
+function scrollToBottom(o) {
+  o.scrollTop = o.scrollHeight - o.clientHeight;
+};
+var oneval = appendOutput
+function setup(cb) {
+  run.onclick = function() {
+    appendOutput('>> ' + eval.value);
+    cb(code.value, eval.value);
   };
 };
-
 /*setup(function(str1, str2) {
   console.log(str1);
-  appendResult(str2, str2);
+  appendResult(str2);
 });*/
 </script>
-
+<script src="script/myi-web.js"></script>
 
 </body>

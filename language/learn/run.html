@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+
+<body>
+<h2>Run</h2>
+
+<p>Up: <a href="..">Language</a>, Next: <a href="examples">Examples</a>.</p>
+
+<br></br>
+
+<iframe src="../webi.html" style="width: 98%" height="360"></iframe>
+
+<h1>How to run a Goat program</h2>
+
+<p>
+We will start with a simple program to test that everything is working.
+Shown in the other tab is the Goat <strong>Web Interpreter</strong>.
+In the box below the title <strong>Editable code</strong> type in the following code block.
+</p>
+
+<pre>
+myText = "Hello world.";
+</pre>
+
+<p>
+Now, click on the box at the bottom below the title <strong>Output</strong> and type the following:
+<pre>
+myText
+</pre>
+and click the <strong>Evaluate</strong> button.
+You should see the following printed to the <strong>Output</strong> area:
+</p>
+
+<pre>
+>> myText
+Hello world.
+</pre>
+
+<p>
+Congratulations, you have made a Goat program!
+</p>
+
+<h4>How it looks and what it means</h4>
+
+<p>
+Learning to read Goat code means learning the code's syntax –
+how programming concepts are represented as text.
+In the following I will briefly describe the syntax and meaning of the code shown in the program above.
+To begin, the first line shows our first example of syntax:
+from the left we see first a sequence of alphabetic characters <code>myText</code> forming a word.
+<pre>
+myText = "Hello world.";
+^^^^^^
+</pre>
+Next is a space, then an equals sign symbol <code>=</code>.
+<pre>
+myText = "Hello world.";
+       ^
+</pre>
+Next is another space, then a sentence in double quotes <code>"Hello world."</code>.
+<pre>
+myText = "Hello world.";
+         ^^^^^^^^^^^^^^
+</pre>
+Finally, we have a semi-colon symbol <code>;</code>.
+<pre>
+myText = "Hello world.";
+                       ^
+</pre>
+This combination of syntax demonstrates a very common form in my language, 
+called an "assignment". 
+We have seen the effect of using this form.
+In the <strong>Evaluate</strong> box we typed a repetition of the label <code>myText</code>,
+and evaluating this code resulted in the text "Hello world." being printed to the <strong>Output</strong> area.
+</p> 
+
+<p>
+In general, the assignment form includes a left-hand side label –
+<code>myText</code> in the example –
+followed by a <code>=</code>,
+and a right-hand side code definition –
+<code>"Hello world."</code> in the example –
+and finally a <code>;</code> terminator.
+Spaces can appear between any of these parts – they are for the benefit of the reader and have no effect on the computed value.
+Currently, Goat does not allow spaces within a left-hand side label.
+</p>
+
+<p>
+Returning to the example,
+the defining code on the right-hand side of the assignment is the double-quoted sentence <code>"Hello world."</code>.
+This is our first example of a primitive form in Goat,
+called "literal text" or just "text".
+The form uses double-quotes around text to represent exactly the text shown within the quotes.
+(Note that inside quotes, spaces are significant and not ignored!)
+</p>
+
+<p>
+To sum up, 
+with this assignment we are saying that whereever else we use the name <code>myText</code>,
+we really mean the text "Hello world.". 
+The assignment form lets you give names to reusable pieces of code,
+and refer to a name within code definitions as shorthand for its definition.
+This is how we get "Hello world." printed when we evaluated the label <code>myText</code> in the <strong>Evaluate</strong> box.
+We can put any code definition into the <strong>Evaluate</strong> box and evaluate it to see for ourselves what happens.
+</p>
+

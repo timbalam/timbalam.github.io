@@ -13,36 +13,36 @@ Up: <a href=".">Learn</a>.
 
 <br></br>
 
-<iframe src="../webi.html" style="width: 98%" height="360"></iframe>
-
-<h1>How to run a Goat program</h2>
+<h1>Run a simple Goat program</h2>
 
 <p>
-We will start with a simple program to test that everything is working.
-Shown in the other tab is the Goat <strong>Web Interpreter</strong>.
-In the box below the title <strong>Editable code</strong> type in the following code block.
+The text in the box below will be evaluated by the Goat <strong>web interpreter</strong>.
+</p>
+
+<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+
+<p>
+We will start with a simple program to test that it is working,
+and to see how to use it to run Goat programs.
+In the box above type in the following code block.
+Press the escape key or tab key when you are finished.
 </p>
 
 <pre>
 myText = "Hello world.";
+.output = myText;
 </pre>
 
 <p>
-Now, click on the box at the bottom below the title <strong>Output</strong> and type the following:
-<pre>
-myText
-</pre>
-and click the <strong>Evaluate</strong> button.
-You should see the following printed to the <strong>Output</strong> area:
+If it worked correctly, you should see the following text appear below the box:
 </p>
 
 <pre>
->> myText
 Hello world.
 </pre>
 
 <p>
-Congratulations, you have made a Goat program!
+Congratulations, you have a working Goat program!
 </p>
 
 <h4>How it looks and what it means</h4>
@@ -109,3 +109,6 @@ This is how we get "Hello world." printed when we evaluated the label <code>myTe
 We can put any code definition into the <strong>Evaluate</strong> box and evaluate it to see for ourselves what happens.
 </p>
 
+<script src="../script/codebox.js"></script>
+<script src="../script/myi-web.js"></script>
+</body>

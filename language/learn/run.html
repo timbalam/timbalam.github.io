@@ -8,7 +8,8 @@
 <h2>Run</h2>
 
 <p>
-Up: <a href=".">Learn</a>.
+Up: <a href=".">Learn</a>,
+Next: <a href="math">Math</a>.
 </p>
 
 <br></br>
@@ -25,7 +26,7 @@ The text in the box below will be evaluated by the Goat <strong>web interpreter<
 We will start with a simple program to test that it is working,
 and to see how to use it to run Goat programs.
 In the box above type in the following code block.
-Press the escape key or tab key when you are finished.
+Click outside the box or press the tab key when you are finished.
 </p>
 
 <pre>
@@ -48,67 +49,82 @@ Congratulations, you have a working Goat program!
 <h4>How it looks and what it means</h4>
 
 <p>
-Learning to read Goat code means learning the code's syntax –
-how programming concepts are represented as text.
-In the following I will briefly describe the syntax and meaning of the code shown in the program above.
-To begin, the first line shows our first example of syntax:
-from the left we see first a sequence of alphabetic characters <code>myText</code> forming a word.
+In this part we will deconstruct the simple program we just wrote.
+This is a bit of a look at the program from the computer's perspective
+(technically the perspective of the Goat interpreter, which is a computer program).
+Like several notable human languages, the computer reads from left to right.
+We begin with the first word of the first line, highlighted below (where I have added a line number marker):
 <pre>
-myText = "Hello world.";
-^^^^^^
+1 | myText = "Hello world.";
+    ^^^^^^
 </pre>
-Next is a space, then an equals sign symbol <code>=</code>.
+The computer understands sequences of alphabetic characters such as <code>myText</code> to be a name.
+Next is a space.
+Spaces can increase readability for humans, but they don't matter to the computer!
+An exception to this that we should note is that names are currently not allowed to contain spaces. 
+After the space is an equals sign symbol <code>=</code>:
 <pre>
-myText = "Hello world.";
-       ^
+1 | myText = "Hello world.";
+           ^
 </pre>
-Next is another space, then a sentence in double quotes <code>"Hello world."</code>.
+The computer sees the <code>=</code> character and understands that we are making an <em>assignment</em>.
+The name to the left is being defined as equivalent to the code to the right. 
+Next is another (ignored) space, then a sentence in double quotes <code>"Hello world."</code>.
 <pre>
-myText = "Hello world.";
-         ^^^^^^^^^^^^^^
+1 | myText = "Hello world.";
+             ^^^^^^^^^^^^^^
 </pre>
 Finally, we have a semi-colon symbol <code>;</code>.
 <pre>
-myText = "Hello world.";
-                       ^
+1 | myText = "Hello world.";
+                           ^
 </pre>
-This combination of syntax demonstrates a very common form in my language, 
-called an "assignment". 
-We have seen the effect of using this form.
-In the <strong>Evaluate</strong> box we typed a repetition of the label <code>myText</code>,
-and evaluating this code resulted in the text "Hello world." being printed to the <strong>Output</strong> area.
+The <code>;</code> character indicates that we have finished with the definition for the assignment.
+The content of the definition is the double-quoted sentence <code>"Hello world."</code>.
+This is an example of a <em>primitive</em> form in Goat,
+for which the Goat interpreter has built-in knowledge.
+</p>
+
+<p>
+The second line, shown below, begins with a period symbol <code>.</code>:
+<pre>
+2 | .output = myText;
+    ^
+</pre>
+followed by the word <code>output</code>:
+<pre>
+2 | .output = myText;
+     ^^^^^^
+</pre>
+The <code>.</code> as giving special meaning to whichever word follows it.
+In this case, it allows the Goat web interpreter to read, evaluate, and print the definition we give to the word <code>output</code>.
+The line continues with <code>=</code>,
+following the assignment pattern which we saw in the first line.
+In this case the assigned code is a repetition of <code>myText</code>:
+<pre>
+2 | .output = myText;
+              ^^^^^^
+</pre>
+The Goat web interpreter is set up to look for the definition of <code>output</code>,
+and to print the result of evaluating the definition below the input text box.
+As we assigned the name <code>myText</code> to be the text "Hello world." on the first line,
+this is what our program prints.
 </p> 
 
 <p>
-In general, the assignment form includes a left-hand side label –
-<code>myText</code> in the example –
-followed by a <code>=</code>,
-and a right-hand side code definition –
-<code>"Hello world."</code> in the example –
-and finally a <code>;</code> terminator.
-Spaces can appear between any of these parts – they are for the benefit of the reader and have no effect on the computed value.
-Currently, Goat does not allow spaces within a left-hand side label.
-</p>
-
-<p>
-Returning to the example,
-the defining code on the right-hand side of the assignment is the double-quoted sentence <code>"Hello world."</code>.
-This is our first example of a primitive form in Goat,
+We can expand on the concept of a primitive form a bit.
+This example features a double-quoted sentence,
 called "literal text" or just "text".
 The form uses double-quotes around text to represent exactly the text shown within the quotes.
 (Note that inside quotes, spaces are significant and not ignored!)
+Some more examples of a primitive form are literal numbers –
+represented by numeric characters e.g. <code>11</code>, <code>0.45</code> –
+and some mathematical operations –
+represented by infix symbolic characters e.g. <code>+</code>, <code>/</code>.
+We will see demonstrations of these primitive in the next example.
 </p>
 
-<p>
-To sum up, 
-with this assignment we are saying that whereever else we use the name <code>myText</code>,
-we really mean the text "Hello world.". 
-The assignment form lets you give names to reusable pieces of code,
-and refer to a name within code definitions as shorthand for its definition.
-This is how we get "Hello world." printed when we evaluated the label <code>myText</code> in the <strong>Evaluate</strong> box.
-We can put any code definition into the <strong>Evaluate</strong> box and evaluate it to see for ourselves what happens.
-</p>
 
 <script src="../script/codebox.js"></script>
-<script src="../script/myi-web.js"></script>
+<script src="../script/goat-webi.js"></script>
 </body>

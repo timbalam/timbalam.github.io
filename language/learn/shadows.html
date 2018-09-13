@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+
+<body>
+<h2>Shadows</h2>
+
+<p>
+Up: <a href=".">Learn</a>,
+Prev: <a href="layers">Layers</a>,
+Next: <a href="updates">Updates</a>.
+</p>
+
+<br></br>
+
+<h1>Regarding precedence</h1>
+
+<p>
+We have introduced the block construction in the <a href="layers">previous tutorial</a>,
+which introduce a nested layer of names,
+permitted to overlap with outer layers.
+In this tutorial we will investigate how layers of names created by blocks interact with outer layer of names.
+For this we will need our Goat Pen:
+</p>
+
+<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+
+<p>
+Let's go back and fix our first (broken) program from the other tutorial in a different way.
+We will add a definition for "x" above the first line,
+as shown below.
+</p>
+
+<pre>
+x = 1;
+myPoint = (.x : 2, .y : x + 2);
+.output = myPoint.y;
+</pre>
+
+<p>
+Typing this into the Goat Pen and running should get us the following valid result!
+</p>
+
+<pre>
+3.0
+</pre>
+
+<p>
+Compare this to what happened the previous time, 
+when we got an error about a missing definition for "x".
+This time, we have a definition –
+we have set <code>x</code> to be the number 1.
+</p>
+
+<p>
+For the second part of our investigation,
+we are going to make the same change to the definition of <code>myPoint</code> as we made for the other tutorial,
+converting the tuple into a block.
+With this change, our program becomes:
+</p>
+
+<pre>
+x = 1;
+myPoint = {.x = 2; .y = x + 2};
+.output = myPoint.y;
+</pre>
+
+<p>
+What will the value of <code>myPoint.y</code> turn out to be?
+Type the new program into the Goat Pen to find out.
+You should see this.
+</p>
+
+<pre>
+4.0
+</pre>
+
+<p>
+This result is the same as the fixed program from other tutorial,
+and demonstrates how Goat decides what definitions to give to names.
+The definition for "x" made inside the block definition overrides
+the definition made on the first line of the program.
+The following holds:
+<strong>Names assigned in a block take precedence over (or "shadow") any identical names defined in layers outside the block.</strong>
+The value represented by a name used in a definition hence comes
+from the closest surrounding layer where it is given a definition.
+</p>
+
+<script src="../script/codebox.js"></script>
+<script src="../script/goat-webi.js"></script>
+</body>
+</html>

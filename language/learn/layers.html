@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+
+<body>
+<h2>Layers</h2>
+
+<p>
+Up: <a href=".">Learn</a>,
+Prev: <a href="names">Names</a>,
+Next: <a href="shadows">Shadows</a>.
+</p>
+
+<br></br>
+
+<h1>Names, layered</h1>
+
+<p>
+In the <a href="names">previous tutorial</a> we created a value representing a point (in a co-ordinate space).
+A useful generalisation of this would be if we related the y-component to the x-component –
+i.e. a line.
+Let's try this and see what happens.
+First, below is our Goat pen.
+</p>
+
+<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+
+<p>
+Let's try to generalise our previous example,
+and modify the definition of <code>myPoint</code> so that the  <code>y</code> coordinate is related to the <code>x</code> by the line "y = x + 2".
+The new program is shown below.
+</p>
+
+<pre>
+myPoint = (.x : 2, .y : x + 2);
+.output = myPoint.y;
+</pre>
+
+<p>
+However, this doesn't quite work! Type and run the above block of code into the Goat pen and you should see the following error.
+</p>
+
+<pre>
+error: definition missing: "x"
+</pre>
+
+<p>
+The error tells us that we have used the label <code>x</code> without defining it.
+This is due to an import distinction between tuple associations and the usual assignments we write in our program –
+whereas assignments introduce an equivalence between the name and definition,
+associations can only be invoked from the tuple.
+This is the cause of the error –
+Nowhere have we <em>assigned</em> to the name <code>x</code> a definition that can be substituted into the tuple definition for <code>y</code>.
+</p>
+
+<p>
+Don't worry if this all seems a bit confusing! 
+We have available a simple fix: 
+an alternative construction to a tuple called a "block",
+demonstrated in the following fixed example.
+</p>
+
+<pre>
+myPoint = {.x = 2; .y = x + 2};
+.output = myPoint.y;
+</pre>
+
+<p>
+Let's go ahead and type this into the Goat pen and run it.
+You should see the following.
+</p>
+
+<pre>
+4.0
+</pre>
+
+<h4>Creating blocks</h4>
+
+<p>
+Cool!
+What did we do?
+We made changed to line 1,
+replacing the tuple creation syntax with a new syntax for constructing a "block".
+The diagram below shows the relationship between tuple and block syntax.
+</p>
+
+<pre>
+<table>
+<tr>
+  <th></th>
+  <th>Tuple</th>
+  <th></th>
+  <th>Block</th>
+</tr>
+<tr>
+  <th>Begins/ends with</th>
+  <td><code>()</code></td>
+  <th>becomes</th>
+  <td><code>{}</code></td>
+</tr>
+<tr>
+  <th>Association/assignment</th>
+  <td><code>:</code></td>
+  <th>becomes</th>
+  <td><code>=</code></td>
+</tr>
+<tr>
+  <th>Definition terminator</th>
+  <td><code>,</code></td>
+  <th>becomes</th>
+  <td><code>;</code></td>
+</tr>
+</table>
+</pre>
+
+<p>
+One thing to note with block creation syntax is that we are again using the familiar <code>=</code> for assignment and <code>;</code> for definition termination.
+This correspondence with how we have been writing our programs so far is not accidental.
+At the end of the <a href="maths">Math</a> tutorial,
+we introduced a way of looking at Goat programs as a set of names.
+With blocks,
+we don't need to settle for a single set of names for our entire program.
+They are a way to introduce a new "layer" of names,
+allowed to overlap with outer layers.
+(Names within a layer must still be unique, though).
+</p>
+
+<h4>How it looks and what it means</h4>
+
+<p>
+Let's come back to the program we wrote,
+and highlight some features of how blocks work.
+</p>
+
+<pre>
+1 | myPoint = {.x = 2; .y = x + 2};
+               ^^^^^^
+               1            ^
+                            2
+2 | .output = myPoint.y;
+              ^^^^^^^^^
+              3
+</pre>
+
+<ol>
+<li><p>
+Unlike tuples, blocks feature regular assignments,
+meaning names are given an equivalence with their definitions whenever they appear,
+<em>within the block</em>.
+</p></li>
+<li><p>
+Here that we used the name <code>x</code> in the definition of <code>y</code>.
+Note we can use the name plain without needing to include the prefix <code>.</code>.
+Remember that the <code>.</code> prefix acts as a decorator to a name rather than actually being part of the name itself. 
+</p></li>
+<li><p>
+Note that we didn't need to change our definition of <code>output</code>!
+We can invoke the public name <code>y</code> on the new block definition of <code>myPoint</code> to access the corresponding definition,
+same as with the tuple definition.
+As we have seen, the evaluated value is 4.0.
+</p></li>
+</ol>
+
+<script src="../script/codebox.js"></script>
+<script src="../script/goat-webi.js"></script>
+</body>
+</html>

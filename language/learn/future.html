@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+
+<body>
+<h2>Future</h2>
+
+<p>
+Up: <a href=".">Learn</a>,
+Prev: <a href="updates">Updates</a>.
+</p>
+
+<br></br>
+
+
+<h1>Referencing the future</h1>
+
+<p>
+Now that we have seen how to update block definitions,
+for our final tutorial,
+we will look into a complementary capability,
+making references to the future!
+We will need our trusty Goat Pen:
+</p>
+
+<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+
+<p>
+The code for this demonstration is below.
+</p>
+
+<pre>
+myPlane = { .z = .x - .y + 7 };
+myPointDepth = myPlane( .x : 1, .y : 2 ).z;
+.output = myPointDepth;
+</pre>
+
+<p>
+Okay, let's see what this does!
+Type it into the Goat Pen and run it.
+The depth of the point should be:
+</p>
+
+<pre>
+6.0
+</pre>
+
+<h4>Breaking it down</h4>
+
+<p>
+For a final time,
+let's break down the program and discuss some interesting parts.
+</p>
+
+<pre>
+1 | myPlane = { .z = .x - .y + 7 };
+                     ^^^^^^^^^^^
+                     1
+2 | myPointDepth = myPlane( .x : 1, .y : 2).z;
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+                   2                       ^^
+                                           3
+3 | .output = myPointDepth;
+</pre>
+
+<ol>
+<li><p>
+Probably the most notable part of the program is the definition of the name <code>z</code> inside the block defining <code>myPlane</code>.
+<code>z</code> is defined as a mathematical expression where two of the inputs are <code>.</code> prefixed names <code>x</code> and <code>y</code>,
+for which there are no corresponding definitions!
+How can this be?
+We need to consider the next line.
+</p></li>
+<li><p>
+The definition made to <code>myPointDepth</code> shows how we can use <code>myPlane</code> in a sensible way.
+We just need to update it with the missing definitions!
+</p></li>
+<li><p>
+We don't have to name the updated value we have created,
+instead we can immediately invoke the <code>z</code> component and assign that as the definition for <code>myPointDepth</code>.
+Running the program shows that this evaluates to 7.0,
+which fits with substituting the provided <code>x</code> and <code>y</code> component values into the definition for the <code>z</code> component of <code>myPlane</code>.
+</p></li>
+</ol>
+
+<h4>Referencing the future, publically</h4>
+
+<p>
+The vital component making this exercise work is the use of <code>.</code> prefixed names in the definition of <code>myPlane</code>'s <code>z</code> component.
+Without the prefix, we would get missing definition errors (try it!).
+When we use the prefix we are saying that we want to reference the component of the block with that name,
+after taking into account future updates.
+The Goat interpreter will then wait until <code>z</code> is invoked before deciding what definitions to apply to the <code>x</code> and <code>y</code> names.
+</p>
+
+<p>
+If we tried invoking the <code>z</code> component of <code>myPlane</code>,
+without first updating to provide the missing components,
+we would get an error!
+Values like <code>myPlane</code> that are only partially defined act as templates from which complete values can be made by updating,
+as in the definition of <code>myPointDepth</code>. 
+</p>
+
+<h4>The end</h4>
+
+<p>
+We have now completed a basic tour of how Goat reads and is written. For those of you who are not yet satisfied, now might be time to try some <a href="./examples">Examples</a>.
+</p>
+
+
+<script src="../script/codebox.js"></script>
+<script src="../script/goat-webi.js"></script>
+</body>
+</html>

@@ -9,565 +9,126 @@
 
 <p>
 Up: <a href=".">Learn</a>,
-Prev: <a href="math">Math</a>.
+Prev: <a href="maths">Maths</a>,
+Next: <a href="layers">Layers</a>.
 </p>
 
 <br></br>
 
-<h1>Names, grouped</h1>
+<h1>Names, associated</h1>
 
 <p>
-The process of writing programs so far has been to names to pieces of code via assignment.
-By doing this, we break down our program into smaller ideas, 
-give names to those ideas,
-then glue them together –
-resulting in code that be easier to understand.
-In Goat, names defined by assignments are organised into groups.
-For example, so far we have writing our programs as a sequence of <code>;</code> separated assignments.
-The corresponding assigned names from these form the "top-level" group. 
-A rule of my language is that within any group, 
-once a name is created its value cannot change, 
-and no other value can be created with the same name. 
-We can demonstrate this by modifying our previous program. 
-The following program
-<pre>
-// learn2_bad.my
-myNumber = 2;
-myMath = 3 * myNumber;
-myMath = 5;
-.run = print(.val = myMath,);
-</pre>
-has an additional line added to it compared to "learn2.my" above. 
-The new line
-<pre>
-4 | myMath = 5;
-</pre>
-is an assignment of the number 5 to the label <code>myMath</code>. 
-Type the code block into a text file editor, 
-save the file as "learn2_bad.my", 
-and give the file to the interpreter to run. 
-You should see an error like the following.
-<pre>
-$ my-exe.exe learn2_bad.my
-my-exe.EXE: MyExceptions [OverlappedSet (Priv (Pure (I_ "myMath")))]
-</pre>
-The duplicate assignments to <code>myMath</code> are forbidden as they would introduce ambiguity –
-which value would be associated with <code>val</code> and communicated to <code>print</code>? 
-Unique names mean that one can quickly find where a label has been assigned, 
-allowing programs to be more easily understood.
+A common feature in Goat programs,
+which we will learn about in this tutorial,
+are <em>tuples</em>,
+where a set of association are made between names and code definitions.
+Their usage is perhaps best demonstrated with an exercise.
+Let's start with the Goat Pen below.
 </p>
 
-<p>
-We have seen the tuple construction a few times so far,
-first in line 3 of the "learn1.my".
-Tuples construct new group of names.
-Each new group is considered distinct from other group, 
-so name repetitions are allowed between groups – 
-the name <code>val</code> assigned in this group could also be assigned in the top-level group.
-The names assigned by tuples behave differently to those in the top-level group in an important way –
-they aren't able to be used in right-hand side definitions,
-and therefore aren't easily reusable.
-This makes tuples only really useful as a way to pass code definitions to commands,
-and hence only public label assignments are permitted – 
-i.e. all assigned labels must be prefixed with <code>.</code>.
-As an aside, tuples do have another powerful use as destructuring patterns, 
-but we won't cover that in this introduction.
-</p>
-
-
-
-<h4>Getting it working</h4>
+<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
 
 <p>
-In this section we will look at how to read my language,
- to hopefully get an idea of what a program might do when we execute it.
- We will start with a simple program to test that everything is working.
-</p>
-
-
-<pre>
-// learn1.my
-myText = "Hello world.";
-.run = print(.val = myText,).run;
-</pre>
-
-<p>
-Open your favourite text editor and type in the code block above.
-Save the file, for example calling it "learn1.my".
-If you followed the instructions from the <a href="try">Try</a> page to install <code>myi</code>, 
-you should now be able to execute the saved code file as described in the "Writing and running your code" section.
-You should see the following printed to the terminal screen:
+Let's imagine we have a two-dimensional co-ordinate that we want to output the y-axis component of. In Goat we can write some code like the following.
 </p>
 
 <pre>
-$ myi-exe.exe learn1.myi
-Hello world.
+myPoint = (.x : 2, .y : 4);
+.output = myPoint.y;
 </pre>
 
 <p>
-Running our program made some text print on the screen!
-Magic!
+As usual, I'll ask you to type the above code block into the Goat pen and run it. 
+You should see the following.
 </p>
+
+<pre>
+4.0
+</pre>
 
 <h4>How it looks and what it means</h4>
 
 <p>
-Learning to read my language code means learning the code syntax –
-how programming concepts are represented as text.
-In the following I will briefly describe the syntax and meaning of the code shown in the program above.
-To begin, the first line shows our first example of syntax:
-a sequence of two forward slash symbols <code>//</code>.
+There are a couple of interesting new things in this exercise!
+As per the tutorials so far,
+we will consider the annotated version of our program below and examine the new features.
 </p>
 
 <pre>
-1 | // learn1.my
-    ^^
+1 | myPoint = (.x : 2, .y : 4);
+    ^^^^^^^
+    1         ^^^^^^^^^^^^^^^^
+              2
+2 | .output = myPoint.y
+              ^^^^^^^
+              3      ^^
+                     4
 </pre>
 
-<p>
-This syntax indicates the start of a "comment" in my language –
-The <code>//</code> and everything on the rest of the line are ignored when running the code.
-Comments can be used for any purpose,
-and are often used for prose descriptions of code, 
-written for the benefit of the programmer.
-Throughout these tutorials I will use the convention seen here of putting a file name as a comment at the top of a block to indicate that the code block represents a standalone file. 
-</p>
+<ol>
+<li><p>
+One this line we are making an assignment to the name <code>myPoint</code>.
+</li></p>
+<li><p>
+The assigned value is an example of a <em>tuple</em>.
+This tuple associates the names <code>x</code> and <code>y</code> to numeric values representing the point's x- and y- co-ordinates.
+Names and associated definitions made when creating a tuple are called the tuple's "components".
+The syntax for creating tuples shown here is elaborated <a href="#creating_tuples">here</a>.
+</p></li>
+<li><p>
+The definition of <code>output</code> demonstrates one way tuples can be interacted with.
+Just like any other assignment we can refer to the created tuple using its name, here <code>myPoint</code>.
+</p></li>
+<li><p>
+The label <code>myPoint</code> is followed by the same prefix <code>.</code> and label <code>y</code> seen the left-hand side of the tuple definition.
+This mirroring of creation and use is discussed <a href="#public_names">here</a>.
+We can describe this general pattern as "invoking" the component named after the <code>.</code> on the preceeding value
+(e.g. we invoke the component named <code>y</code> of <code>myPoint</code>).
+As we have seen, this definition will evaluate to the definition of the <code>y</code> component in the <code>myPoint</code> tuple,
+and thus 4.0 is printed.
+</p></li>
+</ol>
+
+<h4 id="public_names">Invoking names</h4>
 
 <p>
-Looking at the second line
-we can break apart the pieces of syntax –
-from the left we see first a sequence of alphabetic characters <code>myText</code> forming a word.
+The <code>.</code> prefix,
+which we have seen so far in the tuple names and the special <code>output</code> assignment,
+indicates that a name can be "invoked" in the manner shown in the definition of <code>output</code> on the second line of our program.
+I.e. if a name has a <code>.</code> prefix when defined,
+the corresponding definition can be invoked on the created tuple simply by juxtaposition with the prefixed name.
+We consider such names defined with the <code>.</code> prefix to be "public" names.
+</p>
+
+<h4 id="creating_tuples">Creating tuples</h4> 
+
+<p>
+The syntax for creating a tuple involves a sequence of <em>associations</em>,
+terminated by a comma symbol <code>,</code> and inside a pair of parentheses <code>()</code>.
+The syntax for an association is similar to an assignment except with a colon symbol <code>:</code>
+(not a <code>=</code>)
+separating the left-hand side name and right-hand side definition.
+Each name of a tuple's layer must be prefixed with <code>.</code>.
+Requiring this prefix for the components of a tuple makes it clear that components of a tuple are always public (see <a href="#public_names">here</a>).
+The terminating <code>,</code> for the last definition is optional.
+</p>
+
+<h4>Missing names</h4>
+
+<p>
+It is an error to invoke a name that is not associated in the tuple.
+To see this let's modify our program above so that we instead invoke a name "z" on <code>myPoint</code>.
+Make the following change to the second line of our program in the Goat pen above.
 <pre>
-2 | myText = "Hello world.";
-    ^^^^^^
+.output = myPoint.z;
 </pre>
-Next is a space, then an equals sign symbol <code>=</code>.
+After running, you should see the following printed below the box.
 <pre>
-2 | myText = "Hello world.";
-           ^
-</pre>
-Next is another space, then a sentence in double quotes <code>"Hello world."</code>.
-<pre>
-2 | myText = "Hello world.";
-             ^^^^^^^^^^^^^^
-</pre>
-Finally, we have a semi-colon symbol <code>;</code>.
-<pre>
-2 | myText = "Hello world.";
-                           ^
-</pre>
-This combination of syntax demonstrates a very common form in my language, 
-called an "assignment". 
-With this form you can give names to reusable pieces of code in my language,
-by associating a word (a "label") with a code definition.
-An assigned label can be referred to within code definitions as shorthand for its definition. 
-The form begins with the left-hand side of the assignment, which above is the label <code>myText</code> followed by a space.
-Spaces, like comments, are for the benefit of the reader and are ignored by the interpreter, 
-and the label does not include the space.
-The <code>=</code> indicates the start of the code definition, 
-occurring on the assignment's right-hand side.
-The code definition continues until the <code>;</code> terminator.
-In this case, the defining code is the double-quoted sentence <code>"Hello world."</code>
-(as usual the leading space can be ignored).
-In my language, using double-quotes around text creates a literal value that represents the text shown within the quotes.
-With this line, we are saying that uses of the name <code>myText</code> appearing in definitions really mean the text "Hello world.". 
-(Note that inside quotes, spaces are significant and not ignored!)
-</p>
-
-<p>
-The third line from the example above is,
-an assignment like the second line, 
-but this time featuring some new syntax on the left-hand side –
-we see a period character <code>.</code> before the usual label.
-<pre>
-3 | .run = print(.val = myText,).run;
-    ^^^^
-</pre>
-Following that we see the same <code>=</code>, 
-and a right-hand side code definition, 
-finally ending with a <code>;</code>. 
-The code definition also shows some new syntax:
-First a label <code>print</code>.
-<pre>
-3 | .run = print(.val = myText,).run;
-           ^^^^^
-</pre>
-Following that is an opening parenthesis <code>(</code>,
-a block of code,
-and a closing parenthesis <code>)</code>.
-<pre>
-3 | .run = print(.val = myText,).run;
-                ^^^^^^^^^^^^^^^^
-</pre>
-Finally, we see another <code>.</code> with a label, this time <code>run</code>.
-<pre>
-3 | .run = print(.val = myText,).run;
-                                ^^^^
-</pre>
-Coming back to the code inside the parentheses, we might recognise it as another assignment!
-<pre>
-3 | .run = print(.val = myText,).run;
-                 ^^^^^^^^^^^^^^
-</pre>
-We call this form with a <code>()</code> and an inner sequence of assignments collectively a "tuple". 
-If we compare to the other assignments we have seen, for example from the second line
-<pre>
-2 | myText = "Hello world.";
-</pre>
-we see that the assignment inside the tuple ends with a comma character <code>,</code>. 
-In my language <code>,</code> takes the place of <code>;</code> as the terminator for tuple assignments.
-For the left-hand side of the tuple assignment we see another <code>.</code> before a label <code>val</code>.
-<pre>
-3 | .run = print(.val = myText,).run;
-                 ^^^^
-</pre>
-Finally, on the right-hand side we see a label <code>myText</code>.
-<pre>
-3 | .run = print(.val = myText,).run;
-                        ^^^^^^
+error: component missing: "z"
 </pre>
 </p>
 
-<p>
-This example shows two uses of <code>.</code> before a label on the left-hand side of an assignment –
-when assigning <code>run</code>, and <code>val</code>.
-In my language this indicates that the label is "public".
-For now, we can just treat these labels the same as if the <code>.</code> wasn't there.
-The left-hand side assignment to <code>run</code> has a special meaning in my language code,
-as the code definition assigned to a public label <code>run</code> is communicated to the interpreter to be executed when the program is run.
-</p>
-
-<p>
-The syntax shown in the code definition for <code>run</code>
-<pre>
-3 | .run = print(.val = myText,).run
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-</pre>
-is an example of another common pattern in my language code.
-The label <code>print</code> in this case is a built-in "command", 
-with the ability to print a value to the terminal. 
-In the pattern, the command is followed by a tuple of assignments –
-which is a way in my language to "communicate" values to the command.
-In this case, the <code>print</code> command finds the value to print from the value communicated to it with the public label <code>val</code>, 
-which we set via the (public) assignment to <code>val</code> in the tuple.
-Finally, the pattern ends with a <code>.</code> followed by a label.
-This is how we tell the command to perform an action.
-When we tell the command <code>print</code> to <code>run</code>, 
-it knows to print to the terminal.
-</p>
-
-<p>
-The pattern shown by the code definition demonstrates two common uses for public labels.
-The first is when communicating values to commands –
-only values with public labels are communicated,
-meaning <code>val</code> needs to be public.
-The second is invoking command actions –
-the syntax for giving the <code>run</code> instruction to the command mirrors that for denoting public labels. 
-We will see the reason for this later. 
-</p>
-
-<p>
-We can think of the pattern as a two-stage process.
-First we use a tuple of values to "configure" the command – 
-we tell <code>print</code> <em>what</em> to print.
-Second we pass the label <code>run</code> to actually invoke the print action. 
-</p>
-
-<p>
-As we mentioned earlier, in this case the value that we want printed is that assigned to <code>myText</code>. 
-We can look through the sequence of assignments in our program to find one that defines the label <code>myText</code>. 
-We don't have to look far –
-the previous line contains such an assignment giving <code>myText</code> the value of the literal text "Hello, world.". 
-<pre>
-2 | myText = "Hello world.";
-</pre>
-Thus, the <code>run</code> action of <code>print</code> prints the text "Hello, world." to the terminal.
-</p>
-
-<h4>Names, grouped, demonstrated</h4>
-
-<p>
-In previous examples we have used the command <code>print</code> to print values to our terminal. 
-We will soon see that in my language has the capability to define our own commands as well.
-First though, let's imagine we have a two-dimensional co-ordinate that we want to print the y-axis component of. We might some write code like the following.
-</p>
-
-<pre>
-// learn3.my
-myPoint = (.x = 2, .y = 4);
-.run = print(.val = myPoint.y,).run
-</pre>
-
-<p>
-As you might have expected, I'll ask you to type the above code block into a text editor and save to a file "learn3.my". 
-Run the file with the my language interpreter and you should see the following.
-</p>
-
-<pre>
-$ myi-exe.exe learn3.my
-4
-</pre>
-
-<p>
-There are perhaps some interesting new things in this example. Let's skip the (trivial) first line and look closer at line 2.
-As you might have guessed, this line is an assignment to the label <code>myPoint</code>.
-The assigned value
-<pre>
-2 | myPoint = (.x = 2, .y = 4);
-              ^^^^^^^^^^^^^^^^
-</pre>
-is a tuple, 
-which we might remember is syntactically a sequence of <code>,</code> separated assignments inside <code>()</code>s. 
-In this case the tuple defines numeric values for two public names <code>x</code> and <code>y</code> – 
-the x- and y- "co-ordinates" of a point.
-We can see on the next line
-<pre>
-3 | .run = print(.val = myPoint.y,).run
-</pre>
-how to talk about the values of public names like these. 
-The line you might notice is the usual invoking of the <code>print</code> command like we have seen in previous examples.
-The value assigned to the tuple name <code>val</code> as the value to be printed should be read as the label <code>myPoint</code>
-<pre>
-3 | .run = print(.val = myPoint.y,).run
-                        ^^^^^^^
-</pre>
-followed by the public prefix <code>.</code> and label <code>.y</code>.
-<pre>
-3 | .run = print(.val = myPoint.y,).run
-                               ^^
-</pre>
-This is the same pattern that we use to run our <code>print</code> command.
-We recall that following the command by the public name <code>run</code> would invoke the print action.
-To work out what is to be printed, the program will look for the definition <code>myPoint</code>,
-and then invoke the corresponding action associated with the public name <code>y</code>.
-Looking through our program, we find the relevant definition on line 2.
-<pre>
-2 | myPoint = (.x = 2, .y = 4);
-</pre>
-For a tuple, the action invoked by a public name is to simply to get the value assigned to that name in the tuple.
-(It is an error to invoke a name that is not assigned in the tuple.)
-Invoking <code>y</code> on the tuple defined for <code>myPoint</code> will thus return 4,
-which is the value printed.
-</p>
-
-<p>
-A slightly more useful thing then printing the y-component value of a single point,
-would be to print y-component values that are related to the x-components –
-i.e. a line.
-Let's try to generalise our previous example, and modify the definition of <code>myPoint</code> so that the  <code>y</code> coordinate is related to the <code>x</code> by the line "y = x + 2".
-</p>
-
-<pre>
-// learn4_bad.my
-myPoint = (.x = 2, .y = x + 2);
-.run = print(.val = myPoint.y,).run
-</pre>
-
-<p>
-However, this doesn't quite work! After saving the above block of code to a file "learn4_bad.my" and running you should see the following error.
-</p>
-
-<pre>
-$ myi-exe.exe learn4_bad.my
-my-exe.EXE: MyExceptions [ScopeError (Priv (Pure (I_ "x")))]
-</pre>
-
-<p>
-The error tells us that we have used the label <code>x</code> without defining it. 
-Recall that earlier I said that tuple assignments aren't the same as top-level ones,
-and assigned names aren't used for determining values to substitute for label usages.
-This is the cause of the error –
-there is no value assigned to <code>x</code> that can be substituted into the tuple definition for <code>y</code>.
-</p>
-
-<p>
-Don't worry if this all seems a bit confusing! 
-We have available a simple fix: 
-an alternative construction called a "block",
-demonstrated in the following fixed example.
-</p>
-
-<pre>
-// learn4.my
-myPoint = {.x = 2; .y = x + 2};
-.run = print(.val = myPoint.y,).run
-</pre>
-
-<p>
-Follow the usual process – type, save to a file "learn4.my" and run. You should see the following.
-</p>
-
-<pre>
-$ myi-exe.exe learn4.my
-4
-</pre>
-
-<p>
-Woah!
-What did we do?
-Focusing on the changed line 2, we have replaced the tuple construction syntax with a new syntax for constructing a "block". 
-Instead of <code>()</code> we employ opening and closing brace characters <code>{}</code>.
-<pre>
-2 | myPoint = {.x = 2; .y = x + 2};
-              ^                  ^
-</pre>
-Instead of <code>,</code> for terminating assignments, we return to the usual <code>;</code>.
-<pre>
-2 | myPoint = {.x = 2; .y = x + 2};
-                     ^
-</pre>
-The return of <code>;</code> as assignment terminator suggests a return to the top-level behaviour of assignments,
-which is the case.
-</p>
-
-<p>
-Before we look at the block construction in more depth, 
-we should note that we didn't need to change the reference to <code>myPoint</code> on line 3!
-<pre>
-3 | .run = print(.val = myPoint.y,).run
-                        ^^^^^^^^^
-</pre>
-I.e. we can invoke the name <code>y</code> on the new block definition of <code>myPoint</code> in the same way as with the tuple definition.
-</p>
-
-<p>
-Let's come back to the block construction shown.
-Like a tuple, a block introduces a new name group. 
-Contrary to a tuple, names defined within the block <em>are</em> available to be used as placeholders in definitions made the block.
-In this case, to calculate the value for <code>y</code> we need to know the value for <code>x</code>.
-<pre>
-2 | myPoint = {.x = 2; .y = x + 2};
-                            ^
-</pre>
-We search within the assignments of the block and find the definition.
-<pre>
-2 | myPoint = {.x = 2; .y = x + 2};
-               ^^^^^^
-</pre>
-A subtle point is that we used the label <code>x</code> plain in the definition of <code>y</code> to refer to the public definition without needing to include the prefix <code>.</code>.
-This follows from earlier when I said that we can generally get away with thinking of public name definitions as though they were defined in the normal way (without the <code>.</code>). 
-</p>
-
-
-<!-- up to here -->
-
-<p>
-Names defined in a block take precedence over ("shadow") any identical names defined in code outside the block.
-So when determining the value for a label used in a definition,
-the names defined in the current block are searched,
-then the names of the enclosing block,
-and so forth up to the top-level name group.
-Finally, builtin names such as <code>print</code> are searched.
-<p>
-
-
-– in fact, a command is a definition of a group of names for our expected "inputs" – and outputs that looks a bit closer to how we have defined names so far. Let's look at some more code.
-</p>
-
-<pre>
-// learn3.my
-
-myPoint = {
-  myIntercept = 2;
-  .x = 4;
-  .y = x + myIntercept;
-};
-
-myPointHeight = myPoint.y; 
-</pre>
-
-<p>
-What's happening here? In the first few lines we define <code>myPoint</code> to be a compound value with some new but familiar syntax. Let's contrast the new syntax for the value definition with the syntax used to declare <code>myOperatingSystem</code> earlier, starting from the last character of the first line, where we have an open brace <code>{</code> instead of a bracket. The next line begins with an indent of 2 spaces. We recall that spaces (including line breaks) can be skipped over when reading my language code. The rest of the line has the familiar definition syntax, and we see a return to using semi-colons to end definitions, instead of the comma used in the bracket form. The third line defines a name which, like with the bracket syntax and unlike the other definitions we have made, is prefixed by a period. The fourth line has a similar form, and makes use of previously defined names <code>x</code> and <code>myIntercept</code> to define the name <code>y</code>. This is a key difference between the forms - when using this brace form syntax, names defined inside the braces form a group and can be referenced in definitions of the same group. Notably, we do not need the period prefix when using <code>x</code> to define other names within the group, it and the unprefixed <code>myIntercept</code> are treated the same. The next line ends the compound value with a closing brace <code>}</code>, instead of the closing bracket of the other form. Finally the definition of <code>myPoint</code> terminates with a semi-colon.
-</p>
-
-<p>
-Skipping the blank line, the next part of the code defines <code>myPointHeight</code> using the previously defined name <code>myPoint</code>, referring to its <code>.y</code> component in a similar manner to how <code>versionIsModern</code> was defined earlier in terms of <code>myOperatingSystem.version</code>. This illustrates how the braces form used for <code>myPoint</code> actually specifies a compound value like that created by the bracket form, where components are denoted by period prefix on the value names.
-</p>
-
-<p>
-Without a period prefix when defining the name <code>intercept</code>, my language does not allow access to <code>myPoint.intercept</code>. 
-The components are the prefixed names, i.e. <code>.x</code> and <code>.y</code>.
-</p>
-
-
-<p>
-If we consider the definitions of <code>myPoint</code>, we would expect that the <code>.y</code> component assigned to <code>myPointHeight</code> will evaluate to <code>6</code>.
-</p>
-
-<h4>Names, updated</h4>
-
-<p>
-A fundamental feature of my language is the ability to derive modified versions of values, demonstrated by the following code. Let's look at it first and then talk through what it does.
-</p>
-
-<pre>
-myPoint2 = myPoint{ .x = 5 };
-
-myPoint2Height = myPoint2.y;
-</pre>
-
-<p>
-In the first of these lines, we create the name <code>myPoint2</code> and define the value using yet another new syntactic form: the use of a name <code>myPoint</code> defined earlier followed by a compound value with a component <code>.x</code>, declared using the braces form seen in the earlier definition for <code>myPoint</code>. This juxtaposition form is used to defined values that are modifications of other values, by adding new components and/or replacing already existing components. In this case, the update defines a <code>.x</code> component, which <code>myPoint</code> already has. We can understand the new value for <code>myPoint2</code> as being defined as a revised version of <code>myPoint</code>, with the <code>x</code> name defined to be <code>5</code> instead of <code>4</code>.
-</p>
-
-<p>
-The last definition for <code>myPoint2Height</code> thus refers to the <code>.y</code> component of <code>myPoint2</code>, calculated using the updated <code>.x</code> component, and should evaluate to <code>7</code>.
-</p>
-
-<p>
-Creating new extended and updated versions of values as exhibited by <code>myPoint2</code>'s definition is, like naming things, another way to reuse code to avoid repetition. 
-</p>
-
-<p>
-There are actually only a couple more syntactical forms to my language, which we will look at briefly, then we can try it out with some examples. Another small piece of code demonstrates one of these forms.
-</p>
-
-<pre>
-myPlane = { .z = .x - .y + 7 };
-
-myPointDepth = myPlane( .x = 1, .y = 2 ).z;
-</pre>
-
-<p>
-Looking at the first line, which defines the name <code>myPlane</code> as a compound value with an accessible named component <code>.z</code>, where <code>z</code> is defined using two period prefixed names <code>.x</code> and <code>.y</code> which have no corresponding definition in the group. Including the prefix when using a name with no group definition indicates that we expect values for the name to be provided in an updated version of the value. Note that directly accessing the <code>.z</code> component of <code>myPlane</code> will cause an error! Values like this with partially defined components act as templates from which complete values can be made using the value update syntax, as the next definition above demonstrates. 
-</p>
-
-<p>
-With the next code part we have an example of using <code>myPlane</code>. This time we have used the bracket form of compound value definition juxtaposed with an existing value name to apply our updated values. This works in the same way as the braces form, with the <code>.x</code> and <code>.y</code> components of the defined value being substituted in the definition for <code>myPlane</code>. In this case we don't bother to name the updated value we have created, and immediately extract the <code>.z</code> component to assign as the definition for <code>myPointDepth</code>. If we look back at the definition for <code>myPlane</code> we can see that in the new value with the provided <code>.x</code> and <code>.y</code> components, the definition for the <code>.z</code> component has everything it needs and can be computed without causing an error.
-</p>
-
-<p>
-We have now completed a basic tour of how my language reads and is written. For those of you who are not yet satisfied, now might be time to try some <a href="examples">Examples</a>.
-</p>
-
-<!-- unused from previous -->
-
-<p>
-My language there are a few ways to make groups of names. This is often a good strategy for organising code. Another example of a name group involves my language's compound values, which are values that group together other values called components, as in the following example.
-</p>
-
-<pre>
-myOperatingSystem = ( .os = "Windows", .version = 10 );
-
-versionIsModern = myOperatingSystem.version > 7
-</pre>
-
-<p>
-So what's going on here? The first line is defining the name <code>myOperatingSystem</code> as we saw earlier, to a compound value. Let's break up the parts of the syntax: an open bracket <code>(</code>, an initial period <code>.</code>, a definition for <code>os</code>, a comma <code>,</code>, another period and definition for <code>version</code>, and a closing bracket <code>)</code>. The names defined between the brackets form a group, distinct from the names that we have defined so far. These names introduced in a bracket group are the names of the components of the compound value. In the following, when talking about a component name, we will include the period prefix.
-</p>
-
-<p>
-In the last line, we create a name <code>versionIsModern</code> with a definition that begins with our previously defined named value <code>myOperatingSystem</code> followed by a period and <code>version</code>, which is the name of one of the components of <code>myOperatingSystem</code>. This syntax of following a compound value by a period and component name is a way in which we can refer to the component value. The rest of the definition uses the greater-than symbol <code>></code> to compare the <code>.version</code> component to <code>7</code>. 
-</p>
-
-<p>
-When defining compound values with the bracket syntax it is possible to use names from the outer group in definitions for components as shown in the following code. Here, <code>myOldVersion</code> is used to define the <code>.version</code> component of <code>myUpgradedOperatingSystem</code>.
-</p>
-
-<pre>
-myOldVersion = 7;
-
-myUpgradedOperatingSystem = ( .os = "Windows", .version = myOldVersion + 1 );
-</pre>
+<script src="../script/codebox.js"></script>
+<script src="../script/goat-webi.js"></script>
 </body>
-
+</html>

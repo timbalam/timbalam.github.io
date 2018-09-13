@@ -9,7 +9,7 @@
 
 <p>
 Up: <a href=".">Learn</a>,
-Next: <a href="math">Math</a>.
+Next: <a href="maths">Maths</a>.
 </p>
 
 <br></br>
@@ -17,13 +17,13 @@ Next: <a href="math">Math</a>.
 <h1>Run a simple Goat program</h2>
 
 <p>
-We will start by writing a simple program. 
-This will firstly test that the <strong>Goat web interpreter</strong> is working,
+In this first tutorial we will writing a simple program. 
+This will firstly test that the <strong>Goat Web Interpreter</strong> is working,
 and secondly demonstrate how to run a Goat program.
 For this we will need the box below,
- called the <strong>Goat pen</strong>.
+ called the <strong>Goat Pen</strong>.
 As we will see,
-text written in the Goat pen can be evaluated by the Goat web interpreter.
+text written in the Goat Pen can be evaluated by the Goat Web Interpreter.
 </p>
 
 <textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
@@ -53,7 +53,8 @@ Congratulations, you have a working Goat program!
 <h4>How it looks and what it means</h4>
 
 <p>
-The diagram below shows how the computer deconstructs the program we just wrote.
+The diagram below shows an annotated version of the program we just wrote,
+with the main features of interest to the computer highlighted.
 (Line numbers for the original program lines are shown on the far left.)
 <p>
 <pre>
@@ -97,13 +98,28 @@ The Goat pen is set up so that the definition made for <code>output</code> is ev
 The name <code>myText</code> is assigned to <code>output</code>.
 When used inside a definition,
 a name is a place-holder for its definition.
-It is an error to use an undefined label on the right hand side of an assignment.
 As <code>myText</code> was assigned to be the text "Hello world.",
 this is what <code>output</code> evaluates to,
 and is thus printed below the Goat pen.
 </p></li>
-<ol>
+</ol>
 
+<h4>My first error</h4>
+
+<p>
+It is an error to use a label in a definition without giving a definition too.
+Let's see what happens if we change the definition of <code>output</code> to an undefined label <code>myTekts</code>.
+Go to the Goat pen above and change the second line to the following:
+<pre>
+.output = myTekts;
+</pre>
+[#TODO] You should see the following message following the Goat pen:
+<pre>
+error: definition missing: "myTekts"
+</pre>
+This way, if we might misspell or misremember a name,
+Goat will let us know about it so we can fix it!
+</p>
 
 <script src="../script/codebox.js"></script>
 <script src="../script/goat-webi.js"></script>

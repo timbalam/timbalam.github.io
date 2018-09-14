@@ -82,21 +82,21 @@ Just like any other assignment we can refer to the created tuple using its name,
 <li><p>
 The label <code>myPoint</code> is followed by the same prefix <code>.</code> and label <code>y</code> seen the left-hand side of the tuple definition.
 This mirroring of creation and use is discussed <a href="#public_names">here</a>.
-We can describe this general pattern as "invoking" the component named after the <code>.</code> on the preceeding value
-(e.g. we invoke the component named <code>y</code> of <code>myPoint</code>).
+We can describe this general pattern as "accessing" the component named after the <code>.</code> on the preceeding value
+(e.g. we access the component named <code>y</code> of <code>myPoint</code>).
 As we have seen, this definition will evaluate to the definition of the <code>y</code> component in the <code>myPoint</code> tuple,
 and thus 4.0 is printed.
 </p></li>
 </ol>
 
-<h4 id="public_names">Invoking names</h4>
+<h4 id="public_names">Accessing names</h4>
 
 <p>
 The <code>.</code> prefix,
 which we have seen so far in the tuple names and the special <code>output</code> assignment,
-indicates that a name can be "invoked" in the manner shown in the definition of <code>output</code> on the second line of our program.
+indicates that a name can be "accessed" in the manner shown in the definition of <code>output</code> on the second line of our program.
 I.e. if a name has a <code>.</code> prefix when defined,
-the corresponding definition can be invoked on the created tuple simply by juxtaposition with the prefixed name.
+the corresponding definition can be accessed on the created tuple simply by putting the prefixed name after.
 We consider such names defined with the <code>.</code> prefix to be "public" names.
 </p>
 

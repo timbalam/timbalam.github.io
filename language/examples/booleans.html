@@ -11,23 +11,26 @@ Up: <a href=".">Examples</a>.
 
 <h1>Implementing boolean logic</h1>
 
-<h4>What is booleans again?</h4>
-
-Boolean logic simply refers to two values <em>True</em> and <em>False</em> and some relationships between them. For example, we expect an <em>and</em> relationship to be consistent with the following truth-table.
+<p>
+Boolean logic involves two values <em>True</em> and <em>False</em>,
+as well as and some relationships between them.
+For example,
+the following truth-table demonstrates the <em>and</em> relationship.
 </p>
 
 <pre>
 <table>
   <tbody>
-    <tr><td>and</td><td>arg1=True</td><td>arg1=False</td></tr>
-    <tr><td>arg2=True</td><td>res=True</td><td>res=False</td></tr>
-    <tr><td>arg2=False</td><td>res=False</td><td>res=False</td></tr>
+    <tr><td>and</td><td>a=True</td><td>a=False</td></tr>
+    <tr><td>b=True</td><td>res=True</td><td>res=False</td></tr>
+    <tr><td>b=False</td><td>res=False</td><td>res=False</td></tr>
   </tbody>
 </table>
 </pre>
 
 <p>
-In effect, we expect <em>a and b</em> to be true if and only if both <em>a</em> and <em>b</em> are true.
+This relationship can be summarised as:
+we expect <em>a and b</em> to be true when both <em>a</em> and <em>b</em> are true, and false otherwise.
 </p>
 
 <p>
@@ -37,21 +40,30 @@ Another example is the <em>or</em> relationship, demonstrated by this truth tabl
 <pre>
 <table>
   <tbody>
-    <tr><td>or</td><td>arg1=True</td><td>arg1=False</td></tr>
-    <tr><td>arg2=True</td><td>res=True</td><td>res=True</td></tr>
-    <tr><td>arg2=False</td><td>res=True</td><td>res=False</td></tr>
+    <tr><td>or</td><td>a=True</td><td>a=False</td></tr>
+    <tr><td>b=True</td><td>res=True</td><td>res=True</td></tr>
+    <tr><td>b=False</td><td>res=True</td><td>res=False</td></tr>
   </tbody>
 </table>
 </pre>
 
 <p>
-Here, we expect <em>a or b</em> to be true if any of <em>a</em> and <em>b</em> are true.
+Here, we expect <em>a or b</em> to be true if any of <em>a</em> and <em>b</em> are true, and false if both are false.
 
-<h4>True and False in my language</h4>
-
+<h4>True and False in Goat</h4>
 
 <p>
-Here is some code implementing the two boolean values, <code>True</code> and <code>False</code>: 
+First, the text box below is a <strong>Goat Pen</strong> for you to follow along with the example.
+</p>
+
+<textarea class="codebox" style="min-height: 100px;width: 95%"></textarea>
+
+<p>
+This example will be a bit larger that those you have seen so far from the <a href="../learn">tutorials</a>.
+There will be several sections of code,
+which are to be added to the Goat Pen below code from previous sections.
+To start, here is some code implementing the two boolean values,
+<code>True</code> and <code>False</code>.
 </p>
 
 <pre>
@@ -65,136 +77,95 @@ False = {
 </pre>
 
 <p>
-The two declarations use the brace form for declaring compound values, which we call <em>block</em> syntax. Both <code>True</code> and <code>False</code> have components <code>.match</code> that reference other component names (<code>.ifTrue</code> and <code>.ifFalse</code> respectively) that are not defined in the block, which indicates that these are intended as prototype values, requiring the missing component to be filled in before accessing <code>.match</code>. We can call these undefined components <em>implicit</em> components. 
+The two declarations use the brace form for declaring <em>blocks</em>.
+Both <code>True</code> and <code>False</code> have a component <code>match</code> defined using a public name
+(<code>ifTrue</code> and <code>ifFalse</code> respectively)
+to reference not-defined-as-yet components of the block.
+This indicates that these are intended as "prototype" values,
+and we will need to "fill in" the missing components before accessing <code>match</code>.
 </p>
 
+<p>
+It might not be immediately obvious how these two values encode the usual true and false values.
+Let's demonstrate with the following exercise.
 </p>
-It might not be immediately obvious how these two values encode the usual true and false values. The intuition is that if we are dealing with a unknown boolean value in our code, we would extend it to specify what to do for the two possible branches <code>.ifTrue</code> and <code>.ifFalse</code>, then accessing <code>.match</code> will cause the corresponding branch to be entered (note that <code>False</code> will enter <code>.ifFalse</code> and <code>True</code> will enter <code>.ifTrue</code>). A use of these values is demonstrated in the following example describing the boolean <em>and</em> operation. 
+
+<pre>
+showBool = {
+  .show = .bool(
+    .ifTrue : "Definitely!",
+    .ifFalse : "Uh, not really, I think?",
+  ).match;
+};
+.output = showBool(.bool : True).show;
+</pre>
+
+<p>
+We can add this code to the Goat Pen after our definitions of <code>True</code> and <code>False</code> above.
+After running it we should see the following output printed:
+</p>
+
+<pre>
+Definitely!
+</pre>
+
+<p>
+(Try changing the value set to "bool" in the <code>output</code> defintion to <code>False</code>).
+</p>
+
+<p>
+Let's quickly review the definition of <code>showBool</code>:
+It is defined as a block with a component "show".
+The definition of "show" applies an update to a non-existent public component <code>bool</code>,
+and accesses the <code>match</code> component of the updated value.
+<p>
+
+<p>
+The intuition for our boolean definitions is that we will write code,
+such as <code>showBool</code> above,
+that operates on an unknown boolean by updating it with <code>ifTrue</code> and <code>ifFalse</code> definitions specifying what to do for the corresponding cases.
+Accessing <code>match</code> will then enter the appropriate branch
+(i.e. <code>False</code> will take <code>ifFalse</code> and <code>True</code> will take <code>ifTrue</code>).
+</p>
+
+<p>
+The following definition of the <em>and</em> operation is another demonstration of how we can use these boolean definitions.
+A test case <code>expectTrue</code> representing the top-left cell of the truth-table above has also been given.
 </p>
 
 <pre>
 and = {
-  .res = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
+  // "res" is short-hand for "result"
+  .res = .a(.ifTrue : .b, .ifFalse : False).match;
 };
+expectTrue = and(.a : True, .b : True).res;
 </pre>
 
 <p>
-We see that <code>and</code> is being defined using block syntax, with a component <code>.res</code> that is defined using juxtaposition to update an undefined (and therefore implicit) component <code>.arg1</code> and the bracket form for declaring compound values, which we can call <em>tuple</em> syntax. The <code>.match</code> component of the updated value is assigned to the <code>.res</code> component of <code>and</code>.
-<p>
-
-<p>
-The definition of <code>and</code> above demonstrates using names to reference both previously defined values and implicit components. The rules of my language for which values (if any) a name refers to are <em>scoping</em> rules. The rules relate to name groups, and work differently for plain references (not preceded by a <code>.</code>) and component references (preceded by <code>.</code>). Stated simply, a new file and each use of the block syntax <code>{</code> <code>}</code> introduces a new name group with referencable names. When defining names in a group, using a plain reference will point to a value with that name within the same group if one exists, otherwise for nested blocks the value is found as if the name was used outside the immediate block.
-</p>
-
-<p>
-Using a component reference in a definition will always refer to the current name group, and becomes implicit if there is no defined component for that name.
-</p>
-
-<p>
-Technical note: A component reference is still implicit if the corresponding group has the name defined but not designated as a component, i.e. defined without a leading period.
-<p>
-
-<p>
-A feature of the tuple syntax using <code>(</code> <code>)</code> is it does not create a new block. Names for defined components are not referencable and names used to define components are scoped to the name group / block containing the tuple.
-</p>
-
-</p>
-An implication of this is that in the definition of <code>.res</code> above, both <code>.arg1</code> and the implicit component reference <code>.arg2</code> in the definition for <code>.ifTrue</code> refer to implicit components of <code>and</code>. 
-<p>
-
-<p>
-We can use the scoping rules to determine how the public reference to <code>False</code> in the definition of the component <code>.ifFalse</code> is resolved to a value. The name <code>False</code> is not in the immediate block created to define <code>and</code>, but the outside group (the main file) defines <code>False</code> (see earlier), and hence this is the value referenced. It would be an error to publically reference a name that no containing block defines, in contrast to component references which are allowed to be implicit.
-</p>
-
-<p>
-The definition of <code>.res</code> above demonstrates an important interation between implicit references and definition extension. Implicit references are resolved only when needed to compute a component value being accessed, where they refer to the latest value defined for the corresponding component. The definition of <code>.res</code> provides values for two components of <code>.arg1</code>, namely <code>.ifTrue</code> and <code>.ifFalse</code>, and then accesses the component <code>.match</code>. 
-</p>
-
-<p>
-If we look back at our definitions for <code>True</code> and <code>False</code>, were we make implicit references to <code>ifTrue</code> and <code>ifFalse</code>, we can imagine providing these values as <code>.arg1</code> and <code>.arg2</code> to <code>and</code>. The implicit components are supplied by definition extension before accessing the <code>match</code> field so everything will be fine.
-</p>
-
-<h4>Meaning of my code</h4>
-
-<p>
-My language is designed with the principle that it shouldn't be too hard to work out what a program will actually evaluate to, or at least how the smaller parts of the code will interact when composed. For example, we might like to have some confidence that our definitions for <code>True</code>, <code>False</code> and <code>and</code> interact in a manner consistent with the truth-table from the first section. The case represented by the top left cell can be expressed by the following my code.
+Let's add this to the code we have in the Goat Pen already.
+Now let's change our <code>output</code> definition to the following:
 </p>
 
 <pre>
-expectTrue = and { .arg1 = True; .arg2 = True; }.res;
+.output = showBool(.bool = expectTrue).show;
 </pre>
 
 <p>
-My language evaluates in a way that can be modelled through <em>rewriting strategies</em>, by which we mean replacing parts of code with other code in ways that keep the same value. We can perhaps build an intuition as to what value <code>expectTrue</code> will have by going through the work of applying some of these strategies. The first rewriting strategy we will use involves explicitly replacing a reference by the code that defines it. In my language this is always allowed for a public reference, a property often called <em>referential transparency</em>, and as we will see can also be applied to component references as well in some special situations. Applying this strategy to <code>and</code> for the above code would look something like the following.
-</p>
-
+We should see the result:
 <pre>
-expectTrueEquivalent1 = {
-  .res = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
-} { .arg1 = True; .arg2 = True; }.res;
+Definitely!
 </pre>
-
-
-<p>
-Another strategy involves replacing an extension to a value by moving the extending components into the original value, either replacing previous components of the same name or introducing new components. In general when we move components between blocks, we need to rewrite them to be <em>block independent</em> first. We will come back shortly to what this means. For now, looking at our code we see that the extended components <code>.arg1</code> and <code>.arg2</code> in both cases are defined to be <code>True</code>, and after moving these definitions into the substituted <code>and</code> code their referred values would be the same. After rewriting by moving the components the code would look something like the following. Note that the ordering of definitions in a block is actually arbitrary, and for ease of reading I have put name definitions before uses. 
+verifying that our expectation indeed holds.
 </p>
 
-<pre>
-expectTrueEquivalent2 = {
-  .arg1 = True;
-  
-  .arg2 = True;
-  
-  .res = .arg1 ( .ifTrue = .arg2, .ifFalse = False ).match;
-}.res;
-</pre>
-
 <p>
-Our final rewriting trick (for now) is for component accesses, and works almost the same way as our trick of moving extended components into the original definition. After ensuring that the component definition is block independent, we replace the component access code with the code defining the component. In the above code we have are accessing the <code>.res</code> component of our expanded <code>and</code>. However, the <code>.res</code> component has references the new component fields, making it <em>block dependent</em>. If we try our rewriting trick we would throw away the definitions of the <code>.arg1</code> and <code>.arg2</code>, and the rewritten code would end up referring to different component values to what we started with. To get around this, we can simplify a component definition to remove the dependencies on other block names by applying our first rewrite strategy - i.e. substituting the other names by their defining code. We may have to do this repeatedly until the rewritten definition does not depend on any other local names - i.e. is block independent. (We will run into trouble with this if the component ends up referencing itself! We will assume for the moment that this won't happen.) After applying the process to make <code>.res</code> block independent we get the following value equivalent to <code>expectTrue</code>.
+As an exercise,
+use the Goat Pen to create and verify test cases for the rest of the <em>and</em> truth-table at the top of this article.
+As a further exercise,
+try to implement a corresponding <em>or</em> operation and verify the implementation.
 </p>
 
-<pre>
-expectTrueEquivalent3 = {
-  .arg1 = True;
-  
-  .arg2 = True;
-  
-  .res = True ( .ifTrue = True, .ifFalse = False ).match;
-}.res;
-</pre>
-
-
-<p>
-We can now apply the component access rewrite rule by substituting the <code>.res</code> component access by the rewritten definition, with a result of something like the following.
-</p>
-
-<pre>
-expectTrueEquivalent4 = True ( .ifTrue = True, .ifFalse = False ).match;
-</pre>
-
-<p>
-Our value involves further value extension and component access, meaning we can continue to simplify further through rewriting - first rewrite <code>True</code> by its definition, and move in the extended components.
-</p>
-
-<pre>
-expectTrueEquivalent5 = {
-  .ifTrue = True;
-  
-  .ifFalse = False;
-  
-  .match = .ifTrue;
-}.match;
-</pre>
-
-<p>
-We are nearly there. We make <code>.match</code> block independent by substituting <code>.ifTrue</code>'s value <code>True</code> and finally, we rewrite the <code>.match</code> access by the component's rewritten definition.
-</p>
-
-<pre>
-expectTrueEquivalent6 = True;
-</pre>
-
-<p>
-QED. We have thus verified one of the four cases of the truth-table for boolean and. The enthusiastic reader can verify the other three cases as an exercise. Further, the reader can try to implement <em>or</em> and verify their implementation.
-</p>
-<body>
+<script src="../script/codebox.js"></script>
+<script src="../script/goat-webi.js"></script>
+</body>
+</html>

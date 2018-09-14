@@ -157,11 +157,37 @@ Remember that the <code>.</code> prefix acts as a decorator to a name rather tha
 </p></li>
 <li><p>
 Note that we didn't need to change our definition of <code>output</code>!
-We can invoke the public name <code>y</code> on the new block definition of <code>myPoint</code> to access the corresponding definition,
+We can access the public name <code>y</code> on the new block definition of <code>myPoint</code> to access the corresponding definition,
 same as with the tuple definition.
 As we have seen, the evaluated value is 4.0.
 </p></li>
 </ol>
+
+<h4>Going local</h4>
+
+<p>
+In the exercise above we were able to access the name <code>y</code> on <code>myPoint</code> to access the definition.
+Public names of both blocks and tuples can be accessed this way.
+For this reason, when talking about blocks we also refer to the publicly named definitions as "components".
+Unlike tuples,
+with blocks we have the option of defining a "local" name,
+by not including the <code>.</code> prefix.
+Local names can be used inside the block to represent their definition,
+but can't be accessed by code outside the block.
+</p>
+
+<p>
+To observe the difference in behaviour between local and public names,
+try removing the <code>.</code> prefix of the "x" component in the definition of <code>myPoint</code>.
+You should find the result doesn't change.
+Now try instead removing the <code>.</code> prefix of the "y" component.
+You should now see an error like the following:
+<pre>
+error: component missing: "y"
+</pre>
+</p>
+
+
 
 <script src="../script/codebox.js"></script>
 <script src="../script/goat-webi.js"></script>

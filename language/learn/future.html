@@ -32,8 +32,8 @@ The code for this demonstration is below.
 </p>
 
 <pre>
-myPlane = { .z = .x - .y + 7 };
-myPointDepth = myPlane( .x : 1, .y : 2 ).z;
+myPlane = {.z = .x - .y + 7};
+myPointDepth = myPlane(.x : 1, .y : 2).z;
 .output = myPointDepth;
 </pre>
 
@@ -47,21 +47,21 @@ The depth of the point should be:
 6.0
 </pre>
 
-<h4>Breaking it down</h4>
+<h4>How it looks and what it means</h4>
 
 <p>
 For a final time,
-let's break down the program and discuss some interesting parts.
+let's consider the annotated program below and discuss some interesting parts.
 </p>
 
 <pre>
-1 | myPlane = { .z = .x - .y + 7 };
-                     ^^^^^^^^^^^
-                     1
-2 | myPointDepth = myPlane( .x : 1, .y : 2).z;
-                   ^^^^^^^^^^^^^^^^^^^^^^^^
-                   2                       ^^
-                                           3
+1 | myPlane = {.z = .x - .y + 7};
+                    ^^^^^^^^^^^
+                    1
+2 | myPointDepth = myPlane(.x : 1, .y : 2).z;
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+                   2                      ^^
+                                          3
 3 | .output = myPointDepth;
 </pre>
 
@@ -103,7 +103,7 @@ Values like <code>myPlane</code> that are only partially defined act as template
 as in the definition of <code>myPointDepth</code>. 
 </p>
 
-<h4>The end</h4>
+<h4>The journey continues...</h4>
 
 <p>
 We have now completed a basic tour of how Goat reads and is written. For those of you who are not yet satisfied, now might be time to try some <a href="./examples">Examples</a>.

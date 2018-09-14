@@ -1,3 +1,0 @@
-// learn1.my
-myText = "Hello world.";
-.run = print( .val = myText,);

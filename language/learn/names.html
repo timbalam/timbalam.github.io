@@ -29,12 +29,12 @@ Let's start with the Goat Pen below.
 <textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
 
 <p>
-Let's imagine we have a two-dimensional co-ordinate that we want to output the y-axis component of. In Goat we can write some code like the following.
+Let's imagine we have a two-dimensional co-ordinate that we want to inspect the y-axis component of. In Goat we can write some code like the following.
 </p>
 
 <pre>
 myPoint = (.x : 2, .y : 4);
-.output = myPoint.y;
+.inspect = myPoint.y;
 </pre>
 
 <p>
@@ -46,81 +46,56 @@ You should see the following.
 4.0
 </pre>
 
-<h4>How it looks and what it means</h4>
+
+<h4>Creating tuples</h4> 
 
 <p>
-There are a couple of interesting new things in this exercise!
-As per the tutorials so far,
-we will consider the annotated version of our program below and examine the new features.
-</p>
-
+The right hand side of the <code>myPoint</code> assignment is a <em>tuple</em>.
+This tuple associates the names <code>x</code> and <code>y</code> to numeric values representing the point's x- and y- co-ordinates.
+The following diagram of the first line highlights the syntax for "declaring" a tuple.
 <pre>
 1 | myPoint = (.x : 2, .y : 4);
-    ^^^^^^^
-    1         ^^^^^^^^^^^^^^^^
-              2
-2 | .output = myPoint.y
-              ^^^^^^^
-              3      ^^
-                     4
+              ^      ^       ^
+              1^^^^^^3 ^^^^^^1
+               2       2
 </pre>
-
 <ol>
-<li><p>
-One this line we are making an assignment to the name <code>myPoint</code>.
-</li></p>
-<li><p>
-The assigned value is an example of a <em>tuple</em>.
-This tuple associates the names <code>x</code> and <code>y</code> to numeric values representing the point's x- and y- co-ordinates.
-Names and associated definitions made when creating a tuple are called the tuple's "components".
-The syntax for creating tuples shown here is elaborated <a href="#creating_tuples">here</a>.
-</p></li>
-<li><p>
-The definition of <code>output</code> demonstrates one way tuples can be interacted with.
-Just like any other assignment we can refer to the created tuple using its name, here <code>myPoint</code>.
-</p></li>
-<li><p>
-The label <code>myPoint</code> is followed by the same prefix <code>.</code> and label <code>y</code> seen the left-hand side of the tuple definition.
-This mirroring of creation and use is discussed <a href="#public_names">here</a>.
-We can describe this general pattern as "accessing" the component named after the <code>.</code> on the preceeding value
-(e.g. we access the component named <code>y</code> of <code>myPoint</code>).
-As we have seen, this definition will evaluate to the definition of the <code>y</code> component in the <code>myPoint</code> tuple,
-and thus 4.0 is printed.
-</p></li>
+<li>
+Tuple declarations start and end with a pair of parentheses <code>()</code>.
+</li>
+<li>
+A tuple declaration involves a sequence of <em>associations</em>.
+Associations use a colon symbol <code>:</code> to separate a left-hand side name and a right-hand side definition.
+Each name of a association must be prefixed with <code>.</code>.
+(We will see the reason for this in the next section.)
+</li>
+<li>
+Associations are terminated by a comma symbol <code>,</code>.
+Terminating the last definition is optional.
+</li>
 </ol>
-
-<h4 id="public_names">Accessing names</h4>
-
-<p>
-The <code>.</code> prefix,
-which we have seen so far in the tuple names and the special <code>output</code> assignment,
-indicates that a name can be "accessed" in the manner shown in the definition of <code>output</code> on the second line of our program.
-I.e. if a name has a <code>.</code> prefix when defined,
-the corresponding definition can be accessed on the created tuple simply by putting the prefixed name after.
-We consider such names defined with the <code>.</code> prefix to be "public" names.
 </p>
 
-<h4 id="creating_tuples">Creating tuples</h4> 
+<h4>Using tuples</h4>
 
 <p>
-The syntax for creating a tuple involves a sequence of <em>associations</em>,
-terminated by a comma symbol <code>,</code> and inside a pair of parentheses <code>()</code>.
-The syntax for an association is similar to an assignment except with a colon symbol <code>:</code>
-(not a <code>=</code>)
-separating the left-hand side name and right-hand side definition.
-Each name of a tuple's layer must be prefixed with <code>.</code>.
-Requiring this prefix for the components of a tuple makes it clear that components of a tuple are always public (see <a href="#public_names">here</a>).
-The terminating <code>,</code> for the last definition is optional.
+In definition of <code>inspect</code> on the second line of our program,
+we see how to access a component of a tuple –
+the tuple definition represented by <code>myPoint</code> is followed by the same <code>.y</code> syntax used in the definition.
+We have seen this evaluates to the definition of the "y" component in the <code>myPoint</code> tuple, 4.0.
+In Goat, names defined with the <code>.</code> prefix within a tuple are able to be accessed in this manner,
+and are called "components".
 </p>
+
 
 <h4>Missing names</h4>
 
 <p>
-It is an error to invoke a name that is not associated in the tuple.
-To see this let's modify our program above so that we instead invoke a name "z" on <code>myPoint</code>.
+It is an error to access a name that is not associated in the tuple.
+To see this let's modify our program above so that we instead access a name "z" on <code>myPoint</code>.
 Make the following change to the second line of our program in the Goat pen above.
 <pre>
-.output = myPoint.z;
+.inspect = myPoint.z;
 </pre>
 After running, you should see the following printed below the box.
 <pre>
@@ -128,7 +103,7 @@ error: component missing: "z"
 </pre>
 </p>
 
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
 </html>

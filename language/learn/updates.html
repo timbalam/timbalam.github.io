@@ -38,8 +38,8 @@ Here is some code demonstrating the Goat's ability to "update" a block' definiti
 
 <pre>
 myPoint = {.x = 2; .y = x + 2};
-myPoint2 = myPoint{.x = 5};
-.output = myPoint2.y;
+myPoint2 = myPoint(.x : 5);
+.inspect = myPoint2.y;
 </pre>
 
 <p>
@@ -50,43 +50,30 @@ Go ahead and try it in the Goat Pen. You should see the following.
 7.0.
 </pre>
 
-<h4>How it looks and what it means</h4>
+<h4>Component-wise update</h4>
 
 <p>
-Here we discuss the following annotated version of our program,
-and highlight the new features demonstrated including the new syntax in the second line.
-<p>
-
+The second line of the above program demonstrates Goat's block update syntax.
+The value assigned to <code>myPoint2</code> is a modified version of <code>myPoint</code> that incorporating a new definition for its "x" component.
+Here we reproduce the line and highlight the main parts of the syntax.
 <pre>
-1 | myPoint = {.x = 2; .y = x + 2};
-               ^^^^^^
-               1
 2 | myPoint2 = myPoint(.x : 5);
                ^^^^^^^
-               2      ^^^^^^^^
-                      3
-3 | .output = myPoint2.y;
+               1      ^^^^^^^^
+                      2
 </pre>
-
 <ol>
-<li><p>
-The first line defines the name <code>myPoint</code> in the same manner as in the other tutorial,
-with the "x" component originally set to 2.
-</p></li>
-<li><p>
-In the second line we assign the name <code>myPoint2</code> using a new syntax that begins by the name <code>myPoint</code> referencing the definition above.
-</p></li>
-<li><p>
-The name <code>myPoint</code> is followed directly by a tuple with a single component "x".
-This juxtaposition form creates a modified versions of the first value,
-adding new components and/or replacing already existing components with the corresponding definitions from the following tuple.
-We describe this syntax as "updating" the first value.
-In this case, <code>myPoint2</code> is a version of <code>myPoint</code> where the <code>x</code> component has been redefined to be <code>5</code> instead of <code>4</code>.
+<li>
+The value to be modified comes first, here <code>myPoint</code> as defined on the first line.
+</li>
+<li>
+Directly following is a tuple or block declaration with components to be updated or added to the old value.
+Here the "x" component is being redefined as <code>5</code>.
 As running the code shows,
-the corresponding value for the y-component is also updated,
-resulting in 7.0 being printed.
-</p></li>
+the corresponding value for the y-coordinate is also updated to 7.0.
+</li>
 </ol>
+</p>
 
 <h4>Fun with lines</h4>
 
@@ -96,7 +83,7 @@ We can update the "x" component with a series of intervals and invoke the "y" co
 Try adjusting our code to update <code>myPoint</code> with different values of "x" in the Goat Pen!
 </p>
 
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
 </html>

@@ -36,7 +36,7 @@ as shown below.
 <pre>
 x = 1;
 myPoint = (.x : 2, .y : x + 2);
-.output = myPoint.y;
+.inspect = myPoint.y;
 </pre>
 
 <p>
@@ -64,7 +64,7 @@ With this change, our program becomes:
 <pre>
 x = 1;
 myPoint = {.x = 2; .y = x + 2};
-.output = myPoint.y;
+.inspect = myPoint.y;
 </pre>
 
 <p>
@@ -88,7 +88,7 @@ The value represented by a name used in a definition hence comes
 from the closest surrounding layer where it is given a definition.
 </p>
 
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
 </html>

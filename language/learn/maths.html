@@ -20,7 +20,7 @@ Next: <a href="names">Names</a>.
 <p>
 In the <a href="run">previous tutorial</a> we used Goat to print some text on the screen. 
 Cool!
-In our next exercise we will see that Goat can calculate things too!
+In our next exercise we will see that Goat can calculate things too.
 We will need another Goat pen. 
 </p>
 
@@ -33,7 +33,7 @@ For this exercise we will consider the following example code.
 <pre>
 myNumber = 2;
 myMaths = 3 * myNumber;
-.output = myMaths;
+.inspect = myMaths;
 </pre>
 
 <p>
@@ -51,8 +51,6 @@ Below is a diagram like the one from the other tutorial,
 showing our program with annotations.
 This time the changed parts of the code are highlighted.
 (If you are lost it might help to go back over the other tutorial.)
-</p> 
-
 <pre>
 1 | myNumber = 2;
     ^^^^^^^^
@@ -62,36 +60,36 @@ This time the changed parts of the code are highlighted.
     ^^^^^^^
     3         ^^^^^^^^^^^^
               4
-3 | .output = myMaths;
+3 | .inspect = myMaths;
               ^^^^^^^
               5
 </pre>
-
 <ol>
-<li><p>
+<li>
 We might recognise the first line as an assignment,
 this time with the left-hand side name <code>myNumber</code>.
-</p></li>
-<li><p>
+</li>
+<li>
 The assignment right-hand side is the literal number 2.
 Recall that this assignment means that we are choosing the name <code>myNumber</code> to be equivalent to the number 2 where ever we use it in definition code.
-</p></li>
-<li><p>
+</li>
+<li>
 The second line is also an assignment, this time to the label <code>myMaths</code>.
 </p></li>
 <li><p>
 The right hand side is a mathematical expression.
 The asterisk symbol <code>*</code> indicates a multiplication operation applied to the left and right inputs.
-We are multiplying the number 3 on the left by whatever value is represented by the name <code>myNumber</code>. 
-Here, the definition for <code>myNumber</code> comes from the assignment on the previous line.
-</p></li>
-<li><p>
-The third line is where we define the magical <code>output</code> name,
+Here, we are multiplying the number 3 on the left by the value represented by the name <code>myNumber</code>,
+defined on the previous line.
+</li>
+<li>
+The third line is where we define the magical <code>inspect</code> name,
 allowing the Goat web interpreter to evaluate and print it. 
 The definition we have given is the name <code>myMaths</code>,
 which as we have seen turns out to evaluate to the number 6.
-</p></li>
+</li>
 </ol>
+</p>
 
 
 <h4>A note on names</h4>
@@ -108,13 +106,13 @@ The following program has an additional line added compared to the one we made a
 myNumber = 2;
 myMaths = 3 * myNumber;
 myMaths = 5;
-.output = myMaths;
+.inspect = myMaths;
 </pre>
 Update the code block we typed earlier in the Goat pen above,
 and navigate away as usual to run it. 
 You should see an error like the following.
 <pre>
-error: multiple definitions: "myMaths"
+error: multiple assignments: "myMaths"
 </pre>
 The error states that the meaning of <code>myMaths</code> is ambiguous –
 which value would we expect to be printed? 
@@ -129,7 +127,7 @@ Go ahead and try moving the lines of code around in any of the tutorial exercise
 You'll find the results won't change.
 </p> 
 
-
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
+</html>

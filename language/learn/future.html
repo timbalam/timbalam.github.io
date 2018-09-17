@@ -34,7 +34,7 @@ The code for this demonstration is below.
 <pre>
 myPlane = {.z = .x - .y + 7};
 myPointDepth = myPlane(.x : 1, .y : 2).z;
-.output = myPointDepth;
+.inspect = myPointDepth;
 </pre>
 
 <p>
@@ -52,8 +52,6 @@ The depth of the point should be:
 <p>
 For a final time,
 let's consider the annotated program below and discuss some interesting parts.
-</p>
-
 <pre>
 1 | myPlane = {.z = .x - .y + 7};
                     ^^^^^^^^^^^
@@ -62,55 +60,61 @@ let's consider the annotated program below and discuss some interesting parts.
                    ^^^^^^^^^^^^^^^^^^^^^^^
                    2                      ^^
                                           3
-3 | .output = myPointDepth;
+3 | .inspect = myPointDepth;
 </pre>
-
 <ol>
-<li><p>
+<li>
 Probably the most notable part of the program is the definition of the name <code>z</code> inside the block defining <code>myPlane</code>.
 <code>z</code> is defined as a mathematical expression where two of the inputs are <code>.</code> prefixed names <code>x</code> and <code>y</code>,
 for which there are no corresponding definitions!
 How can this be?
 We need to consider the next line.
-</p></li>
-<li><p>
+</li>
+<li>
 The definition made to <code>myPointDepth</code> shows how we can use <code>myPlane</code> in a sensible way.
 We just need to update it with the missing definitions!
-</p></li>
-<li><p>
+</li>
+<li>
 We don't have to name the updated value we have created,
-instead we can immediately invoke the <code>z</code> component and assign that as the definition for <code>myPointDepth</code>.
+instead we can immediately access the "z" component and assign that as the definition for <code>myPointDepth</code>.
 Running the program shows that this evaluates to 7.0,
-which fits with substituting the provided <code>x</code> and <code>y</code> component values into the definition for the <code>z</code> component of <code>myPlane</code>.
-</p></li>
+illustrating the program behaviour —
+the provided "x" and "y" component values are substituted into the definition for the "z" component of <code>myPlane</code>.
+</li>
 </ol>
+</p>
 
-<h4>Referencing the future, publically</h4>
+<h4>Live names</h4>
 
 <p>
-The vital component making this exercise work is the use of <code>.</code> prefixed names in the definition of <code>myPlane</code>'s <code>z</code> component.
-Without the prefix, we would get missing definition errors (try it!).
-When we use the prefix we are saying that we want to reference the component of the block with that name,
-after taking into account future updates.
-The Goat interpreter will then wait until <code>z</code> is invoked before deciding what definitions to apply to the <code>x</code> and <code>y</code> names.
+The vital component making this exercise work is the use of <code>.</code> prefixed names
+(i.e. <code>.x</code> and <code>.y</code>)
+in the "z" component definition of <code>myPlane</code>.
+Without the prefix, we would get missing definition errors (try it!),
+since we haven't defined the names.
+When we use the <code>.</code> prefix we get a "live" reference to the corresponding component of the block,
+that updates whenever the corresponding component updates.
+The Goat interpreter will wait until the block's "z" component is accessed,
+and first access the "x" and "y" components and substitute them into the "z" definition.
 </p>
 
 <p>
-If we tried invoking the <code>z</code> component of <code>myPlane</code>,
-without first updating to provide the missing components,
-we would get an error!
-Values like <code>myPlane</code> that are only partially defined act as templates from which complete values can be made by updating,
-as in the definition of <code>myPointDepth</code>. 
+Values like <code>myPlane</code> that are only partially defined act as templates from which complete values can be made by updating.
+After providing "x" and "y" components to <code>myPlane</code>, we can safely access the "z" component in the definition of <code>myPointDepth</code>. 
+Goat will help us by checking that we only try to access completed components.
+I.e. we get an error if we try to acccess the "z" component of <code>myPlane</code>,
+without first updating to provide the missing components (try it too!).
 </p>
 
 <h4>The journey continues...</h4>
 
 <p>
-We have now completed a basic tour of how Goat reads and is written. For those of you who are not yet satisfied, now might be time to try some <a href="./examples">Examples</a>.
+We have now completed a basic tour of how Goat reads and is written.
+For those of you whose curiosity has been piqued,
+now might be time to try some <a href="./examples">Examples</a>.
 </p>
 
-
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
 </html>

@@ -34,8 +34,8 @@ Click outside the pen or press the tab key when you are finished.
 </p>
 
 <pre>
-myText = "Hello world.";
-.output = myText;
+myText = "Hello darkness.";
+.inspect = myText;
 </pre>
 
 <p>
@@ -43,7 +43,7 @@ If it worked correctly, you should see the following text appear below the box:
 </p>
 
 <pre>
-Hello world.
+Hello darkness.
 </pre>
 
 <p>
@@ -56,62 +56,58 @@ Congratulations, you have a working Goat program!
 The diagram below shows an annotated version of the program we just wrote,
 with the main features of interest to the computer highlighted.
 (Line numbers for the original program lines are shown on the far left.)
-<p>
 <pre>
-1 | myText = "Hello world.";
-    ^^^^^^   ^^^^^^^^^^^^^^
-    1      ^ 3             ^
-           2               4
-2 | .output = myText;
-    ^       ^       ^
-    5^^^^^^ 2 ^^^^^^4
-     6        7
+1 | myText = "Hello darkness.";
+    ^^^^^^   ^^^^^^^^^^^^^^^^^
+    1      ^ 3                ^
+           2                  4
+2 | .inspect = myText;
+    ^^^^^^^^   ^^^^^^
+    5        ^ 6     ^
+             2       4
 </pre>
-<p>
 <ol>
-<li><p>
+<li>
 The computer understands sequences of alphabetic characters such as <code>myText</code> to be a name.
 The space at the end helps readability but is not necessary and doesn't change the meaning of the program.
 Names are not allowed to contain spaces.
-</p></li>
-<li><p>
+</li>
+<li>
 The computer sees the equals sign symbol <code>=</code> and understands that we are making an <em>assignment</em>.
 The name to the left is defined as equivalent to the code to the right. Any space immediately after the <code>=</code> also has no effect on the program.
-</p></li>
-<li><p>
-The sentence in double quotes <code>"Hello world."</code> represents a literal text value. 
-</p></li>
-<li><p>
+</li>
+<li>
+The sentence in double quotes <code>"Hello darkness."</code> represents a literal text value. 
+</li>
+<li>
 Each line ends with a semi-colon symbol <code>;</code>.
 The <code>;</code> indicates that we have finished with the definition for an assignment.
-</p></li>
-<li><p>
-The second line, shown below, begins with a full-stop symbol <code>.
-</code>.
-The <code>.</code> indicates that the following name has a special meaning. 
-In this case, it allows the Goat web interpreter to read and evaluate the definition of <code>output</code>.
-</p></li>
-<li><p>
-The Goat pen is set up so that the definition made for <code>output</code> is evaluated and the result printed below the pen.
-</p></li>
-<li><p>
-The name <code>myText</code> is assigned to <code>output</code>.
+</li>
+<li>
+The second line defines a special name <code>inspect</code> with a full stop symbol <code>.</code> prefix. 
+If this name is defined (the prefix is necessary),
+the Goat Pen will try to evaluate the definition and prints the result below the pen.
+Otherwise, a default message will be displayed.
+</li>
+<li>
+The name <code>myText</code> is assigned to <code>inspect</code>.
 When used inside a definition,
 a name is a place-holder for its definition.
-As <code>myText</code> was assigned to be the text "Hello world.",
-this is what <code>output</code> evaluates to,
+As <code>myText</code> was assigned to be the text "Hello darkness.",
+this is what <code>inspect</code> evaluates to,
 and is thus printed below the Goat pen.
-</p></li>
+</li>
 </ol>
+</p>
 
 <h4>My first error</h4>
 
 <p>
 It is an error to use a label in a definition without giving a definition too.
-Let's see what happens if we change the definition of <code>output</code> to an undefined label <code>myTekts</code>.
+Let's see what happens if we change the definition of <code>inspect</code> to an undefined label <code>myTekts</code>.
 Go to the Goat pen above and change the second line to the following:
 <pre>
-.output = myTekts;
+.inspect = myTekts;
 </pre>
 [#TODO] You should see the following message following the Goat pen:
 <pre>
@@ -121,6 +117,7 @@ This way, if we might misspell or misremember a name,
 Goat will let us know about it so we can fix it!
 </p>
 
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
+</html>

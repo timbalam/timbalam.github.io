@@ -18,8 +18,8 @@ Next: <a href="shadows">Shadows</a>.
 <h1>Names, layered</h1>
 
 <p>
-In the <a href="names">previous tutorial</a> we created a value representing a point (in a co-ordinate space).
-A useful generalisation of this would be if we related the y-component to the x-component –
+In the <a href="names">previous tutorial</a> we created a value representing a 2-D point.
+A useful generalisation of this would be to have the y-component relate to the x-component –
 i.e. a line.
 Let's try this and see what happens.
 First, below is our Goat pen.
@@ -28,18 +28,20 @@ First, below is our Goat pen.
 <textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
 
 <p>
-Let's try to generalise our previous example,
-and modify the definition of <code>myPoint</code> so that the  <code>y</code> coordinate is related to the <code>x</code> by the line "y = x + 2".
+Let's try an obvious, yet unsuccessful,
+way to generalise our previous example,
+and modify the definition of <code>myPoint</code> so that the y-coordinate relates to the x- by the line <strong>y = x + 2</strong>.
 The new program is shown below.
 </p>
 
 <pre>
 myPoint = (.x : 2, .y : x + 2);
-.output = myPoint.y;
+.inspect = myPoint.y;
 </pre>
 
 <p>
-However, this doesn't quite work! Type and run the above block of code into the Goat pen and you should see the following error.
+We will see this doesn't quite work.
+Type and run the above block of code into the Goat Pen and you should see the following error.
 </p>
 
 <pre>
@@ -48,11 +50,11 @@ error: definition missing: "x"
 
 <p>
 The error tells us that we have used the label <code>x</code> without defining it.
-This is due to an import distinction between tuple associations and the usual assignments we write in our program –
-whereas assignments introduce an equivalence between the name and definition,
-associations can only be invoked from the tuple.
+This demonstrates an import distinction between tuple associations and the usual assignments we write in our program –
+assignments introduce an equivalence between the name and definition,
+associations only define an accessible component.
 This is the cause of the error –
-Nowhere have we <em>assigned</em> to the name <code>x</code> a definition that can be substituted into the tuple definition for <code>y</code>.
+the label <code>x</code> doesn't have an associated definition that can be substituted into the tuple definition for <code>y</code>.
 </p>
 
 <p>
@@ -64,7 +66,7 @@ demonstrated in the following fixed example.
 
 <pre>
 myPoint = {.x = 2; .y = x + 2};
-.output = myPoint.y;
+.inspect = myPoint.y;
 </pre>
 
 <p>
@@ -91,25 +93,21 @@ The diagram below shows the relationship between tuple and block syntax.
 <tr>
   <th></th>
   <th>Tuple</th>
-  <th></th>
   <th>Block</th>
 </tr>
 <tr>
-  <th>Begins/ends with</th>
+  <td>Begins/ends with</td>
   <td><code>()</code></td>
-  <th>becomes</th>
   <td><code>{}</code></td>
 </tr>
 <tr>
-  <th>Association/assignment</th>
+  <td>Association/assignment</td>
   <td><code>:</code></td>
-  <th>becomes</th>
   <td><code>=</code></td>
 </tr>
 <tr>
-  <th>Definition terminator</th>
+  <td>Definition terminator</td>
   <td><code>,</code></td>
-  <th>becomes</th>
   <td><code>;</code></td>
 </tr>
 </table>
@@ -118,6 +116,7 @@ The diagram below shows the relationship between tuple and block syntax.
 <p>
 One thing to note with block creation syntax is that we are again using the familiar <code>=</code> for assignment and <code>;</code> for definition termination.
 This correspondence with how we have been writing our programs so far is not accidental.
+One way to think of blocks is as defining their own sub-programs.
 At the end of the <a href="maths">Math</a> tutorial,
 we introduced a way of looking at Goat programs as a set of names.
 With blocks,
@@ -132,48 +131,52 @@ allowed to overlap with outer layers.
 <p>
 Let's come back to the program we wrote,
 and highlight some features of how blocks work.
-</p>
-
 <pre>
 1 | myPoint = {.x = 2; .y = x + 2};
                ^^^^^^
                1            ^
                             2
-2 | .output = myPoint.y;
+2 | .inspect = myPoint.y;
               ^^^^^^^^^
               3
 </pre>
-
 <ol>
-<li><p>
+<li>
 Unlike tuples, blocks feature regular assignments,
 meaning names are given an equivalence with their definitions whenever they appear,
 <em>within the block</em>.
-</p></li>
-<li><p>
-Here that we used the name <code>x</code> in the definition of <code>y</code>.
-Note we can use the name plain without needing to include the prefix <code>.</code>.
-Remember that the <code>.</code> prefix acts as a decorator to a name rather than actually being part of the name itself. 
-</p></li>
-<li><p>
-Note that we didn't need to change our definition of <code>output</code>!
-We can access the public name <code>y</code> on the new block definition of <code>myPoint</code> to access the corresponding definition,
-same as with the tuple definition.
+</li>
+<li>
+We can use the name <code>x</code> in the definition of the "y" component,
+without needing to include the prefix <code>.</code> used in the definition.
+(The name is the thing defined,
+and the <code>.</code> prefix gives the name the following additional behaviour.)
+</li>
+<li>
+Note that we didn't need to change our definition of <code>inspect</code>!
+We can access the names defined with the <code>.</code> prefix within blocks the same way we can with tuples.
+For this reason, we refer to such definitions of blocks also as components.
 As we have seen, the evaluated value is 4.0.
-</p></li>
+</li>
 </ol>
+</p>
+
+<p>
+Aside: The special <code>inspect</code> assignment we may recognise as having the <code>.</code> prefix,
+making it a program-level component.
+We won't get to cover exactly what this means in these tutorials, though.
+</p>
 
 <h4>Going local</h4>
 
 <p>
-In the exercise above we were able to access the name <code>y</code> on <code>myPoint</code> to access the definition.
-Public names of both blocks and tuples can be accessed this way.
-For this reason, when talking about blocks we also refer to the publicly named definitions as "components".
+In the exercise above we make a block with two components.
 Unlike tuples,
-with blocks we have the option of defining a "local" name,
+but like the main definitions of our programs,
+with blocks we also have the option of defining a "local" name,
 by not including the <code>.</code> prefix.
 Local names can be used inside the block to represent their definition,
-but can't be accessed by code outside the block.
+but can't be accessed directly by code outside the block.
 </p>
 
 <p>
@@ -187,9 +190,7 @@ error: component missing: "y"
 </pre>
 </p>
 
-
-
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
 </html>

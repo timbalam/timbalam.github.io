@@ -12,48 +12,48 @@ Up: <a href=".">Examples</a>.
 <h1>Implementing boolean logic</h1>
 
 <p>
-Boolean logic involves two values <em>True</em> and <em>False</em>,
+Boolean logic involves two values <strong>true</strong> and <strong>false</strong>,
 as well as and some relationships between them.
 For example,
-the following truth-table demonstrates the <em>and</em> relationship.
+the following truth-table demonstrates the <strong>and</strong> relationship.
 </p>
 
 <pre>
 <table>
   <tbody>
-    <tr><td>and</td><td>a=True</td><td>a=False</td></tr>
-    <tr><td>b=True</td><td>res=True</td><td>res=False</td></tr>
-    <tr><td>b=False</td><td>res=False</td><td>res=False</td></tr>
+    <tr><th>and</th><th>a=True</th><th>a=False</th></tr>
+    <tr><th>b=True</th><td>res=True</td><td>res=False</td></tr>
+    <tr><th>b=False</th><td>res=False</td><td>res=False</td></tr>
   </tbody>
 </table>
 </pre>
 
 <p>
 This relationship can be summarised as:
-we expect <em>a and b</em> to be true when both <em>a</em> and <em>b</em> are true, and false otherwise.
+we expect <em>a</em> <strong>and</strong> <em>b</em> to be true when both <em>a</em> and <em>b</em> are true, and false otherwise.
 </p>
 
 <p>
-Another example is the <em>or</em> relationship, demonstrated by this truth table.
+Another example is the <strong>or</strong> relationship, demonstrated by this truth table.
 </p>
 
 <pre>
 <table>
   <tbody>
-    <tr><td>or</td><td>a=True</td><td>a=False</td></tr>
-    <tr><td>b=True</td><td>res=True</td><td>res=True</td></tr>
-    <tr><td>b=False</td><td>res=True</td><td>res=False</td></tr>
+    <tr><th>or</th><th>a=True</th><th>a=False</th></tr>
+    <tr><th>b=True</th><td>res=True</td><td>res=True</td></tr>
+    <tr><th>b=False</th><td>res=True</td><td>res=False</td></tr>
   </tbody>
 </table>
 </pre>
 
 <p>
-Here, we expect <em>a or b</em> to be true if any of <em>a</em> and <em>b</em> are true, and false if both are false.
+Here, we expect <em>a</em> <strong>or</strong> <em>b</em> to be true if any of <em>a</em> and <em>b</em> are true, and false if both are false.
 
 <h4>True and False in Goat</h4>
 
 <p>
-First, the text box below is a <strong>Goat Pen</strong> for you to follow along with the example.
+First, the text box below is a <strong>Goat Pen</strong> for you to type the code excerpts from the example.
 </p>
 
 <textarea class="codebox" style="min-height: 100px;width: 95%"></textarea>
@@ -78,16 +78,16 @@ False = {
 
 <p>
 The two declarations use the brace form for declaring <em>blocks</em>.
-Both <code>True</code> and <code>False</code> have a component <code>match</code> defined using a public name
-(<code>ifTrue</code> and <code>ifFalse</code> respectively)
-to reference not-defined-as-yet components of the block.
-This indicates that these are intended as "prototype" values,
-and we will need to "fill in" the missing components before accessing <code>match</code>.
+Both <code>True</code> and <code>False</code> have a component "match" defined to be a live component reference
+(to <code>ifTrue</code> and <code>ifFalse</code> respectively).
+This indicates that these are intended as "template" values,
+and we will need to "fill in" the missing components before accessing <code>.match</code>.
 </p>
 
 <p>
 It might not be immediately obvious how these two values encode the usual true and false values.
-Let's demonstrate with the following exercise.
+To help us, below is a piece of code which we can use to visualise the values,
+by converting to a representative text description.
 </p>
 
 <pre>
@@ -97,7 +97,7 @@ showBool = {
     .ifFalse : "Uh, not really, I think?",
   ).match;
 };
-.output = showBool(.bool : True).show;
+.inspect = showBool(.bool : True).show;
 </pre>
 
 <p>
@@ -110,26 +110,26 @@ Definitely!
 </pre>
 
 <p>
-(Try changing the value set to "bool" in the <code>output</code> defintion to <code>False</code>).
+(Try changing the value set to "bool" in the <code>output</code> defintion to <code>False</code>.)
 </p>
 
 <p>
 Let's quickly review the definition of <code>showBool</code>:
 It is defined as a block with a component "show".
-The definition of "show" applies an update to a non-existent public component <code>bool</code>,
-and accesses the <code>match</code> component of the updated value.
+The definition of "show" applies an update to a live component "bool",
+and accesses <code>.match</code> of the updated value.
 <p>
 
 <p>
 The intuition for our boolean definitions is that we will write code,
 such as <code>showBool</code> above,
-that operates on an unknown boolean by updating it with <code>ifTrue</code> and <code>ifFalse</code> definitions specifying what to do for the corresponding cases.
-Accessing <code>match</code> will then enter the appropriate branch
+that operates on an unknown boolean by updating it with <code>.ifTrue</code> and <code>.ifFalse</code> definitions specifying what to do for the corresponding cases.
+Accessing <code>.match</code> will then enter the appropriate branch
 (i.e. <code>False</code> will take <code>ifFalse</code> and <code>True</code> will take <code>ifTrue</code>).
 </p>
 
 <p>
-The following definition of the <em>and</em> operation is another demonstration of how we can use these boolean definitions.
+The following definition of the <strong>and</strong> operation is another demonstration of how we can use these boolean definitions.
 A test case <code>expectTrue</code> representing the top-left cell of the truth-table above has also been given.
 </p>
 
@@ -160,12 +160,12 @@ verifying that our expectation indeed holds.
 
 <p>
 As an exercise,
-use the Goat Pen to create and verify test cases for the rest of the <em>and</em> truth-table at the top of this article.
+use the Goat Pen to create and verify test cases for the rest of the <strong>and</strong> truth-table at the top of this article.
 As a further exercise,
-try to implement a corresponding <em>or</em> operation and verify the implementation.
+try to implement a corresponding <strong>or</strong> operation and verify the implementation.
 </p>
 
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="../script/setup-goat-web.js"></script>
+<script src="../script/goat-web.js"></script>
 </body>
 </html>

@@ -45,16 +45,15 @@ Type and run the above block of code into the Goat Pen and you should see the fo
 </p>
 
 <pre>
-error: definition missing: "x"
+&lt;error: Missing assignment: x&gt;
 </pre>
 
 <p>
 The error tells us that we have used the label <code>x</code> without defining it.
 This demonstrates an import distinction between tuple associations and the usual assignments we write in our program –
-assignments introduce an equivalence between the name and definition,
-associations only define an accessible component.
-This is the cause of the error –
-the label <code>x</code> doesn't have an associated definition that can be substituted into the tuple definition for <code>y</code>.
+assignments introduce a reusable equivalence between the name and definition,
+associations define a component to add to a tuple.
+Hence the label <code>x</code> is not defined for the tuple "y" component definition.
 </p>
 
 <p>
@@ -70,7 +69,7 @@ myPoint = {.x = 2; .y = x + 2};
 </pre>
 
 <p>
-Let's go ahead and type this into the Goat pen and run it.
+Let's go ahead and replace our code in the Goat Pen with this and run it.
 You should see the following.
 </p>
 
@@ -118,12 +117,12 @@ One thing to note with block creation syntax is that we are again using the fami
 This correspondence with how we have been writing our programs so far is not accidental.
 One way to think of blocks is as defining their own sub-programs.
 At the end of the <a href="maths">Math</a> tutorial,
-we introduced a way of looking at Goat programs as a set of names.
+we described a way of looking at Goat programs as a set of names.
 With blocks,
 we don't need to settle for a single set of names for our entire program.
 They are a way to introduce a new "layer" of names,
-allowed to overlap with outer layers.
-(Names within a layer must still be unique, though).
+existing within the <code>{}</code> and allowed to overlap with outer layers.
+(Names within a layer must still be unique, though.)
 </p>
 
 <h4>How it looks and what it means</h4>
@@ -186,7 +185,7 @@ You should find the result doesn't change.
 Now try instead removing the <code>.</code> prefix of the "y" component.
 You should now see an error like the following:
 <pre>
-error: component missing: "y"
+&lt;error: Missing component: y&gt;
 </pre>
 </p>
 

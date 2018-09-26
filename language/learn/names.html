@@ -61,11 +61,11 @@ The following diagram of the first line highlights the syntax for "declaring" a 
 </pre>
 <ol>
 <li>
-Tuple declarations start and end with a pair of parentheses <code>()</code>.
+Tuple declarations start and end with a pair of <strong>parentheses</strong> <code>()</code>.
 </li>
 <li>
 A tuple declaration involves a sequence of <em>associations</em>.
-Associations use a colon symbol <code>:</code> to separate a left-hand side name and a right-hand side definition.
+Associations use a <strong>colon</strong> symbol <code>:</code> to separate a left-hand side name and a right-hand side definition.
 Each name of a association must be prefixed with <code>.</code>.
 (We will see the reason for this in the next section.)
 </li>
@@ -82,7 +82,7 @@ Terminating the last definition is optional.
 In definition of <code>inspect</code> on the second line of our program,
 we see how to access a component of a tuple –
 the tuple definition represented by <code>myPoint</code> is followed by the same <code>.y</code> syntax used in the definition.
-We have seen this evaluates to the definition of the "y" component in the <code>myPoint</code> tuple, 4.0.
+We have seen this evaluates to the corresponding definition in the <code>myPoint</code> tuple, 4.
 In Goat, names defined with the <code>.</code> prefix within a tuple are able to be accessed in this manner,
 and are called "components".
 </p>
@@ -99,7 +99,7 @@ Make the following change to the second line of our program in the Goat pen abov
 </pre>
 After running, you should see the following printed below the box.
 <pre>
-error: component missing: "z"
+&lt;error: Missing component: z&gt;
 </pre>
 </p>
 

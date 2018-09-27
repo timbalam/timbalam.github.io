@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-<h2>Names</h2>
-
+<header>
 <p>
-Up: <a href=".">Learn</a>,
 Prev: <a href="maths">Maths</a>,
-Next: <a href="layers">Layers</a>.
+Next: <a href="layers">Layers</a>,
+Up: <a href=".">Learn</a>
 </p>
-
-<br></br>
-
+</header>
+<hr>
+<main>
 <h1>Names, associated</h1>
 
 <p>
@@ -26,13 +26,13 @@ Their usage is perhaps best demonstrated with an exercise.
 Let's start with the Goat Pen below.
 </p>
 
-<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+<textarea class="codebox"></textarea>
 
 <p>
 Let's imagine we have a two-dimensional co-ordinate that we want to inspect the y-axis component of. In Goat we can write some code like the following.
 </p>
 
-<pre>
+<pre class="codebox">
 myPoint = (.x : 2, .y : 4);
 .inspect = myPoint.y;
 </pre>
@@ -42,7 +42,7 @@ As usual, I'll ask you to type the above code block into the Goat pen and run it
 You should see the following.
 </p>
 
-<pre>
+<pre class="codebox-output">
 4.0
 </pre>
 
@@ -53,6 +53,7 @@ You should see the following.
 The right hand side of the <code>myPoint</code> assignment is a <em>tuple</em>.
 This tuple associates the names <code>x</code> and <code>y</code> to numeric values representing the point's x- and y- co-ordinates.
 The following diagram of the first line highlights the syntax for "declaring" a tuple.
+</p>
 <pre>
 1 | myPoint = (.x : 2, .y : 4);
               ^      ^       ^
@@ -74,7 +75,6 @@ Associations are terminated by a comma symbol <code>,</code>.
 Terminating the last definition is optional.
 </li>
 </ol>
-</p>
 
 <h4>Using tuples</h4>
 
@@ -94,14 +94,25 @@ and are called "components".
 It is an error to access a name that is not associated in the tuple.
 To see this let's modify our program above so that we instead access a name "z" on <code>myPoint</code>.
 Make the following change to the second line of our program in the Goat pen above.
-<pre>
+</p>
+<pre class="codebox">
 .inspect = myPoint.z;
 </pre>
+<p>
 After running, you should see the following printed below the box.
-<pre>
+</p>
+<pre class="codebox-output">
 &lt;error: Missing component: z&gt;
 </pre>
+</main>
+<hr>
+<footer>
+<p>
+Prev: <a href="maths">Maths</a>,
+Next: <a href="layers">Layers</a>,
+Up: <a href=".">Learn</a>
 </p>
+</footer>
 
 <script src="../script/setup-goat-web.js"></script>
 <script src="../script/goat-web.js"></script>

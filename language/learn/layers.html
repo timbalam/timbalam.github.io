@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-<h2>Layers</h2>
-
+<header>
 <p>
-Up: <a href=".">Learn</a>,
 Prev: <a href="names">Names</a>,
-Next: <a href="shadows">Shadows</a>.
+Next: <a href="shadows">Shadows</a>,
+Up: <a href=".">Learn</a>
 </p>
-
-<br></br>
-
+</header>
+<hr>
+<main>
 <h1>Names, layered</h1>
 
 <p>
@@ -25,7 +25,7 @@ Let's try this and see what happens.
 First, below is our Goat pen.
 </p>
 
-<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+<textarea class="codebox"></textarea>
 
 <p>
 Let's try an obvious, yet unsuccessful,
@@ -34,7 +34,7 @@ and modify the definition of <code>myPoint</code> so that the y-coordinate relat
 The new program is shown below.
 </p>
 
-<pre>
+<pre class="codebox">
 myPoint = (.x : 2, .y : x + 2);
 .inspect = myPoint.y;
 </pre>
@@ -44,7 +44,7 @@ We will see this doesn't quite work.
 Type and run the above block of code into the Goat Pen and you should see the following error.
 </p>
 
-<pre>
+<pre class="codebox-output">
 &lt;error: Missing assignment: x&gt;
 </pre>
 
@@ -63,7 +63,7 @@ an alternative construction to a tuple called a "block",
 demonstrated in the following fixed example.
 </p>
 
-<pre>
+<pre class="codebox">
 myPoint = {.x = 2; .y = x + 2};
 .inspect = myPoint.y;
 </pre>
@@ -73,7 +73,7 @@ Let's go ahead and replace our code in the Goat Pen with this and run it.
 You should see the following.
 </p>
 
-<pre>
+<pre class="codebox-output">
 4.0
 </pre>
 
@@ -87,30 +87,32 @@ replacing the tuple creation syntax with a new syntax for constructing a "block"
 The diagram below shows the relationship between tuple and block syntax.
 </p>
 
-<pre>
 <table>
 <tr>
   <th></th>
   <th>Tuple</th>
+  <td></td>
   <th>Block</th>
 </tr>
 <tr>
   <td>Begins/ends with</td>
   <td><code>()</code></td>
+  <td></td>
   <td><code>{}</code></td>
 </tr>
 <tr>
   <td>Association/assignment</td>
   <td><code>:</code></td>
+  <td></td>
   <td><code>=</code></td>
 </tr>
 <tr>
   <td>Definition terminator</td>
   <td><code>,</code></td>
+  <td></td>
   <td><code>;</code></td>
 </tr>
 </table>
-</pre>
 
 <p>
 One thing to note with block creation syntax is that we are again using the familiar <code>=</code> for assignment and <code>;</code> for definition termination.
@@ -130,6 +132,7 @@ existing within the <code>{}</code> and allowed to overlap with outer layers.
 <p>
 Let's come back to the program we wrote,
 and highlight some features of how blocks work.
+</p>
 <pre>
 1 | myPoint = {.x = 2; .y = x + 2};
                ^^^^^^
@@ -158,7 +161,6 @@ For this reason, we refer to such definitions of blocks also as components.
 As we have seen, the evaluated value is 4.0.
 </li>
 </ol>
-</p>
 
 <p>
 Aside: The special <code>inspect</code> assignment we may recognise as having the <code>.</code> prefix,
@@ -184,10 +186,19 @@ try removing the <code>.</code> prefix of the "x" component in the definition of
 You should find the result doesn't change.
 Now try instead removing the <code>.</code> prefix of the "y" component.
 You should now see an error like the following:
-<pre>
+</p>
+<pre class="codebox-output">
 &lt;error: Missing component: y&gt;
 </pre>
+</main>
+<hr>
+<footer>
+<p>
+Prev: <a href="names">Names</a>,
+Next: <a href="shadows">Shadows</a>,
+Up: <a href=".">Learn</a>
 </p>
+</footer>
 
 <script src="../script/setup-goat-web.js"></script>
 <script src="../script/goat-web.js"></script>

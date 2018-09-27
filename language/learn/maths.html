@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-<h2>Maths</h2>
-
+<header>
 <p>
-Up: <a href=".">Learn</a>,
 Prev: <a href="run">Run</a>,
-Next: <a href="names">Names</a>.
+Next: <a href="names">Names</a>,
+Up: <a href=".">Learn</a>
 </p>
-
-<br></br>
-
+</header>
+<hr>
+<main>
 <h1>Calculating with Goat</h1>
 
 <p>
@@ -24,13 +24,13 @@ In our next exercise we will see that Goat can calculate things too.
 We will need another Goat pen. 
 </p>
 
-<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+<textarea class="codebox"></textarea>
 
 <p>
 For this exercise we will consider the following example code.
 </p>
 
-<pre>
+<pre class="codebox">
 myNumber = 2;
 myMaths = 3 * myNumber;
 .inspect = myMaths;
@@ -39,10 +39,10 @@ myMaths = 3 * myNumber;
 <p>
 Type out (or copy) the code above into the web interpreter box. 
 Upon navigating away from the box you should see the following printed below the box:
-<pre>
+</p>
+<pre class="codebox-output">
 6.0
 </pre>
-</p> 
 
 <h4>How it looks and what it means</h4>
 
@@ -51,6 +51,7 @@ Below is a diagram like the one from the other tutorial,
 showing our program with annotations.
 This time the changed parts of the code are highlighted.
 (If you are lost it might help to go back over the other tutorial.)
+</p>
 <pre>
 1 | myNumber = 2;
     ^^^^^^^^
@@ -75,8 +76,8 @@ Recall that this assignment means that we are choosing the name <code>myNumber</
 </li>
 <li>
 The second line is also an assignment, this time to the label <code>myMaths</code>.
-</p></li>
-<li><p>
+</li>
+<li>
 The right hand side is a mathematical expression.
 The <strong>asterisk</strong> symbol <code>*</code> indicates a multiplication operation applied to the left and right inputs.
 Here, we are multiplying the number 3 on the left by the value represented by the name <code>myNumber</code>,
@@ -89,7 +90,6 @@ The definition we have given is the name <code>myMaths</code>,
 which as we have seen turns out to evaluate to the number 6.
 </li>
 </ol>
-</p>
 
 
 <h4>A note on names</h4>
@@ -102,18 +102,22 @@ and it is an error to reuse a name.
 We can demonstrate this by modifying our program above,
 to add a duplicate definition for <code>myMaths</code>.
 The following program has an additional line added compared to the one we made above.
-<pre>
+</p>
+<pre class="codebox">
 myNumber = 2;
 myMaths = 3 * myNumber;
 myMaths = 5;
 .inspect = myMaths;
 </pre>
+<p>
 Update the code block we typed earlier in the Goat pen above,
 and navigate away as usual to run it. 
 You should see an error like the following.
-<pre>
+</p>
+<pre class="codebox-output">
 &lt;error: Multiple assignments: myMaths&gt;
 </pre>
+<p>
 The error states that the meaning of <code>myMaths</code> is ambiguous –
 which value would we expect to be printed? 
 Goat enforces the use of unique names with unchanging values so that it is easier to know what a label means, 
@@ -126,6 +130,15 @@ we have the property that the order in which we make our assignments doesn't aff
 Go ahead and try moving the lines of code around in any of the tutorial exercises so far!
 You'll find the results won't change.
 </p> 
+</main>
+<hr>
+<footer>
+<p>
+Prev: <a href="run">Run</a>,
+Next: <a href="names">Names</a>,
+Up: <a href=".">Learn</a>
+</p>
+</footer>
 
 <script src="../script/setup-goat-web.js"></script>
 <script src="../script/goat-web.js"></script>

@@ -1,14 +1,17 @@
 <!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
+</head>
 <body>
-<h2>Booleans</h2>
-
+<header>
 <p>
-Up: <a href=".">Examples</a>.
+Up: <a href=".">Examples</a>
 </p>
-
-<br></br>
-
-
+</header>
+<hr>
+<main>
 <h1>Implementing boolean logic</h1>
 
 <p>
@@ -18,15 +21,31 @@ For example,
 the following truth-table demonstrates the <strong>and</strong> relationship.
 </p>
 
-<pre>
 <table>
   <tbody>
-    <tr><th>and</th><th>a=True</th><th>a=False</th></tr>
-    <tr><th>b=True</th><td>res=True</td><td>res=False</td></tr>
-    <tr><th>b=False</th><td>res=False</td><td>res=False</td></tr>
+    <tr>
+      <th>and</th>
+      <td></td>
+      <th><code>a=True</code></th>
+      <td></td>
+      <th><code>a=False</code></th>
+    </tr>
+    <tr>
+      <th><code>b=True</code></th>
+      <td></td>
+      <td><code>res=True</code></td>
+      <td></td>
+      <td><code>res=False</code></td>
+    </tr>
+    <tr>
+      <th><code>b=False</code></th>
+      <td></td>
+      <td><code>res=False</code></td>
+      <td></td>
+      <td><code>res=False</code></td>
+    </tr>
   </tbody>
 </table>
-</pre>
 
 <p>
 This relationship can be summarised as:
@@ -37,15 +56,31 @@ we expect <em>a</em> <strong>and</strong> <em>b</em> to be true when both <em>a<
 Another example is the <strong>or</strong> relationship, demonstrated by this truth table.
 </p>
 
-<pre>
 <table>
   <tbody>
-    <tr><th>or</th><th>a=True</th><th>a=False</th></tr>
-    <tr><th>b=True</th><td>res=True</td><td>res=True</td></tr>
-    <tr><th>b=False</th><td>res=True</td><td>res=False</td></tr>
+    <tr>
+      <th>or</th>
+      <td></td>
+      <th><code>a=True</code></th>
+      <td></td>
+      <th><code>a=False</code></th>
+    </tr>
+    <tr>
+      <th><code>b=True</code></th>
+      <td></td>
+      <td><code>res=True</code></td>
+      <td></td>
+      <td><code>res=True</code></td>
+    </tr>
+    <tr>
+      <th><code>b=False</code></th>
+      <td></td>
+      <td><code>res=True</code></td>
+      <td></td>
+      <td><code>res=False</code></td>
+    </tr>
   </tbody>
 </table>
-</pre>
 
 <p>
 Here, we expect <em>a</em> <strong>or</strong> <em>b</em> to be true if any of <em>a</em> and <em>b</em> are true, and false if both are false.
@@ -55,8 +90,7 @@ Here, we expect <em>a</em> <strong>or</strong> <em>b</em> to be true if any of <
 <p>
 First, the text box below is a <strong>Goat Pen</strong> for you to type the code excerpts from the example.
 </p>
-
-<textarea class="codebox" style="min-height: 100px;width: 95%"></textarea>
+<textarea class="codebox"></textarea>
 
 <p>
 This example will be a bit larger that those you have seen so far from the <a href="../learn">tutorials</a>.
@@ -65,8 +99,7 @@ which are to be added to the Goat Pen below code from previous sections.
 To start, here is some code implementing the two boolean values,
 <code>True</code> and <code>False</code>.
 </p>
-
-<pre>
+<pre class="codebox">
 True = {
   .match = .ifTrue;
 };
@@ -90,7 +123,7 @@ To help us, below is a piece of code which we can use to visualise the values,
 by converting to a representative text description.
 </p>
 
-<pre>
+<pre class="codebox">
 showBool = {
   .show = .bool(
     .ifTrue : "Definitely!",
@@ -105,12 +138,12 @@ We can add this code to the Goat Pen after our definitions of <code>True</code> 
 After running it we should see the following output printed:
 </p>
 
-<pre>
+<pre class="codebox-output">
 Definitely!
 </pre>
 
 <p>
-(Try changing the value set to "bool" in the <code>output</code> defintion to <code>False</code>.)
+(Try changing the value set to "bool" in the <code>.inspect</code> defintion to <code>False</code>.)
 </p>
 
 <p>
@@ -133,7 +166,7 @@ The following definition of the <strong>and</strong> operation is another demons
 A test case <code>expectTrue</code> representing the top-left cell of the truth-table above has also been given.
 </p>
 
-<pre>
+<pre class="codebox">
 and = {
   // "res" is short-hand for "result"
   .res = .a(.ifTrue : .b, .ifFalse : False).match;
@@ -143,18 +176,19 @@ expectTrue = and(.a : True, .b : True).res;
 
 <p>
 Let's add this to the code we have in the Goat Pen already.
-Now let's change our <code>output</code> definition to the following:
+Now let's change our <code>.inspect</code> definition to the following:
 </p>
-
-<pre>
-.output = showBool(.bool = expectTrue).show;
+<pre class="codebox">
+.inspect = showBool(.bool = expectTrue).show;
 </pre>
 
 <p>
 We should see the result:
-<pre>
+</p>
+<pre class="codebox-output">
 Definitely!
 </pre>
+<p>
 verifying that our expectation indeed holds.
 </p>
 
@@ -164,6 +198,13 @@ use the Goat Pen to create and verify test cases for the rest of the <strong>and
 As a further exercise,
 try to implement a corresponding <strong>or</strong> operation and verify the implementation.
 </p>
+</main>
+<hr>
+<footer>
+<p>
+Up: <a href=".">Examples</a>
+</p>
+</footer>
 
 <script src="../script/setup-goat-web.js"></script>
 <script src="../script/goat-web.js"></script>

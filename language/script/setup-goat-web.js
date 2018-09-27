@@ -1,9 +1,12 @@
 function setup(cb) {
   document.querySelectorAll('textarea.codebox').forEach(function (tb) {
-    var o = tb.insertAdjacentElement('afterend',document.createElement('pre'));
+    var o = document.createElement('pre');
     o.className = 'codebox-output';
+    o.setAttribute("hidden", "")
+    tb.insertAdjacentElement('afterend',o);
     tb.onblur = function () {
       cb(o, tb.value);
+      o.removeAttribute("hidden");
     };
   });
 };

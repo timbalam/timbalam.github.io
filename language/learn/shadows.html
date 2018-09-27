@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-<h2>Shadows</h2>
-
+<header>
 <p>
-Up: <a href=".">Learn</a>,
 Prev: <a href="layers">Layers</a>,
-Next: <a href="updates">Updates</a>.
+Next: <a href="updates">Updates</a>,
+Up: <a href=".">Learn</a>
 </p>
-
-<br></br>
-
+</header>
+<hr>
+<main>
 <h1>Regarding precedence</h1>
 
 <p>
@@ -25,7 +25,7 @@ In this tutorial we will investigate how layers of names created by blocks inter
 For this we will need our Goat Pen:
 </p>
 
-<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+<textarea class="codebox"></textarea>
 
 <p>
 Let's go back and fix our first (broken) program from the other tutorial in a different way.
@@ -33,7 +33,7 @@ We will add a definition for "x" above the first line,
 as shown below.
 </p>
 
-<pre>
+<pre class="codebox">
 x = 1;
 myPoint = (.x : 2, .y : x + 2);
 .inspect = myPoint.y;
@@ -43,7 +43,7 @@ myPoint = (.x : 2, .y : x + 2);
 Typing this into the Goat Pen and running should get us the following valid result!
 </p>
 
-<pre>
+<pre class="codebox-output">
 3.0
 </pre>
 
@@ -61,7 +61,7 @@ converting the tuple into a block.
 With this change, our program becomes:
 </p>
 
-<pre>
+<pre class="codebox">
 x = 1;
 myPoint = {.x = 2; .y = x + 2};
 .inspect = myPoint.y;
@@ -73,7 +73,7 @@ Type the new program into the Goat Pen to find out.
 You should see this.
 </p>
 
-<pre>
+<pre class="codebox-output">
 4.0
 </pre>
 
@@ -87,6 +87,15 @@ The following holds:
 The value represented by a name used in a definition hence comes
 from the closest surrounding layer where it is given a definition.
 </p>
+</main>
+<hr>
+<footer>
+<p>
+Prev: <a href="layers">Layers</a>,
+Next: <a href="updates">Updates</a>,
+Up: <a href=".">Learn</a>
+</p>
+</footer>
 
 <script src="../script/setup-goat-web.js"></script>
 <script src="../script/goat-web.js"></script>

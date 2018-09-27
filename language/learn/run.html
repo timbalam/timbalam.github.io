@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-<h2>Run</h2>
-
+<header>
 <p>
-Up: <a href=".">Learn</a>,
-Next: <a href="maths">Maths</a>.
+Next: <a href="maths">Maths</a>,
+Up: <a href=".">Learn</a>
 </p>
-
-<br></br>
-
+</header>
+<hr>
+<main>
 <h1>Run a simple Goat program</h2>
 
 <p>
@@ -26,14 +26,14 @@ As we will see,
 text written in the Goat Pen can be evaluated by the Goat Web Interpreter.
 </p>
 
-<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+<textarea class="codebox"></textarea>
 
 <p>
 Type the following code block into the Goat pen above.
 Click outside the pen or press the tab key when you are finished.
 </p>
 
-<pre>
+<pre class="codebox">
 myText = "Hello darkness.";
 .inspect = myText;
 </pre>
@@ -42,7 +42,7 @@ myText = "Hello darkness.";
 If it worked correctly, you should see the following text appear below the box:
 </p>
 
-<pre>
+<pre class="codebox-output">
 Hello darkness.
 </pre>
 
@@ -56,6 +56,7 @@ Congratulations, you have a working Goat program!
 The diagram below shows an annotated version of the program we just wrote,
 with the main features of interest to the computer highlighted.
 (Line numbers for the original program lines are shown on the far left.)
+</p>
 <pre>
 1 | myText = "Hello darkness.";
     ^^^^^^   ^^^^^^^^^^^^^^^^^
@@ -100,7 +101,6 @@ this is what <code>inspect</code> evaluates to,
 and is thus printed below the Goat pen.
 </li>
 </ol>
-</p>
 
 <h4>My first error</h4>
 
@@ -108,16 +108,28 @@ and is thus printed below the Goat pen.
 It is an error to use a label in a definition without giving a definition too.
 Let's see what happens if we change the definition of <code>inspect</code> to an undefined label <code>myTekts</code>.
 Go to the Goat pen above and change the second line to the following:
-<pre>
+</p>
+<pre class="codebox">
 .inspect = myTekts;
 </pre>
+<p>
 You should see the following message following the Goat pen:
-<pre>
+</p>
+<pre class="codebox-output">
 &lt;error: Missing assignment: myTekts&gt;
 </pre>
+<p>
 This way, if we might misspell or misremember a name,
 Goat will let us know about it so we can fix it!
 </p>
+</main>
+<hr>
+<footer>
+<p>
+Next: <a href="maths">Maths</a>,
+Up: <a href=".">Learn</a>
+</p>
+</footer>
 
 <script src="../script/setup-goat-web.js"></script>
 <script src="../script/goat-web.js"></script>

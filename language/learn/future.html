@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-<h2>Future</h2>
-
+<header>
 <p>
-Up: <a href=".">Learn</a>,
-Prev: <a href="updates">Updates</a>.
+Prev: <a href="updates">Updates</a>,
+Up: <a href=".">Learn</a>
 </p>
-
-<br></br>
-
-
+</header>
+<hr>
+<main>
 <h1>Referencing the future</h1>
 
 <p>
@@ -25,13 +24,12 @@ making references to the future!
 We will need our trusty Goat Pen:
 </p>
 
-<textarea class="codebox" style="min-height: 100px; width: 95%"></textarea>
+<textarea class="codebox"></textarea>
 
 <p>
 The code for this demonstration is below.
 </p>
-
-<pre>
+<pre class="codebox">
 myPlane = {.z = .x - .y + 7};
 myPointDepth = myPlane(.x : 1, .y : 2).z;
 .inspect = myPointDepth;
@@ -42,8 +40,7 @@ Okay, let's see what this does!
 Type it into the Goat Pen and run it.
 The depth of the point should be:
 </p>
-
-<pre>
+<pre class="codebox-output">
 6.0
 </pre>
 
@@ -52,6 +49,7 @@ The depth of the point should be:
 <p>
 For a final time,
 let's consider the annotated program below and discuss some interesting parts.
+</p>
 <pre>
 1 | myPlane = {.z = .x - .y + 7};
                     ^^^^^^^^^^^
@@ -82,7 +80,6 @@ illustrating the program behaviour —
 the provided "x" and "y" component values are substituted into the definition for the "z" component of <code>myPlane</code>.
 </li>
 </ol>
-</p>
 
 <h4>Live names</h4>
 
@@ -113,6 +110,14 @@ We have now completed a basic tour of how Goat reads and is written.
 For those of you whose curiosity has been piqued,
 now might be time to try some <a href="../examples">Examples</a>.
 </p>
+</main>
+<hr>
+<footer>
+<p>
+Prev: <a href="updates">Updates</a>,
+Up: <a href=".">Learn</a>
+</p>
+</footer>
 
 <script src="../script/setup-goat-web.js"></script>
 <script src="../script/goat-web.js"></script>

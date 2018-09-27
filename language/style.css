@@ -1,8 +1,36 @@
 
+/* Organisation inspired by https://www.gnu.org/style.css */
+
+
+html { color: #000; background: #FFF; }
+
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
   margin: 0;
   padding: 0;
 }
+
+table {
+ border-collapse: collapse;
+ border-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+input, button, textarea, select, optgroup, option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+input, button, textarea, select {
+    *font-size: 100%;
+}
+
+/*** PAGE LAYOUT ***/
 
 html, body {
   font-size: 1em;
@@ -10,10 +38,7 @@ html, body {
   font-family: Arial, sans-serif;
   letter-spacing: .2px;
 }
-
-html {
-  color: #000; 
-}
+html { background-color: #e7e7e7; }
 
 body {
   max-width: 800px;
@@ -22,62 +47,85 @@ body {
   background-color: white;
 }
 
-h1, h2, h3, h4, h5, h6, strong, dt, th {
-  font-weight: bold;
+/*** BASIC ELEMENTS ***/
+
+/* Size and positioning */
+
+p, pre, li, dt, dd, table, code, address { line-height: 1.7em; }
+
+h1 { font-size: 2em; margin: 1em 0; }
+h2 { font-size: 1.5em; margin: 1em 0 0.87em 0; }
+h3 { font-size: 1.3em; margin: 1em 0 0.87em 0; }
+h4 { font-size: 1.13em; margin: 1em 0 0.88em 0; }
+h5 { font-size: 1em; margin: 1em 0; }
+
+code, pre { font-family: monospace; }
+p, pre { margin: 0 0 .85em 0; }
+pre {
+  overflow: auto;
+  padding: 10px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-size: 100%;
-}
+ul, ol, blockquote { margin-left: 1.5%; margin-right: 1.5%;}
+hr { margin: 1em 0; }
+ol li { margin: 1em; }
 
-h1, h2, h3, h4 {
-  color: #333;
-}
-
-h1 {
-  font-size: 2em;
-  margin: 1em 0;
-}
-
-h2 {
-  font-size: 1.5em;
-  margin: 1em 0 0.87em 0;
-}
-
-p, pre, li, dt, dd, table, code, address {
-  line-height: 1.7em;
-}
-
-p, pre {
-  margin: 0 0 .85em 0;
-}
-
-hr {
-  background-color: #ede6d5;
-  margin: 1em 0;
-}
 
 table {
- border: 0; 
- display: block;
- overflow: auto;
- margin-top: 1.5em;
- margin-bottom: 1.5em;
- border-collapse: collapse;
- border-spacing: 0;
+ display: block; overflow: auto;
+ margin-top: 1.5em; margin-bottom: 1.5em;
 }
+th { padding: .3em .5em; text-align: center; }
+td { padding: .2em .5em; }
 
-td {
-  padding: .2em .5em;
-}
+/* Style */
 
+h1, h2, h3, h4, h5, h6, strong, dt, th { font-weight: bold; }
+h1, h2, h3, h4 { color: #333; }
 
-
-a[href] {
-  color: #005090;
-}
-
-a {
+a { text-decoration: none; outline-style: none; }
+a:hover { text-decoration: underline; }
+a[href] { color: #005090; }
+a[href]:visited { color: #100070; }
+a[href]:active, a[href]:hover {
+  color: #100070;
   text-decoration: none;
-  outline-style: none;
+}
+
+pre {
+  border: 1px solid #ccc;
+  border-radius: 0;
+}
+
+ol { list-style: decimal outside; }
+ul { list-style: square outside; }
+
+
+hr { background-color: #ede6d5; }
+table { border: 0; }
+
+em { font-style: italic; }
+
+/* Navigation bars */
+header, footer { margin: 0 -1em; padding: 0 1em; }
+header p, footer p { line-height: 2em; }
+
+
+/* Goat Pen */
+.codebox {
+  color: #333;
+  background-color: #f5f5f5;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+textarea.codebox {
+  overflow: auto;
+  font-family: monospace;
+  margin: 0 0 0.85em 0;
+  padding: 10px;
+  min-height: 100px;
+  
+  border: 1px solid #ccc;
+  border-radius: 0;
 }

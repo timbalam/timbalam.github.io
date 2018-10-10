@@ -1,9 +1,13 @@
 <!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
 <body>
 <h2>Desugaring to categories</h2>
 
 <p>
-In the paper <a href="http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf">Compiling to Categories</a> the author makes use of a famous correspondence between the "simply typed lambda calculus and a "cartesian closed category" to transform and re-interpret programs written in the Haskell programming language. 
+In the paper <a href="http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf">Compiling to Categories</a> the author makes use of a famous correspondence between the "simply typed lambda calculus" and a "cartesian closed category" to transform and re-interpret programs written in the Haskell programming language. 
 An insight of this is that while Haskell's syntax is closely related to lambda calculus,
 the language itself forces a relatively rigid "monomorphic" interpretation. 
 In contrast, Haskell also has "do notation" that provides syntax that describes computations that can be re-interpreted in different monadic contexts.
@@ -22,7 +26,8 @@ Only the "bind" function <code>(>>=)</code> is involved in the do notation desug
 </p>
 <pre>
 -- do desugar
-do { a <- m; U } -- --> m >>= (\ a -> do { U })
+do { a &lt;- m; U } -- --> m >>= (\ a -> do { U })
+do { m; U }      -- --> m >>= (\ _ -> do { U })
 do { e }         -- --> e
 </pre>
 
@@ -67,7 +72,7 @@ class Cartesian k => Closed k where
 
 <p>
 The paper describes a "lambda notation" desugar similar to that for do notation as follows:
-<p>
+</p>
 <pre>
 -- lambda desugar
 \ x -> x        -- --> id
@@ -98,7 +103,7 @@ newtype Kliesli m a b = K { unK :: a -> m b }
 
 instance Monad m => Category (Kliesli m) where
   id = K return
-  g . f = K (unK g <=< unK f)
+  g . f = K (unK g &lt;=&lt; unK f)
   
 instance Monad m => Cartesian (Kliesli m) where
   f *** g = K (\ a -> liftA2 (,) (unK f a) (unK g a))
@@ -127,11 +132,19 @@ What is the reinterpretation of application <code>\ f r -> f r</code> in this ca
 -- curry (K (\ (f, x) -> unK f x))
 -- (defn curry)
 -- K (\ f -> return (K (\ r -> unK f r)))
+</pre>
+
+<p>
+Let's introduce some inbuilt IO functions with types appropriate to the Kliesli IO category:
+</p>
   
-putStrLn :: String -> IO ()
-getStrLn :: IO String
+<pre>
+putStrLn :: Kliesli IO String () -- String -> IO ()
+getStrLn :: Kliesli IO () String -- IO ()
 
-f :: IO ()
+f :: Kliesli IO () ()
 f = putStrLn getStrLn
-  -- (apply . const putStrLn *** const getStrLn) ()
-
+-- apply . const putStrLn *** const getStrLn
+</pre>
+</body>
+</html>

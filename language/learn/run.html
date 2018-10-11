@@ -57,42 +57,42 @@ The diagram below shows an annotated version of the program we just wrote,
 with the main features of interest to the computer highlighted.
 (Line numbers for the original program lines are shown on the far left.)
 </p>
-<pre>
-1 | myText = "Hello darkness.";
-    ^^^^^^   ^^^^^^^^^^^^^^^^^
-    1      ^ 3                ^
-           2                  4
-2 | .inspect = myText;
-    ^^^^^^^^   ^^^^^^
-    5        ^ 6     ^
-             2       4
+<pre class="diagram">
+1 | <span class="li1">myText</span> <span class="li2">=</span> <span class="li3">"Hello darkness."</span><span class="li4">;</span>
+    <span class="li1">^^^^^^</span> <!--           --><!---->  <span class="li3">^^^^^^^^^^^^^^^^^</span><!--           --><!---->
+    <span class="li1">1</span>      <span class="li2">^</span> <span class="li3">3</span>                <span class="li4">^</span>
+    <!--           --><!---->       <span class="li2">2</span> <!--           --><!---->                 <span class="li4">4</span>
+2 | <span class="li5">.inspect</span> <span class="li2">=</span> <span class="li6">myText</span><span class="li4">;</span>
+    <span class="li5">^^^^^^^^</span> <!--           --><!---->  <span class="li6">^^^^^^</span><!--           --><!---->
+    <span class="li5">5</span>        <span class="li2">^</span> <span class="li6">6</span>     <span class="li4">^</span>
+    <!--           --><!---->         <span class="li2">2</span> <!--           --><!---->      <span class="li4">4</span>
 </pre>
-<ol>
-<li>
+<ol class="diagram">
+<li class="li1">
 The computer understands sequences of alphabetic characters such as <code>myText</code> to be a name.
 The space after isn't necessary but helps readability.
 For the most part, spacing doesn't affect the meaning of the program.
 Names are not allowed to contain spaces.
 </li>
-<li>
+<li class="li2">
 The computer sees the <strong>equals sign</strong> symbol <code>=</code> and understands that we are making an <em>assignment</em>.
 The name to the left is defined as equivalent to the code to the right.
 (Any space immediately after the <code>=</code> also has no effect on the program.)
 </li>
-<li>
+<li class="li3">
 The sentence in double quotes <code>"Hello darkness."</code> represents a literal text value. 
 </li>
-<li>
+<li class="li4">
 Each line ends with a <strong>semi-colon</strong> symbol <code>;</code>.
 The <code>;</code> indicates that we have finished with the definition for an assignment.
 </li>
-<li>
+<li class="li5">
 The second line defines a special name <code>inspect</code> with a <strong>full stop</strong> symbol <code>.</code> prefix. 
 If this name is defined (the prefix is necessary),
 the Goat Pen will try to evaluate the definition and prints the result below the pen.
 Otherwise, a default message will be displayed.
 </li>
-<li>
+<li class="li6">
 The name <code>myText</code> is assigned to <code>inspect</code>.
 When used inside a definition,
 a name is a place-holder for its definition.

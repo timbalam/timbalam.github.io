@@ -131,3 +131,20 @@ textarea.codebox {
   border: 1px solid #ccc;
   border-radius: 0;
 }
+
+/* Diagram */
+.diagram span.li1 { color: red }
+.diagram span.li2 { color: #e0e }
+.diagram span.li3 { color: #0cc }
+.diagram span.li4 { color: #fb0 }
+.diagram span.li5 { color: green }
+.diagram span.li6 { color: brown }
+
+
+ol.diagram li { border-left-style: solid; border-left-width: medium; padding: 0 0.5em }
+ol.diagram li.li1 { border-color: red }
+ol.diagram li.li2 { border-color: #e0e }
+ol.diagram li.li3 { border-color: #0cc }
+ol.diagram li.li4 { border-color: #fb0 }
+ol.diagram li.li5 { border-color: green }
+ol.diagram li.li6 { border-color: brown }

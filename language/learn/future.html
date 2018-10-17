@@ -30,8 +30,8 @@ We will need our trusty Goat Pen:
 The code for this demonstration is below.
 </p>
 <pre class="codebox">
-myPlane = {.z = .x - .y + 7};
-myPointDepth = myPlane(.x : 1, .y : 2).z;
+myPlane = { .z = .x - .y + 7 };
+myPointDepth = myPlane{ .x = 1; .y = 2 }.z;
 .inspect = myPointDepth;
 </pre>
 
@@ -50,23 +50,24 @@ The depth of the point should be:
 For a final time,
 let's consider the annotated program below and discuss some interesting parts.
 </p>
-<pre>
-1 | myPlane = {.z = .x - .y + 7};
-                    ^^^^^^^^^^^
-                    1
-2 | myPointDepth = myPlane(.x : 1, .y : 2).z;
-                   ^^^^^^^^^^^^^^^^^^^^^^^
-                   2                      ^^
-                                          3
+<pre class="diagram">
+1 | myPlane = { .z = <span class="li1">.x - .y + 7</span> };
+                     <span class="li1">^^^^^^^^^^^</span>
+                     <span class="li1">1</span>
+2 | myPointDepth = <span class="li2">myPlane{ .x = 1; .y = 2 }</span><span class="li3">.z</span>;
+                   <span class="li2">^^^^^^^^^^^^^^^^^^^^^^^^^</span><span class="li3"></span>
+                   <span class="li2">2</span>                        <span class="li3">^^</span>
+                   <span class="li2"></span>                         <span class="li3">3</span>
 3 | .inspect = myPointDepth;
 </pre>
-<ol>
+<ol class="diagram">
 <li>
-Probably the most notable part of the program is the definition of the name <code>z</code> inside the block defining <code>myPlane</code>.
-<code>z</code> is defined as a mathematical expression where two of the inputs are <code>.</code> prefixed names <code>x</code> and <code>y</code>,
+Probably the most notable part of the program is the definition of the component <code>.z</code>
+inside the block defining <code>myPlane</code>.
+<code>.z</code> is defined as a mathematical expression where two of the inputs are <code>.</code> prefixed names <code>.x</code> and <code>.y</code>,
 for which there are no corresponding definitions!
 How can this be?
-We need to consider the next line.
+The next line contains the answers.
 </li>
 <li>
 The definition made to <code>myPointDepth</code> shows how we can use <code>myPlane</code> in a sensible way.
@@ -74,10 +75,10 @@ We just need to update it with the missing definitions!
 </li>
 <li>
 We don't have to name the updated value we have created,
-instead we can immediately access the "z" component and assign that as the definition for <code>myPointDepth</code>.
+instead we can immediately access <code>.z</code> and assign that as the definition for <code>myPointDepth</code>.
 Running the program shows that this evaluates to 7.0,
 illustrating the program behaviour —
-the provided "x" and "y" component values are substituted into the definition for the "z" component of <code>myPlane</code>.
+the provided <code>.x</code> and <code>.y</code> values are substituted into the definition for <code>.z</code>.
 </li>
 </ol>
 
@@ -86,21 +87,21 @@ the provided "x" and "y" component values are substituted into the definition fo
 <p>
 The vital component making this exercise work is the use of <code>.</code> prefixed names
 (i.e. <code>.x</code> and <code>.y</code>)
-in the "z" component definition of <code>myPlane</code>.
+in the definition of <code>.z</code> (in the block defining <code>myPlane</code>).
 Without the prefix, we would get missing definition errors (try it!),
 since we haven't defined the names.
 When we use the <code>.</code> prefix we get a "live" reference to the corresponding component of the block,
 that updates whenever the corresponding component updates.
-The Goat interpreter will wait until the block's "z" component is accessed,
-and first access the "x" and "y" components and substitute them into the "z" definition.
+The Goat interpreter will wait until the <code>.z</code> is accessed,
+and then access <code>.x</code> and <code>.y</code>, substituting them into the <code>.z</code> definition.
 </p>
 
 <p>
 Values like <code>myPlane</code> that are only partially defined act as templates from which complete values can be made by updating.
-After providing "x" and "y" components to <code>myPlane</code>, we can safely access the "z" component in the definition of <code>myPointDepth</code>. 
+After updating <code>myPlane</code> with <code>.x</code> and <code>.y</code> component definitions,
+we can safely access <code>.z</code> in the definition of <code>myPointDepth</code>. 
 Goat will help us by checking that we only try to access completed components.
-I.e. we get an error if we try to acccess the "z" component of <code>myPlane</code>,
-without first updating to provide the missing components (try it too!).
+I.e. we get an error if we try to access <code>myPlane.z</code> directly (try it too!).
 </p>
 
 <h4>The journey continues...</h4>

@@ -142,9 +142,9 @@ textarea.codebox {
 
 
 ol.diagram li { border-left-style: solid; border-left-width: medium; padding: 0 0.5em }
-ol.diagram li.li1 { border-color: red }
-ol.diagram li.li2 { border-color: #e0e }
-ol.diagram li.li3 { border-color: #0cc }
-ol.diagram li.li4 { border-color: #fb0 }
-ol.diagram li.li5 { border-color: green }
-ol.diagram li.li6 { border-color: brown }
+ol.diagram li:nth-child(1) { border-color: red }
+ol.diagram li:nth-child(2) { border-color: #e0e }
+ol.diagram li:nth-child(3) { border-color: #0cc }
+ol.diagram li:nth-child(4) { border-color: #fb0 }
+ol.diagram li:nth-child(5) { border-color: green }
+ol.diagram li:nth-child(6) { border-color: brown }

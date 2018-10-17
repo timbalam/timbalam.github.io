@@ -21,51 +21,21 @@ Up: <a href=".">Learn</a>
 In the <a href="names">previous tutorial</a> we created a value representing a 2-D point.
 A useful generalisation of this would be to have the y-component relate to the x-component –
 i.e. a line.
-Let's try this and see what happens.
+Let's try to do this.
 First, below is our Goat pen.
 </p>
 
 <textarea class="codebox"></textarea>
 
 <p>
-Let's try an obvious, yet unsuccessful,
-way to generalise our previous example,
+We can generalise our previous example,
 and modify the definition of <code>myPoint</code> so that the y-coordinate relates to the x- by the line <strong>y = x + 2</strong>.
 The new program is shown below.
 </p>
 
 <pre class="codebox">
-myPoint = (.x : 2, .y : x + 2);
-.inspect = myPoint.y;
-</pre>
-
-<p>
-We will see this doesn't quite work.
-Type and run the above block of code into the Goat Pen and you should see the following error.
-</p>
-
-<pre class="codebox-output">
-&lt;error: Missing assignment: x&gt;
-</pre>
-
-<p>
-The error tells us that we have used the label <code>x</code> without defining it.
-This demonstrates an import distinction between tuple associations and the usual assignments we write in our program –
-assignments introduce a reusable equivalence between the name and definition,
-associations define a component to add to a tuple.
-Hence the label <code>x</code> is not defined for the tuple "y" component definition.
-</p>
-
-<p>
-Don't worry if this all seems a bit confusing! 
-We have available a simple fix: 
-an alternative construction to a tuple called a "block",
-demonstrated in the following fixed example.
-</p>
-
-<pre class="codebox">
-myPoint = {.x = 2; .y = x + 2};
-.inspect = myPoint.y;
+myLine = { .x = 2; .y = x + 2 };
+.inspect = myLine.y;
 </pre>
 
 <p>
@@ -77,119 +47,54 @@ You should see the following.
 4.0
 </pre>
 
-<h4>Creating blocks</h4>
+<h4>Creating layers</h4>
 
 <p>
-Cool!
-What did we do?
-We made changed to line 1,
-replacing the tuple creation syntax with a new syntax for constructing a "block".
-The diagram below shows the relationship between tuple and block syntax.
-</p>
-
-<table>
-<tr>
-  <th></th>
-  <th>Tuple</th>
-  <td></td>
-  <th>Block</th>
-</tr>
-<tr>
-  <td>Begins/ends with</td>
-  <td><code>()</code></td>
-  <td></td>
-  <td><code>{}</code></td>
-</tr>
-<tr>
-  <td>Association/assignment</td>
-  <td><code>:</code></td>
-  <td></td>
-  <td><code>=</code></td>
-</tr>
-<tr>
-  <td>Definition terminator</td>
-  <td><code>,</code></td>
-  <td></td>
-  <td><code>;</code></td>
-</tr>
-</table>
-
-<p>
-One thing to note with block creation syntax is that we are again using the familiar <code>=</code> for assignment and <code>;</code> for definition termination.
-This correspondence with how we have been writing our programs so far is not accidental.
-One way to think of blocks is as defining their own sub-programs.
+It worked!
+But how?
+As suggested by the reuse of assignment syntax,
+one way to think of blocks is as defining a sub-program.
 At the end of the <a href="maths">Math</a> tutorial,
 we described a way of looking at Goat programs as a set of names.
 With blocks,
 we don't need to settle for a single set of names for our entire program.
-They are a way to introduce a new "layer" of names,
+They introduce a new "layer" of names,
 existing within the <code>{}</code> and allowed to overlap with outer layers.
 (Names within a layer must still be unique, though.)
-</p>
-
-<h4>How it looks and what it means</h4>
-
-<p>
-Let's come back to the program we wrote,
-and highlight some features of how blocks work.
-</p>
-<pre>
-1 | myPoint = {.x = 2; .y = x + 2};
-               ^^^^^^
-               1            ^
-                            2
-2 | .inspect = myPoint.y;
-              ^^^^^^^^^
-              3
-</pre>
-<ol>
-<li>
-Unlike tuples, blocks feature regular assignments,
-meaning names are given an equivalence with their definitions whenever they appear,
-<em>within the block</em>.
-</li>
-<li>
-We can use the name <code>x</code> in the definition of the "y" component,
-without needing to include the prefix <code>.</code> used in the definition.
-(The name is the thing defined,
-and the <code>.</code> prefix gives the name the following additional behaviour.)
-</li>
-<li>
-Note that we didn't need to change our definition of <code>inspect</code>!
-We can access the names defined with the <code>.</code> prefix within blocks the same way we can with tuples.
-For this reason, we refer to such definitions of blocks also as components.
-As we have seen, the evaluated value is 4.0.
-</li>
-</ol>
-
-<p>
-Aside: The special <code>inspect</code> assignment we may recognise as having the <code>.</code> prefix,
-making it a program-level component.
-We won't get to cover exactly what this means in these tutorials, though.
 </p>
 
 <h4>Going local</h4>
 
 <p>
-In the exercise above we make a block with two components.
-Unlike tuples,
-but like the main definitions of our programs,
-with blocks we also have the option of defining a "local" name,
-by not including the <code>.</code> prefix.
-Local names can be used inside the block to represent their definition,
-but can't be accessed directly by code outside the block.
+Like the main definitions of our programs,
+within blocks we have the option of defining names without the <code>.</code> prefix.
+An important thing to note is that within a block,
+component definitions not treated specially.
+We can use the name <code>x</code> unprefixed in the definition of <code>.y</code>,
+even though we used the prefix <code>.</code> when defining the component.
+The difference is that only components be accessed directly by code outside the block,
+as the in definition of <code>.inspect</code>.
+We call definitions that are not components "local".
 </p>
 
 <p>
-To observe the difference in behaviour between local and public names,
-try removing the <code>.</code> prefix of the "x" component in the definition of <code>myPoint</code>.
-You should find the result doesn't change.
-Now try instead removing the <code>.</code> prefix of the "y" component.
-You should now see an error like the following:
+Aside: The special <code>.inspect</code> assignment we may recognise as having the <code>.</code> prefix,
+making it a program-level component.
+We won't get to cover exactly what this means in these tutorials, though.
+</p>
+
+<p>
+We can observe the difference in behaviour between components and local names,
+by removing the <code>.</code> prefix of the <code>.x</code> definition of <code>myLine</code>.
+You should find the result doesn't change,
+since we only reference <code>x</code> within the block definition.
+If we try instead removing the <code>.</code> prefix of the <code>.y</code> definition,
+due to the attempt to access the component by <code>.inspect</code> you should now see an error like the following:
 </p>
 <pre class="codebox-output">
 &lt;error: Missing component: y&gt;
 </pre>
+
 </main>
 <hr>
 <footer>

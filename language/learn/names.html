@@ -18,10 +18,10 @@ Up: <a href=".">Learn</a>
 <h1>Names, associated</h1>
 
 <p>
-A common feature in Goat programs,
-which we will learn about in this tutorial,
-are <em>tuples</em>,
-where a set of association are made between names and code definitions.
+So far, we have worked with the basic data forms in Goat:
+text and numbers.
+To describe more complex things, we will need <em>compound</em> objects.
+Compound objects have zero or more named "components" with corresponding code definitions.
 Their usage is perhaps best demonstrated with an exercise.
 Let's start with the Goat Pen below.
 </p>
@@ -29,11 +29,13 @@ Let's start with the Goat Pen below.
 <textarea class="codebox"></textarea>
 
 <p>
-Let's imagine we have a two-dimensional co-ordinate that we want to inspect the y-axis component of. In Goat we can write some code like the following.
+A simple example of a compound object is a two-dimensional coordinate,
+with x- and y- components described by numbers.
+In Goat we can represent such a coordinate by writing some code like the following.
 </p>
 
 <pre class="codebox">
-myPoint = (.x : 2, .y : 4);
+myPoint = { .x = 2; .y = 4 };
 .inspect = myPoint.y;
 </pre>
 
@@ -47,52 +49,52 @@ You should see the following.
 </pre>
 
 
-<h4>Creating tuples</h4> 
+<h4>Creating compound objects</h4> 
 
 <p>
-The right hand side of the <code>myPoint</code> assignment is a <em>tuple</em>.
-This tuple associates the names <code>x</code> and <code>y</code> to numeric values representing the point's x- and y- co-ordinates.
-The following diagram of the first line highlights the syntax for "declaring" a tuple.
+The right hand side of the <code>myPoint</code> assignment is a <em>compound object</em>,
+declared using "block" syntax.
+This object defines "components" <code>.x</code> and <code>.y</code> representing the point's x- and y- co-ordinates.
+The following diagram of the first line highlights the block syntax for "declaring" a compound object.
 </p>
-<pre>
-1 | myPoint = (.x : 2, .y : 4);
-              ^      ^       ^
-              1^^^^^^3 ^^^^^^1
-               2       2
+<pre class="diagram">
+1 | myPoint = <span class="li1">{</span> <span class="li2">.x = 2</span><span class="li3">;</span> <span class="li2">.y = 4</span> <span class="li1">}</span>;
+              <span class="li1">^</span> <!--           --><!---->      <span class="li3">^</span> <!--           --><!---->       <span class="li1">^</span>
+              <span class="li1">1</span> <span class="li2">^^^^^^</span><span class="li3">3</span> <span class="li2">^^^^^^</span> <span class="li1">1</span>
+              <!--           --><!---->  <span class="li2">2</span>     <!--          --><!---->  <span class="li2">2</span>
 </pre>
-<ol>
+<ol class="diagram">
 <li>
-Tuple declarations start and end with a pair of <strong>parentheses</strong> <code>()</code>.
+Block declarations start with an <strong>open brace</strong> <code>{</code> and end with a <strong>close brace</strong> <code>}</code>.
+As usual, spaces immediately before and after are ignored.
 </li>
 <li>
-A tuple declaration involves a sequence of <em>associations</em>.
-Associations use a <strong>colon</strong> symbol <code>:</code> to separate a left-hand side name and a right-hand side definition.
-Each name of a association must be prefixed with <code>.</code>.
-(We will see the reason for this in the next section.)
+The declaration involves a sequence of assignments in the manner we have been writing our programs so far.
+We have prefixed the defined names with <code>.</code> to designate that they represent "components",
+allowing access from code outside the block as discussed in the next section.
 </li>
 <li>
-Associations are terminated by a comma symbol <code>,</code>.
-Terminating the last definition is optional.
+As usual, assignments are terminated by a <code>;</code>,
+and terminating the last definition of a block is optional.
 </li>
 </ol>
 
-<h4>Using tuples</h4>
+<h4>Using compound objects</h4>
 
 <p>
 In definition of <code>inspect</code> on the second line of our program,
-we see how to access a component of a tuple –
-the tuple definition represented by <code>myPoint</code> is followed by the same <code>.y</code> syntax used in the definition.
-We have seen this evaluates to the corresponding definition in the <code>myPoint</code> tuple, 4.
-In Goat, names defined with the <code>.</code> prefix within a tuple are able to be accessed in this manner,
-and are called "components".
+we see how to access a component of a compound object –
+<code>myPoint</code> (representing the declared object) is followed by the same <code>.y</code> syntax used in the definition.
+We have seen this evaluates to the number given in the corresponding definition, 4.
+In Goat, names defined within a block as components (using the <code>.</code> prefix) are able to be accessed in this manner.
 </p>
 
 
 <h4>Missing names</h4>
 
 <p>
-It is an error to access a name that is not associated in the tuple.
-To see this let's modify our program above so that we instead access a name "z" on <code>myPoint</code>.
+It is an error to access a name that is not defined as a component.
+To see this let's modify our program above so that we instead access a component <code>.z</code> on <code>myPoint</code>.
 Make the following change to the second line of our program in the Goat pen above.
 </p>
 <pre class="codebox">

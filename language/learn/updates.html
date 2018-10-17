@@ -19,10 +19,10 @@ Up: <a href=".">Learn</a>
 
 <p>
 In the <a href="layers">Layers</a> tutorial we set out to represent a line by a generalised point with interdependent x- and y- components.
-We got as far as the following definition for <code>myPoint</code>:
+We got as far as the following definition for <code>myLine</code>:
 </p>
 <pre>
-myPoint = {.x = 2; .y = x + 2};
+myLine = { .x = 2; .y = x + 2 };
 </pre>
 <p>
 This is close! The only thing we would need to be able to do is to adjust the value of the x-component,
@@ -37,9 +37,9 @@ We will need the following Goat Pen.
 Here is some code demonstrating the Goat's ability to "update" a block' definitions.
 </p>
 <pre class="codebox">
-myPoint = {.x = 2; .y = x + 2};
-myPoint2 = myPoint(.x : 5);
-.inspect = myPoint2.y;
+myLine = { .x = 2; .y = x + 2 };
+myLineAt5 = myLine{ .x = 5 };
+.inspect = myLineAt5.y;
 </pre>
 
 <p>
@@ -53,33 +53,32 @@ Go ahead and try it in the Goat Pen. You should see the following.
 
 <p>
 The second line of the above program demonstrates Goat's block update syntax.
-The value assigned to <code>myPoint2</code> is a modified version of <code>myPoint</code> that incorporating a new definition for its "x" component.
+The value assigned to <code>myLine2</code> is a modified version of <code>myLine</code> that incorporating a new definition for <code>.x</code>.
 Here we reproduce the line and highlight the main parts of the syntax.
 </p>
-<pre>
-2 | myPoint2 = myPoint(.x : 5);
-               ^^^^^^^
-               1      ^^^^^^^^
-                      2
+<pre class="diagram">
+2 | myLineAt5 = <span class="li1">myLine</span><span class="li2">{ .x = 5 }</span>;
+                <span class="li1">^^^^^^</span><span class="li2"></span>
+                <span class="li1">1</span>     <span class="li2">^^^^^^^^^^</span>
+                <span class="li1"></span>      <span class="li2">2</span>
 </pre>
-<ol>
+<ol class="diagram">
 <li>
-The value to be modified comes first, here <code>myPoint</code> as defined on the first line.
+The value to be modified comes first, here <code>myLine</code> as defined on the first line.
 </li>
 <li>
 Directly following is a tuple or block declaration with components to be updated or added to the old value.
-Here the "x" component is being redefined as <code>5</code>.
+Here <code>.x</code> is being redefined as <code>5</code>.
 As running the code shows,
-the corresponding value for the y-coordinate is also updated to 7.
+the corresponding value for <code>.y</code> is also updated to 7.
 </li>
 </ol>
 
 <h4>Fun with lines</h4>
 
 <p>
-We can see that our generalised definition of <code>myPoint</code> can really describe a line.
-We can update the "x" component with a series of intervals and invoke the "y" component to find out the corresponding height of the line.
-Try adjusting our code to update <code>myPoint</code> with different values of "x" in the Goat Pen!
+We have seen that the ability to make updates allows us to reuse our generalised definition of <code>myLine</code>
+to find the corresponding height of a line at any x-coordinate we choose.
 </p>
 </main>
 <hr>

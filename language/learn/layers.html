@@ -84,12 +84,13 @@ We won't get to cover exactly what this means in these tutorials, though.
 </p>
 
 <p>
-We can observe the difference in behaviour between components and local names,
-by removing the <code>.</code> prefix of the <code>.x</code> definition of <code>myLine</code>.
+You can observe the difference in behaviour between components and local names with the following exercise.
+First, remove the <code>.</code> prefix of the <code>.x</code> definition of <code>myLine</code>.
 You should find the result doesn't change,
-since we only reference <code>x</code> within the block definition.
-If we try instead removing the <code>.</code> prefix of the <code>.y</code> definition,
-due to the attempt to access the component by <code>.inspect</code> you should now see an error like the following:
+since the only reference to <code>x</code> is within the block definition.
+Now try removing the <code>.</code> prefix of the <code>.y</code> definition.
+Due to the attempt to access the component by <code>.inspect</code>,
+you should now get an error like the following:
 </p>
 <pre class="codebox-output">
 &lt;error: Missing component: y&gt;

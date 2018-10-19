@@ -23,9 +23,28 @@ a {
 a:hover {
 	text-decoration: underline;
 }
-p {
+p, pre {
 	padding: 0;
 	margin: 0 0 2em;
+}
+pre, code {
+  font-size: 16px;
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+}
+pre {
+  line-height: 18px;
+  height: auto;
+  border-width: 1px;
+  border-color: #999;
+  border-style: solid;
+  text-shadow: none;
+  background: #fff;
+  width: 100%;
+  overflow: auto;
+  position: relative;
+  text-align: left;
+  padding: 5px;
 }
 
 
@@ -66,45 +85,44 @@ h6 {
 /*
 Custom
 */
-header { text-align: center }
-header h1,
-header h2,
-header h3,
-header h4 {
+.row { width: 100% }
+
+#title h1,
+#title h2,
+#title h3,
+#title h4 {
   display: inline-block;
 }
 
-header {
+#title > section {
   text-align: center;
   padding-top: 20%;
   padding-bottom: 15%;
-  width: 100%;
 }
-header,
-section:nth-child(1),
-section:nth-child(3) {
+#title,
+#projects {
   background-color: #f0f0f0;
 }
-section#about,
-section#projects,
-section#writing {
+section,
+article {
   padding-top: 6%;
-  padding-bottom: 6%;
-  width: 100%;
+  padding-bottom: 2%;
+  width: 700px;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
-section#about p,
-section#writing p {
+
+section p,
+article p {
   text-align: justify;
 }
 
-section h1, section h2 { text-align: center }
+article header,
+section hgroup, h1, h2 { text-align: center }
 
-section p,
-header menu,
-section ul {
-  width: 700px;
-  max-width: 90%;
-  margin: 0 auto;
+article header {
+  margin: 0 0 1em;
 }
 
 
@@ -114,6 +132,7 @@ menu {
   display: table;
   table-layout: fixed;
   padding: 5% 0 0 0;
+  width: 100%;
 }
 menu > li { display: table-cell; text-align: center }
 menu > li a {
@@ -129,8 +148,10 @@ menu > li a {
 
 footer {
   position: sticky;
-  bottom: 15px; 
-  width: calc(100% - 15px)
+  bottom: 5px; 
+  width: calc(100% - 30px);
+  margin-left: auto;
+  margin-right: auto;
 }
 footer::after {
   clear: both;
@@ -170,6 +191,15 @@ footer a::before {
   display: inline;
 }
 #projects ul > li h6::after {
-  content: " //";
-  font-weight: normal;
+  display: inline-block;
+  content: '';
+  width: 4px;
+  height: 1.5em;
+  margin: 0 .2em 0 .3em;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid rgba(66,66,66,.15);
+  border-top: none;
+  border-bottom: none;
+  transform: skewX(-15deg);
 }

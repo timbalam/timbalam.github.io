@@ -1,18 +1,70 @@
 <!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<head>
+</head>
 <body>
-<h2>Things</h2>
-
-<em>from Tim Lamberton</em>
-<br></br>
-
-<h1>Welcome!</h1>
-
-<p>
-This website contains Tim Lamberton's writing about programming-related projects, ideas and other things. Check out something that interests you:
-</p>
-<ol>
+<header>
+<h1>Things</h1>
+<h3>from Tim Lamberton</h3>
+<menu>
 <li>
-<a href="language">Language</a>: Programming in my language.
+<a href="#about">About</a>
+</li><li>
+<a href="#projects">Projects</a>
+</li><li>
+<a href="#writing">Writing</a>
 </li>
-</ol>
+</menu>
+</header>
+<section id="about">
+<h2>Welcome!</h2>
+<p>
+My name is Tim Lamberton.
+I am a <strong>researcher and programmer</strong>
+with a background in physics, maths and bioinformatics. 
+I have <strong>developed and maintained open-source software</strong>
+for bioinformatics,
+and <strong>designed and implemented novel algorithms</strong>
+for clustering genomic sequence data.
+I <strong>designed and implemented an experimental programming language</strong>,
+which aims to be easy to learn and easy to use.
+I have <strong>developed website front- and back-ends</strong>,
+and standalone web applications.
+This website contains information on my past and present work,
+as well as programming-related writing, demos and other things.
+Have a look around!
+</p>
+</section>
+<div class="scroll-to-top">
+<section id="projects">
+<h2>Projects</h2>
+<ul>
+<li>
+<h6>GroopM</h6>
+I was the main developer for a tool for clustering bulk environmental DNA sequence data into population genomes
+(see the source on
+<a href="https://github.com/timbalam/GroopM">GitHub</a>)
+</li><li>
+<h6>Goat</h6>
+I wrote an interpreter for an invented programming language
+(see the source on
+<a href="https://github.com/timbalam/Goat">GitHub</a>, 
+documentation and tutorials <a href="language">here</a>)
+</li>
+</ul>
+</section>
+<section id="writing">
+<h2>Writing</h2>
+<p>
+See my writing on a variety of technical subjects <a href="notes">here</a>.
+</p>
+</section>
+<footer>
+<a href="#top"></a>
+</footer>
+</div>
 </body>
+</html>

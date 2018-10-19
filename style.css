@@ -1,0 +1,175 @@
+/* Inspired by Themify Ultra http://themify.me/themes/ultra */
+
+/**
+1. RESET
+**/
+
+* { margin: 0; padding: 0 }
+
+menu, ul { list-style: none }
+
+/**
+2. GENERAL
+**/
+body {
+	font: 1em/1.85em 'Open Sans', "Arial", sans-serif;
+	word-wrap: break-word;
+	color: #666;
+}
+a {
+	text-decoration: none;
+	outline: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+p {
+	padding: 0;
+	margin: 0 0 2em;
+}
+
+
+/* HEADINGS */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.4em;
+  margin: 0 0 .4em;
+  word-wrap: normal;
+  font-weight: normal;
+}
+h1 {
+  font-size: 3.2em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: #000;
+}
+h2 {
+	font-size: 2.9em;
+	letter-spacing: -.035em;
+	margin: 0 0 .7em;
+	font-weight: 300;
+	color: #000;
+}
+h3 {
+	font-size: 1.5em;
+	margin: 0 0 .8em;
+	line-height: 1.6em;
+	letter-spacing: -.01em;
+	font-weight: 300;
+}
+h6 {
+	font-size: 1.1em;
+  font-weight: bold;
+}
+
+
+/*
+Custom
+*/
+header { text-align: center }
+header h1,
+header h2,
+header h3,
+header h4 {
+  display: inline-block;
+}
+
+header {
+  text-align: center;
+  padding-top: 20%;
+  padding-bottom: 15%;
+  width: 100%;
+}
+header,
+section:nth-child(1),
+section:nth-child(3) {
+  background-color: #f0f0f0;
+}
+section#about,
+section#projects,
+section#writing {
+  padding-top: 6%;
+  padding-bottom: 6%;
+  width: 100%;
+}
+section#about p,
+section#writing p {
+  text-align: justify;
+}
+
+section h1, section h2 { text-align: center }
+
+section p,
+header menu,
+section ul {
+  width: 700px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+
+/* Menu bar */
+menu {
+  text-align: center;
+  display: table;
+  table-layout: fixed;
+  padding: 5% 0 0 0;
+}
+menu > li { display: table-cell; text-align: center }
+menu > li a {
+  background-color: rgba(0,0,0,0.0);
+  color: #292929;
+  border: 2px solid #292929;
+  font-size: 16px;
+  padding: .625em 1.25em;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+
+footer {
+  position: sticky;
+  bottom: 15px; 
+  width: calc(100% - 15px)
+}
+footer::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+footer a {
+  background-color: rgba(0,0,0,0.0);
+  color: #292929;
+  text-decoration: none;
+  opacity: 0.6;
+  float: right;
+  z-index: 10;
+  outline: none;
+  line-height: 1.8em;
+}
+footer a:hover {
+  text-decoration: none;
+}
+footer a::before {
+  content: "\2bb9";
+  font-size: 2.8em;
+  font-family: normal;
+  font-weight: normal;
+}
+
+
+/* Projects list */
+#projects ul > li {
+  width: 100%;
+  font-size: 14px;
+  position: relative;
+  margin-bottom: 1.5em;
+  text-align: center;
+}
+#projects ul > li h6 {
+  display: inline;
+}
+#projects ul > li h6::after {
+  content: " //";
+  font-weight: normal;
+}

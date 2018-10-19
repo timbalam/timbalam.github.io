@@ -4,8 +4,13 @@
 <meta charset="utf-8">
 </head>
 <body>
+<article>
+<header>
 <h2>Desugaring to categories</h2>
-
+<address>Tim Lamberton</address>
+<time datetime="2018-07-07">7 Jul 2018</time>
+</header>
+<main>
 <p>
 In the paper <a href="http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf">Compiling to Categories</a> the author makes use of a famous correspondence between the "simply typed lambda calculus" and a "cartesian closed category" to transform and re-interpret programs written in the Haskell programming language. 
 An insight of this is that while Haskell's syntax is closely related to lambda calculus,
@@ -146,5 +151,7 @@ f :: Kliesli IO () ()
 f = putStrLn getStrLn
 -- apply . const putStrLn *** const getStrLn
 </pre>
+</main>
+</article>
 </body>
 </html>

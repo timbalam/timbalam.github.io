@@ -85,24 +85,8 @@ h6 {
 /*
 Custom
 */
-.row { width: 100%; overflow-y: hidden }
+.row { width: 100% }
 
-#title h1,
-#title h2,
-#title h3,
-#title h4 {
-  display: inline-block;
-}
-
-#title > section {
-  text-align: center;
-  padding-top: 16%;
-  padding-bottom: 12%;
-}
-#title,
-#projects {
-  background-color: #f0f0f0;
-}
 section,
 article {
   padding-top: 6%;
@@ -133,7 +117,6 @@ menu {
   table-layout: fixed;
   padding: 3% 0 0 0;
   width: 100%;
-  min-width: 400px;
 }
 menu > li { display: table-cell; text-align: center }
 menu > li a {
@@ -146,6 +129,8 @@ menu > li a {
   position: relative;
   vertical-align: middle;
 }
+
+
 
 /* Top button */
 footer {
@@ -187,17 +172,17 @@ footer a::before {
 
 
 /* Projects list */
-#projects ul > li {
+ul > li {
   width: 100%;
   font-size: 14px;
   position: relative;
   margin-bottom: 1.5em;
   text-align: center;
 }
-#projects ul > li h6 {
+ul > li h6 {
   display: inline;
 }
-#projects ul > li h6::after {
+ul > li h6::after {
   display: inline-block;
   content: '';
   width: 4px;
@@ -209,4 +194,14 @@ footer a::before {
   border-top: none;
   border-bottom: none;
   transform: skewX(-15deg);
+}
+
+
+@media screen and (max-width: 400px) {
+  menu {
+    display: block
+  }
+  menu > li {
+    display: inline-block
+  }
 }

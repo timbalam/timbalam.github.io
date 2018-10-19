@@ -85,7 +85,8 @@ h6 {
 /*
 Custom
 */
-.row { width: 100% }
+.row, .row-1 { width: 100% }
+.row-1 { background-color: #f0f0f0 }
 
 section,
 article {
@@ -109,17 +110,31 @@ article header {
   margin: 0 0 1em;
 }
 
+/* Title page */
+.title-page h1,
+.title-page h2,
+.title-page h3,
+.title-page h4 {
+  display: inline-block;
+}
+
+.title-page > section {
+  text-align: center;
+  padding-top: 18%;
+  padding-bottom: 18%;
+}
+
 
 /* Menu bar */
-menu {
+.title-page menu {
   text-align: center;
   display: table;
   table-layout: fixed;
   padding: 3% 0 0 0;
   width: 100%;
 }
-menu > li { display: table-cell; text-align: center }
-menu > li a {
+.title-page menu > li { display: table-cell; text-align: center }
+.title-page menu > li a {
   background-color: rgba(0,0,0,0.0);
   color: #292929;
   border: 2px solid #292929;
@@ -154,7 +169,7 @@ footer a {
   line-height: 1.8em;
   font-weight: normal;
   /*border: 2px solid #292929;*/
-  padding: 0.2em 0.1em 0 0.1em;
+  padding: 0 0.1em;
   margin-top: 5px;
 }
 footer a:hover {
@@ -163,8 +178,10 @@ footer a:hover {
 .placeholder {
   display: none;
 }
-footer a::before {
-  content: "\2B99";
+footer a.top-nav::before {
+  /* content: "\2B99"; */
+
+  content: "\2227";
   font-size: 1.8em;
   font-family: normal;
   font-weight: normal;
@@ -198,10 +215,10 @@ ul > li h6::after {
 
 
 @media screen and (max-width: 400px) {
-  menu {
+  .title-page menu {
     display: block
   }
-  menu > li {
+  .title-page menu > li {
     display: inline-block
   }
 }

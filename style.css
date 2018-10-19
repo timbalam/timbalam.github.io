@@ -85,7 +85,7 @@ h6 {
 /*
 Custom
 */
-.row { width: 100% }
+.row { width: 100%; overflow-y: hidden }
 
 #title h1,
 #title h2,
@@ -96,8 +96,8 @@ Custom
 
 #title > section {
   text-align: center;
-  padding-top: 20%;
-  padding-bottom: 15%;
+  padding-top: 16%;
+  padding-bottom: 12%;
 }
 #title,
 #projects {
@@ -131,8 +131,9 @@ menu {
   text-align: center;
   display: table;
   table-layout: fixed;
-  padding: 5% 0 0 0;
+  padding: 3% 0 0 0;
   width: 100%;
+  min-width: 400px;
 }
 menu > li { display: table-cell; text-align: center }
 menu > li a {
@@ -146,10 +147,11 @@ menu > li a {
   vertical-align: middle;
 }
 
+/* Top button */
 footer {
   position: sticky;
   bottom: 5px; 
-  width: calc(100% - 30px);
+  width: calc(100% - 20px);
   margin-left: auto;
   margin-right: auto;
 }
@@ -159,21 +161,26 @@ footer::after {
   display: table;
 }
 footer a {
-  background-color: rgba(0,0,0,0.0);
+  background-color: rgba(0,0,0,0.05);
   color: #292929;
-  text-decoration: none;
   opacity: 0.6;
   float: right;
   z-index: 10;
-  outline: none;
   line-height: 1.8em;
+  font-weight: normal;
+  /*border: 2px solid #292929;*/
+  padding: 0.2em 0.1em 0 0.1em;
+  margin-top: 5px;
 }
 footer a:hover {
   text-decoration: none;
 }
+.placeholder {
+  display: none;
+}
 footer a::before {
-  content: "\2bb9";
-  font-size: 2.8em;
+  content: "\2B99";
+  font-size: 1.8em;
   font-family: normal;
   font-weight: normal;
 }

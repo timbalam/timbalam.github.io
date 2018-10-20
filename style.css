@@ -160,7 +160,7 @@ footer::after {
   content: "";
   display: table;
 }
-footer a {
+a.top-nav {
   background-color: rgba(0,0,0,0.05);
   color: #292929;
   opacity: 0.6;
@@ -171,20 +171,12 @@ footer a {
   /*border: 2px solid #292929;*/
   padding: 0 0.1em;
   margin-top: 5px;
-}
-footer a:hover {
-  text-decoration: none;
-}
-.placeholder {
-  display: none;
-}
-footer a.top-nav::before {
-  /* content: "\2B99"; */
-
-  content: "\2227";
   font-size: 1.8em;
   font-family: normal;
   font-weight: normal;
+}
+a.top-nav:hover {
+  text-decoration: none;
 }
 
 

@@ -8,34 +8,37 @@
 <body>
 <header>
 <p>
-Next: <a href="maths">Maths</a>,
+Next: <a href="calculate">Calculate</a>,
 Up: <a href=".">Learn</a>
 </p>
 </header>
 <hr>
 <main>
-<h1>Run a simple Goat program</h2>
+<h1>Run a simple Goat program</h1>
 
 <p>
-In this first tutorial we will writing a simple program. 
-This will firstly test that the <strong>Goat Web Interpreter</strong> is working,
-and secondly demonstrate how to run a Goat program.
-For this we will need the box below,
- called the <strong>Goat Pen</strong>.
+In this first tutorial we will write and run a simple program.
+</p>
+
+<p>
+We will use the box below,
+called the <strong>Goat Pen</strong>.
 As we will see,
-text written in the Goat Pen can be evaluated by the Goat Web Interpreter.
+the Goat Pen can evaluate Goat <strong>code</strong> written in it.
 </p>
 
 <textarea class="codebox"></textarea>
+<pre class="codebox-output" hidden></pre>
 
 <p>
-Type the following code block into the Goat pen above.
-Click outside the pen or press the tab key when you are finished.
+The box following contains some Goat code.
+Type the code into the Goat pen above.
+<strong>Click outside the pen</strong> or <strong>press the tab key</strong> when you are finished.
 </p>
 
 <pre class="codebox">
-myText = "Hello darkness.";
-.inspect = myText;
+message = "Hello darkness.";
+.inspect = message;
 </pre>
 
 <p>
@@ -43,87 +46,118 @@ If it worked correctly, you should see the following text appear below the box:
 </p>
 
 <pre class="codebox-output">
-Hello darkness.
+Something's not working...
 </pre>
 
 <p>
-Congratulations, you have a working Goat program!
+Congratulations,
+you have made a working Goat program!
 </p>
 
-<h4>How it looks and what it means</h4>
+<h2>How it looks and what it means</h2>
 
 <p>
-The diagram below shows an annotated version of the program we just wrote,
-with the main features of interest to the computer highlighted.
-(Line numbers for the original program lines are shown on the far left.)
+A Goat <em>program</em> structure is inspired by that of a dictionary.
+In the simplest form,
+a program describes a vocabulary —
+a series of <em>words</em> and their corresponding <em>definitions</em>.
 </p>
-<pre class="diagram">
-1 | <span class="li1">myText</span> <span class="li2">=</span> <span class="li3">"Hello darkness."</span><span class="li4">;</span>
-    <span class="li1">^^^^^^</span> <!--           --><!---->  <span class="li3">^^^^^^^^^^^^^^^^^</span><!--           --><!---->
-    <span class="li1">1</span>      <span class="li2">^</span> <span class="li3">3</span>                <span class="li4">^</span>
-    <!--           --><!---->       <span class="li2">2</span> <!--           --><!---->                 <span class="li4">4</span>
-2 | <span class="li5">.inspect</span> <span class="li2">=</span> <span class="li6">myText</span><span class="li4">;</span>
-    <span class="li5">^^^^^^^^</span> <!--           --><!---->  <span class="li6">^^^^^^</span><!--           --><!---->
-    <span class="li5">5</span>        <span class="li2">^</span> <span class="li6">6</span>     <span class="li4">^</span>
-    <!--           --><!---->         <span class="li2">2</span> <!--           --><!---->      <span class="li4">4</span>
-</pre>
-<ol class="diagram">
-<li>
-The computer understands sequences of alphabetic characters such as <code>myText</code> to be a name.
-The space after isn't necessary but helps readability.
-For the most part, spacing doesn't affect the meaning of the program.
-Names are not allowed to contain spaces.
-</li>
-<li>
-The computer sees the <strong>equals sign</strong> symbol <code>=</code> and understands that we are making an <em>assignment</em>.
-The name to the left is defined as equivalent to the code to the right.
-(Any space immediately after the <code>=</code> also has no effect on the program.)
-</li>
-<li>
-The sentence in double quotes <code>"Hello darkness."</code> represents a literal text value. 
-</li>
-<li>
-Each line ends with a <strong>semi-colon</strong> symbol <code>;</code>.
-The <code>;</code> indicates that we have finished with the definition for an assignment.
-</li>
-<li>
-The second line defines a special name <code>inspect</code> with a <strong>full stop</strong> symbol <code>.</code> prefix. 
-If this name is defined (the prefix is necessary),
-the Goat Pen will try to evaluate the definition and prints the result below the pen.
-Otherwise, a default message will be displayed.
-</li>
-<li>
-The name <code>myText</code> is assigned to <code>inspect</code>.
-When used inside a definition,
-a name is a place-holder for its definition.
-As <code>myText</code> was assigned to be the text "Hello darkness.",
-this is what <code>inspect</code> evaluates to,
-and is thus printed below the Goat pen.
-</li>
-</ol>
-
-<h4>My first error</h4>
 
 <p>
-It is an error to use a label in a definition without giving a definition too.
-Let's see what happens if we change the definition of <code>inspect</code> to an undefined label <code>myTekts</code>.
-Go to the Goat pen above and change the second line to the following:
+Our program defines two words,
+with the form <em>word</em> <code>=</code> <em>definition</em> <code>;</code>.
+On the first line,
+<code>message</code> is defined as the piece of text "Hello, darkness.".
 </p>
-<pre class="codebox">
-.inspect = myTekts;
-</pre>
+
 <p>
-You should see the following message following the Goat pen:
+On the second line,
+<code>inspect</code> is defined.
+The word <code>inspect</code>
+is written with a <em>prefix</em> period character <code>.</code>.
+We will see the significance of this below and in later tutorials.
 </p>
-<pre class="codebox-output">
-&lt;error: Missing assignment: myTekts&gt;
-</pre>
+
 <p>
-This way, if we might misspell or misremember a name,
-Goat will let us know about it so we can fix it!
+<code>inspect</code> is defined effectively as a synonym for <code>message</code>,
+demonstrating that Goat,
+like a dictionary,
+allows words to be defined in terms of other words. 
 </p>
+
+<p>
+We make this synonym for a good reason,
+because <code>inspect</code> is a privledged word inside the Goat Pen.
+When made with the <code>.</code> prefix,
+the word <code>inspect</code> defines the <strong>value that is displayed in the output box</strong>.
+</p>
+
+<p>
+Since <code>inspect</code> is a synonym for <code>message</code>,
+and <code>message</code> is a piece of text,
+we end up seeing that text displayed:
+"Hello, darkness.".
+</p>
+
+<h2>New syntax</h2>
+
+<p>
+In this tutorial we have encountered our first example of Goat code.
+Let's summarise:
+</p>
+
+<ul>
+<li>
+A <em>program</em> is a series of <em>word</em>-<em>definition</em> pairs.
+<li>
+An equals sign <code>=</code> is used between a word being defined and its definition.
+The end of the definition is indicated by a semi-colon character <code>;</code>.
+</li><li>
+A word can contain letters and numbers and must start with a letter.
+Spaces or symbols are not allowed in words.
+</li><li>
+A fragment of <em>literal text</em> can be represented by surrounding it with double quote characters <code>"</code>.
+</li>
+</ul>
+
+
+<h4>Discover</h4>
+
+<p>
+Below is a list of additional facts and exercises for those who wish to learn more about Goat syntax.
+For the exercises, utilise the Goat Pen at the top of the article. 
+(Remember to press tab or click outside of the box after making the changes).
+</p>
+
+<ul>
+<li>
+The example code in this tutorial uses white space (spaces and newlines) to improve readability.
+In fact, space can be added almost anywhere without changing the program behaviour.
+Delete all of the spaces and newlines in the example exercise.
+</li><li>
+Next, add back in any spaces or newlines you like.
+Can you produce an error?
+</li><li>
+One place that spaces are forbidden is in words.
+Add a space in <code>message</code>.
+(This should give an error!)
+</li><li>
+The definition of <code>message</code> in line 1 uses a literal text.
+Change the text inside the <code>"</code>'s.
+</li>
+<li>
+The definition of <code>inspect</code> makes reference to another defined word <code>message</code>.
+Modify the definition of <code>inspect</code> to be an undefined word, e.g. <code>messge</code>.
+(Should give another error!)
+Note that if we misspell or misremember a word we defined,
+Goat will let us know so we can fix it.
+</li>
+</ul>
+
 </main>
+
 <hr>
+
 <footer>
 <p>
 Next: <a href="maths">Maths</a>,

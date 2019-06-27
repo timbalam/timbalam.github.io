@@ -1,13 +1,21 @@
 function setup(cb) {
-  document.querySelectorAll('textarea.codebox').forEach(function (tb) {
-    var o = document.createElement('pre');
-    o.className = 'codebox-output';
-    o.setAttribute("hidden", "")
-    tb.insertAdjacentElement('afterend',o);
-    tb.onblur = function () {
-      cb(o, tb.value);
-      o.removeAttribute("hidden");
-    };
+  document.querySelectorAll(".codebox")
+    .forEach(function (el) {
+    var o = el.nextElementSibling;
+    while (o != null) {
+      if (o.classList.contains("codebox-output")) {
+        if (el.tagName == "TEXTAREA") {
+          el.onblur = function () {
+            cb(o, el.id, el.value);
+            o.removeAttribute("hidden");
+          }
+        } else if (el.tagName == "PRE") {
+          cb(o, el.id, el.textContent);
+        }
+        break
+      }
+      o = o.nextElementSibling;
+    }
   });
 };
 /*setup(function(o, str) {

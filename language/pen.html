@@ -1,20 +1,23 @@
 <!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Goat Pen</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+<title>Goat Pen</title>
 </head>
+
 <body>
 <h1>Goat Pen</h1>
 
-<p>
-The <strong>Goat Pen</strong> is a text editor in which we can write Goat programs,
-which will then be automatically run through the <strong>Goat Web Interpreter</strong>.
-
-<textarea class="codebox" style="min-height: 100px;width: 95%">
-// Give a definition for a public name ".output" and I will print the value below!
+<textarea class="codebox" min-height="400px">
+// Hello!
+// I am the **Goat Pen**, a text editor for writing the Goat programming language.
+// I will look for an export called 'inspect' and print its value!
 </textarea>
+<pre class="codebox-output" hidden></pre>
 
 
-<script src="../script/codebox.js"></script>
-<script src="../script/goat-webi.js"></script>
+<script src="script/setup-goat-web.js"></script>
+<script src="script/goat-web.js"></script>
 </body>
+</html>

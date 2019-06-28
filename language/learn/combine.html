@@ -8,45 +8,112 @@
 <body>
 <header>
 <p>
-Prev: <a href="maths">Maths</a>,
+Prev: <a href="run">Run</a>,
 Next: <a href="layers">Layers</a>,
 Up: <a href=".">Learn</a>
 </p>
 </header>
 <hr>
 <main>
-<h1>Names, associated</h1>
+<h1>Combine</h1>
 
 <p>
-So far, we have worked with the basic data forms in Goat:
-text and numbers.
-To describe more complex things, we will need <em>compound</em> objects.
-Compound objects have zero or more named "components" with corresponding code definitions.
-Their usage is perhaps best demonstrated with an exercise.
+<a href="run">So far</a> we have used Goat to print some text on the screen,
+which was fun.
+Text is an example of a 'plain' data form that Goat has builtin rules for working with.
+Numbers are another plain data form of Goat that we will see in future tutorials.
+</p>
+
+<p>
+Like most programming languages,
+Goat also comes with <em>combining forms</em> which can glue together the simpler forms.
+These combining forms can be used to organise our code,
+keeping together related data and separating unrelated data.
+</p>
+
+<p>
+As we will see, 
+combining forms generally need to be matched with corresponding <em>selection forms</em> for getting at the parts.
+</p>
+
+<p>
+Goat has a very general combining form called a <em>block</em>,
+and a corresponding <em>lookup</em> form for selection.
+Blocks are perhaps best understood via demonstration.
 Let's start with the Goat Pen below.
 </p>
 
 <textarea class="codebox"></textarea>
+<pre class="codebox-output" hidden></pre>
 
 <p>
-A simple example of a compound object is a two-dimensional coordinate,
-with x- and y- components described by numbers.
-In Goat we can represent such a coordinate by writing some code like the following.
+The example below uses a block to group together some facts that relate to a common farm animal,
+and selects a fact to be displayed.
 </p>
 
 <pre class="codebox">
-myPoint = { .x = 2; .y = 4 };
-.inspect = myPoint.y;
+facts = {
+  .speciesName = "Capra hircus";
+  .diet = "herbivore";
+  .skills = "climbing, chariot-pulling";
+  };
+.inspect = facts.diet;
 </pre>
 
 <p>
-As usual, I'll ask you to type the above code block into the Goat pen and run it. 
-You should see the following.
+Type out the code above into the Goat Pen
+(copying it will also work).
+Upon navigating away from the box you should see the following printed below the box:
 </p>
 
 <pre class="codebox-output">
-4.0
+Something went wrong...
 </pre>
+
+<p>
+You have now made a second running Goat program.
+Go you!
+</p>
+
+<h2>Combine and select</h4>
+
+<p>
+The program above demonstrates the use of combination and selection in Goat.
+In the definition of <code>facts</code> we see Goat's block declaration syntax,
+starting on line 1 with an open brace <code>{</code>,
+and continuing until the closing brace <code>}</code> on line 5.
+Perhaps familiarly,
+the block contains a series of words and definitions,
+separated by <code>=</code> and ended by <code>;</code>.
+The block reflects the combination of the plain text values used as definitions.
+</p>
+
+<p>
+The block defines three words,
+ach using a <code>.</code> prefix:
+<code>speciesName</code>,
+<code>diet</code> and <code>skills</code>.
+Let us look briefly at the last line for the significance of these names.
+</p>
+
+<p>
+The last line defines <code>inspect</code>,
+which we recall from <a href="run">the earlier tutorial</a> defines the output box value of the Goat Pen.
+The definition references <code>goatFacts</code> and uses <em>lookup</em> syntax in the form <code>.</code><em>word</em>.
+</p>
+
+<p>
+In effect,
+we are defining <code>inspect</code> to correspond to the definition of <code>diet</code> inside the combination refered to by <code>facts</code>.
+Tracing back to the definition of <code>facts</code>,
+we see that it is indeed the same as that displayed by the output box:
+"herbivore".
+</p>
+
+<h2>New syntax</h2>
+
+<h2>Discover</h2>
+
 
 
 <h4>Creating compound objects</h4> 

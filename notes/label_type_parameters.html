@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<article>
+<header>
+<h3>Labelling type parameters</h3>
+<address>Tim Lamberton</address>
+<time datetime="2018-10-24">24 Oct 2018</time>
+</header>
+<p>
+(Problem: Adding type parameters)
+</p>
+<p>
+<a href="https://gist.github.com/chrisdone/5bfaa534f843035a932185a1864cb7a7">In a gist,</a>
+<strong>@chrisdone</strong> describes a way to represent type parameter lists as labelled rows.
+Here I will try to present a slightly more formal version of the idea. 
+The idea is to represent concrete types by a scheme(?):
+</p>
+<pre>
+&sigma; <em>:=</em> T <em>|</em> &lang; label :: * | &sigma; &rang; 
+</pre>
+<p>
+Here <code>*</code> is the kind of concrete types,
+and <code>T</code> is a type constructor.
+In the following I make use the following sugar for row types:
+</p>
+<pre>
+T { 'label_1 :: *, e } ==> &lang; 'label_1 :: * | T { e } &rang;
+T { 'label_1 :: * } ==> &lang; 'label_1 :: * | T &rang;
+</pre>
+<p>
+As per the example from <strong>@chrisdone</strong>'s gist,
+we can give <code>Maybe</code> the type:
+</p>
+<pre>
+Maybe :: *
+Just :: a -> Maybe { value = a }
+Nothing :: Maybe { value = a }
+</pre>
+
+<p>
+We can naturally represent higher-kinded types —
+that is, types with "missing" parameters.
+Consider the <code>ConduitT</code> example from the gist,
+for which I will express the type in the following manner:
+</p>
+<pre>
+data ConduitT { input :: *, output :: *, monad :: *, return :: * }
+</pre>
+
+<p>
+Note that <code>monad</code> has kind <code>*</code>.
+Let's see what the type of a function that uses a <code>ConduitT</code> with a <code>Monad</code> constraint:
+</p>
+<pre>
+yieldM :: Monad { monad = m } => { Field m = o | m } ->
+  ConduitT { monad = m, output = o, input = i, return = () }
+</pre>
+
+<p>
+The <code>Monad</code> constraint no longer requires a higher-kinded type. 
+The label for the parameterised type of <code>Monad</code> is provided by an associated field <code>Field m</code>.
+The <code>Monad</code> class definition could look like:
+</p>
+<pre>
+class Monad { monad :: * } where
+  type Field monad
+  
+  return :: a -> { Field monad = a | monad }
+  (>>=) :: { Field monad = a | monad } -> (a -> { Field monad = b | monad })
+    -> { Field monad = b | monad }
+</pre>
+
+<p>
+With this formalism
+<code>return</code> and <code>(>>=)</code> are still as polymorphic as the usual definition.
+In essence, we simulate missing type parameters by adding them as needed into the row <code>r</code>.
+</p>
+
+<p>
+(Use it so solve the problem.)
+</p>
+
+</article>
+</body>
+
+</html>

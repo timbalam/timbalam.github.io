@@ -144,7 +144,7 @@ Let's introduce some inbuilt IO functions with types appropriate to the Kliesli 
   
 <pre>
 putStrLn :: Kliesli IO String () -- String -> IO ()
-getStrLn :: Kliesli IO () String -- IO ()
+getStrLn :: Kliesli IO () String -- IO String
 
 f :: Kliesli IO () ()
 f = putStrLn getStrLn

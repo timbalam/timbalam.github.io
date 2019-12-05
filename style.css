@@ -3,7 +3,6 @@
 /**
 1. RESET
 **/
-
 * { margin: 0; padding: 0 }
 
 menu, ul { list-style: none }
@@ -69,18 +68,17 @@ h2 {
 	font-weight: 300;
 	color: #000;
 }
-h3 {
+h1 + h3 {
 	font-size: 1.5em;
 	margin: 0 0 .8em;
 	line-height: 1.6em;
 	letter-spacing: -.01em;
 	font-weight: 300;
 }
-h6 {
+h3 {
 	font-size: 1.1em;
   font-weight: bold;
 }
-
 
 /*
 Custom
@@ -124,7 +122,6 @@ article header {
   padding-bottom: 18%;
 }
 
-
 /* Menu bar */
 .title-page menu {
   text-align: center;
@@ -144,8 +141,6 @@ article header {
   position: relative;
   vertical-align: middle;
 }
-
-
 
 /* Top button */
 footer {
@@ -179,7 +174,6 @@ a.top-nav:hover {
   text-decoration: none;
 }
 
-
 /* Projects list */
 ul > li {
   width: 100%;
@@ -188,10 +182,10 @@ ul > li {
   margin-bottom: 1.5em;
   text-align: center;
 }
-ul > li h6 {
+ul > li h3, ul > li p {
   display: inline;
 }
-ul > li h6::after {
+ul > li h3::after {
   display: inline-block;
   content: '';
   width: 4px;
